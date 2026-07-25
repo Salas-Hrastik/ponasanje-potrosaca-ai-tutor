@@ -1,0 +1,15 @@
+{
+  "napomena": "Registar DOPUNSKIH izvora. Dopušteni su isključivo izvori navedeni u priručniku (poglavlje „Literatura i izvori za daljnje učenje\" ili izrijekom spomenuti u tekstu). Datoteke se stavljaju u mapu iz DOPUNSKI_DIR i NIKAD se ne commitaju u git.",
+  "izvori": [
+    {
+      "oznaka": "skift-mckinsey-2025",
+      "datoteka": "remapping_travel_with_agentic_ai.pdf",
+      "naslov": "Remapping Travel with Agentic AI",
+      "autor": "Skift Research & McKinsey & Company",
+      "godina": 2025,
+      "jezik": "en",
+      "url": "",
+      "napomena": "Industrijsko izvješće na koje se priručnik poziva kod podatkovnih pokazatelja o agentskom AI-ju u turizmu (vidi Predgovor i pogl. 8.6)."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "ponasanje-potrosaca-ai-tutor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Samostalni obrazovni AI asistent za kolegij Ponašanje potrošača u turizmu (Veleučilište Baltazar Zaprešić, Management u turizmu i ugostiteljstvu) — odgovara isključivo prema priloženom priručniku, uz citiranje poglavlja i stranice.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "struktura": "tsx scripts/izvuci-strukturu.ts",
+    "ingest": "tsx scripts/ingest.ts",
+    "ingest:dopunski": "tsx scripts/ingest-dopunski.ts",
+    "nacrti": "tsx scripts/generiraj-nacrte.ts",
+    "kviz:uvezi": "tsx scripts/uvezi-kviz.ts",
+    "rag:debug": "tsx scripts/rag-debug.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.45.0",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
+    "jszip": "^3.10.1",
+    "pdf-parse": "1.1.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "napomena": "Predložak za kviz koji isporučuje NASTAVNIK. Pitanja unesena ovom datotekom odmah su odobrena i vidljiva studentima (npm run kviz:uvezi -- --datoteka=data/kviz-predlozak.json). Asistent sam ne izmišlja pitanja: sve što pripremi skripta `npm run nacrti` ostaje neodobreno dok ga nastavnik ne potvrdi.",
+  "polja": {
+    "poglavlje_broj": "broj poglavlja iz data/sadrzaj.json (1–11)",
+    "lekcija_oznaka": "neobavezno — oznaka odjeljka, npr. \"4.4\"",
+    "pitanje": "tekst pitanja",
+    "odgovori": "točno 4 ponuđena odgovora",
+    "tocan_index": "0–3, indeks točnog odgovora",
+    "objasnjenje": "jedna rečenica objašnjenja koja se prikazuje nakon odgovora",
+    "stranica_ref": "npr. \"str. 24–25\""
+  },
+  "pitanja": []
+}

@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env*.local
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# Sirovi nastavni materijali (priručnik, dopunski izvori, mediji) NIKAD se ne
+# commitaju — obrađuju se lokalno pri ingestu i završavaju samo u Supabaseu
+# (tekst/ugradnje) odnosno u Supabase Storageu (mediji).
+/materijali/
+*.docx
+*.pdf
+*.pptx
+*.mp3
+*.mp4
+*.m4a
+*.wav

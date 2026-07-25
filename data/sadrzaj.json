@@ -1,0 +1,659 @@
+{
+  "izvor": {
+    "oznaka": "prirucnik",
+    "naslov": "Ponašanje potrošača u turizmu",
+    "podnaslov": "Od klasičnih čimbenika odlučivanja do interneta i umjetne inteligencije",
+    "vrsta": "Veleučilišni priručnik",
+    "ustanova": "Veleučilište Baltazar Zaprešić",
+    "kolegij": "Ponašanje potrošača u turizmu",
+    "studij": "Management u turizmu i ugostiteljstvu",
+    "ukupno_stranica": 52
+  },
+  "poglavlja": [
+    {
+      "broj": 1,
+      "naslov": "Uvod u ponašanje potrošača u turizmu",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranica_od": 4,
+      "stranica_do": 9,
+      "lekcije": [
+        {
+          "broj": 1,
+          "oznaka": "1.1",
+          "naslov": "Pojam i predmet izučavanja",
+          "stranica_od": 4,
+          "stranica_do": 5,
+          "podnaslovi": []
+        },
+        {
+          "broj": 2,
+          "oznaka": "1.2",
+          "naslov": "Tipovi ponašanja pri kupnji",
+          "stranica_od": 5,
+          "stranica_do": 5,
+          "podnaslovi": []
+        },
+        {
+          "broj": 3,
+          "oznaka": "1.3",
+          "naslov": "Specifičnosti turističkog proizvoda",
+          "stranica_od": 5,
+          "stranica_do": 6,
+          "podnaslovi": []
+        },
+        {
+          "broj": 4,
+          "oznaka": "1.4",
+          "naslov": "Zašto je razumijevanje potrošača važno",
+          "stranica_od": 6,
+          "stranica_do": 7,
+          "podnaslovi": []
+        },
+        {
+          "broj": 5,
+          "oznaka": "1.5",
+          "naslov": "Interdisciplinarnost područja",
+          "stranica_od": 7,
+          "stranica_do": 9,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 2,
+      "naslov": "Psihološki čimbenici ponašanja",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranica_od": 9,
+      "stranica_do": 15,
+      "lekcije": [
+        {
+          "broj": 6,
+          "oznaka": "2.1",
+          "naslov": "Motivacija za putovanje",
+          "stranica_od": 9,
+          "stranica_do": 10,
+          "podnaslovi": []
+        },
+        {
+          "broj": 7,
+          "oznaka": "2.2",
+          "naslov": "Od potrebe do želje: motivacija u makro i mikro odlukama",
+          "stranica_od": 10,
+          "stranica_do": 11,
+          "podnaslovi": []
+        },
+        {
+          "broj": 8,
+          "oznaka": "2.3",
+          "naslov": "Percepcija i imidž destinacije",
+          "stranica_od": 11,
+          "stranica_do": 12,
+          "podnaslovi": []
+        },
+        {
+          "broj": 9,
+          "oznaka": "2.4",
+          "naslov": "Učenje, pamćenje i stavovi",
+          "stranica_od": 12,
+          "stranica_do": 13,
+          "podnaslovi": []
+        },
+        {
+          "broj": 10,
+          "oznaka": "2.5",
+          "naslov": "Osobnost, životni stil i emocije",
+          "stranica_od": 13,
+          "stranica_do": 13,
+          "podnaslovi": []
+        },
+        {
+          "broj": 11,
+          "oznaka": "2.6",
+          "naslov": "Prehrana kao sastavnica turističkog doživljaja",
+          "stranica_od": 13,
+          "stranica_do": 15,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 3,
+      "naslov": "Sociokulturni i društveni čimbenici",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranica_od": 15,
+      "stranica_do": 22,
+      "lekcije": [
+        {
+          "broj": 12,
+          "oznaka": "3.1",
+          "naslov": "Kultura i potkultura",
+          "stranica_od": 15,
+          "stranica_do": 16,
+          "podnaslovi": []
+        },
+        {
+          "broj": 13,
+          "oznaka": "3.2",
+          "naslov": "Društveni sloj i status",
+          "stranica_od": 16,
+          "stranica_do": 16,
+          "podnaslovi": []
+        },
+        {
+          "broj": 14,
+          "oznaka": "3.3",
+          "naslov": "Referentne skupine i lideri mišljenja",
+          "stranica_od": 16,
+          "stranica_do": 17,
+          "podnaslovi": []
+        },
+        {
+          "broj": 15,
+          "oznaka": "3.4",
+          "naslov": "Obitelj i uloge u odluci o putovanju",
+          "stranica_od": 17,
+          "stranica_do": 18,
+          "podnaslovi": []
+        },
+        {
+          "broj": 16,
+          "oznaka": "3.5",
+          "naslov": "Generacijske skupine",
+          "stranica_od": 18,
+          "stranica_do": 19,
+          "podnaslovi": []
+        },
+        {
+          "broj": 17,
+          "oznaka": "3.6",
+          "naslov": "Ponašanje turista prema emitivnim tržištima",
+          "stranica_od": 19,
+          "stranica_do": 22,
+          "podnaslovi": [
+            {
+              "naslov": "Srednjoeuropski gost u suvremenom kontekstu",
+              "stranica": 20
+            },
+            {
+              "naslov": "Komparacija s dalekoistočnim tržištima",
+              "stranica": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "broj": 4,
+      "naslov": "Proces donošenja odluke o putovanju",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranica_od": 22,
+      "stranica_do": 28,
+      "lekcije": [
+        {
+          "broj": 18,
+          "oznaka": "4.1",
+          "naslov": "Klasični model procesa odlučivanja",
+          "stranica_od": 22,
+          "stranica_do": 22,
+          "podnaslovi": []
+        },
+        {
+          "broj": 19,
+          "oznaka": "4.2",
+          "naslov": "Makro i mikro odluke u putovanju",
+          "stranica_od": 22,
+          "stranica_do": 23,
+          "podnaslovi": []
+        },
+        {
+          "broj": 20,
+          "oznaka": "4.3",
+          "naslov": "Prepoznavanje potrebe",
+          "stranica_od": 23,
+          "stranica_do": 24,
+          "podnaslovi": []
+        },
+        {
+          "broj": 21,
+          "oznaka": "4.4",
+          "naslov": "Traženje informacija",
+          "stranica_od": 24,
+          "stranica_do": 25,
+          "podnaslovi": [
+            {
+              "naslov": "Faze informiranja: od pasivnosti do aktivnog traženja",
+              "stranica": 24
+            },
+            {
+              "naslov": "Suvišak informacija i nužnost selekcije",
+              "stranica": 24
+            }
+          ]
+        },
+        {
+          "broj": 22,
+          "oznaka": "4.5",
+          "naslov": "Vrednovanje alternativa",
+          "stranica_od": 25,
+          "stranica_do": 25,
+          "podnaslovi": []
+        },
+        {
+          "broj": 23,
+          "oznaka": "4.6",
+          "naslov": "Odluka, rezervacija i percipirani rizik",
+          "stranica_od": 25,
+          "stranica_do": 25,
+          "podnaslovi": []
+        },
+        {
+          "broj": 24,
+          "oznaka": "4.7",
+          "naslov": "Ponašanje nakon putovanja",
+          "stranica_od": 25,
+          "stranica_do": 28,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 5,
+      "naslov": "Podvrste turizma posebnih interesa i specifičnosti ponašanja",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranica_od": 28,
+      "stranica_do": 33,
+      "lekcije": [
+        {
+          "broj": 25,
+          "oznaka": "5.1",
+          "naslov": "Od masovnog odmorišnog do turizma posebnih interesa",
+          "stranica_od": 28,
+          "stranica_do": 28,
+          "podnaslovi": []
+        },
+        {
+          "broj": 26,
+          "oznaka": "5.2",
+          "naslov": "Pregled glavnih podvrsta i obilježja ponašanja",
+          "stranica_od": 28,
+          "stranica_do": 29,
+          "podnaslovi": []
+        },
+        {
+          "broj": 27,
+          "oznaka": "5.3",
+          "naslov": "Eno-gastronomski turizam: prehrana kao motiv i kao ograničenje",
+          "stranica_od": 29,
+          "stranica_do": 30,
+          "podnaslovi": [
+            {
+              "naslov": "Manifestacijski oblici i povezanost s vinom",
+              "stranica": 29
+            },
+            {
+              "naslov": "Prehrambeni trendovi koji oblikuju potražnju",
+              "stranica": 30
+            },
+            {
+              "naslov": "Ograničenja, alergije i fobije u prehrani",
+              "stranica": 30
+            }
+          ]
+        },
+        {
+          "broj": 28,
+          "oznaka": "5.4",
+          "naslov": "Implikacije za prilagodbu ponude",
+          "stranica_od": 30,
+          "stranica_do": 33,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 6,
+      "naslov": "Internet i digitalna transformacija tržišta",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranica_od": 33,
+      "stranica_do": 36,
+      "lekcije": [
+        {
+          "broj": 29,
+          "oznaka": "6.1",
+          "naslov": "Od kataloga do platforme",
+          "stranica_od": 33,
+          "stranica_do": 33,
+          "podnaslovi": []
+        },
+        {
+          "broj": 30,
+          "oznaka": "6.2",
+          "naslov": "Disintermedijacija i nove platforme",
+          "stranica_od": 33,
+          "stranica_do": 33,
+          "podnaslovi": []
+        },
+        {
+          "broj": 31,
+          "oznaka": "6.3",
+          "naslov": "Mobilno-prvi potrošač",
+          "stranica_od": 33,
+          "stranica_do": 34,
+          "podnaslovi": []
+        },
+        {
+          "broj": 32,
+          "oznaka": "6.4",
+          "naslov": "Platformska ekonomija i ekonomija dijeljenja",
+          "stranica_od": 34,
+          "stranica_do": 34,
+          "podnaslovi": []
+        },
+        {
+          "broj": 33,
+          "oznaka": "6.5",
+          "naslov": "Ključne platforme i njihov značaj",
+          "stranica_od": 34,
+          "stranica_do": 36,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 7,
+      "naslov": "Online ponašanje turističkog potrošača",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranica_od": 36,
+      "stranica_do": 39,
+      "lekcije": [
+        {
+          "broj": 34,
+          "oznaka": "7.1",
+          "naslov": "Digitalna customer journey",
+          "stranica_od": 36,
+          "stranica_do": 36,
+          "podnaslovi": []
+        },
+        {
+          "broj": 35,
+          "oznaka": "7.2",
+          "naslov": "Nulti trenutak istine (ZMOT)",
+          "stranica_od": 36,
+          "stranica_do": 37,
+          "podnaslovi": []
+        },
+        {
+          "broj": 36,
+          "oznaka": "7.3",
+          "naslov": "Recenzije, eWOM i sadržaj korisnika",
+          "stranica_od": 37,
+          "stranica_do": 37,
+          "podnaslovi": []
+        },
+        {
+          "broj": 37,
+          "oznaka": "7.4",
+          "naslov": "Povjerenje, ocjene i reputacija",
+          "stranica_od": 37,
+          "stranica_do": 37,
+          "podnaslovi": []
+        },
+        {
+          "broj": 38,
+          "oznaka": "7.5",
+          "naslov": "Personalizacija i preporučni sustavi",
+          "stranica_od": 37,
+          "stranica_do": 39,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 8,
+      "naslov": "Umjetna inteligencija i ponašanje potrošača",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranica_od": 39,
+      "stranica_do": 42,
+      "lekcije": [
+        {
+          "broj": 39,
+          "oznaka": "8.1",
+          "naslov": "Što je AI u kontekstu turizma",
+          "stranica_od": 39,
+          "stranica_do": 39,
+          "podnaslovi": []
+        },
+        {
+          "broj": 40,
+          "oznaka": "8.2",
+          "naslov": "Generativni AI i planiranje putovanja",
+          "stranica_od": 39,
+          "stranica_do": 40,
+          "podnaslovi": []
+        },
+        {
+          "broj": 41,
+          "oznaka": "8.3",
+          "naslov": "Hiperpersonalizacija i dinamičke cijene",
+          "stranica_od": 40,
+          "stranica_do": 40,
+          "podnaslovi": []
+        },
+        {
+          "broj": 42,
+          "oznaka": "8.4",
+          "naslov": "Konverzacijski commerce i glasovni asistenti",
+          "stranica_od": 40,
+          "stranica_do": 40,
+          "podnaslovi": []
+        },
+        {
+          "broj": 43,
+          "oznaka": "8.5",
+          "naslov": "Utjecaj AI-ja na faze odlučivanja",
+          "stranica_od": 40,
+          "stranica_do": 40,
+          "podnaslovi": []
+        },
+        {
+          "broj": 44,
+          "oznaka": "8.6",
+          "naslov": "Agentski AI (agentic AI): od savjetnika prema izvršitelju",
+          "stranica_od": 40,
+          "stranica_do": 41,
+          "podnaslovi": []
+        },
+        {
+          "broj": 45,
+          "oznaka": "8.7",
+          "naslov": "Rizici: pristranost, mjehurići i privatnost",
+          "stranica_od": 41,
+          "stranica_do": 42,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 9,
+      "naslov": "Istraživanje ponašanja: od klasičnih metoda do stvarnog vremena",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranica_od": 42,
+      "stranica_do": 47,
+      "lekcije": [
+        {
+          "broj": 46,
+          "oznaka": "9.1",
+          "naslov": "Zašto i kako istražujemo ponašanje turista",
+          "stranica_od": 42,
+          "stranica_do": 42,
+          "podnaslovi": []
+        },
+        {
+          "broj": 47,
+          "oznaka": "9.2",
+          "naslov": "Klasične metode istraživanja",
+          "stranica_od": 42,
+          "stranica_do": 43,
+          "podnaslovi": []
+        },
+        {
+          "broj": 48,
+          "oznaka": "9.3",
+          "naslov": "Evolucija empirijskih spoznaja",
+          "stranica_od": 43,
+          "stranica_do": 43,
+          "podnaslovi": []
+        },
+        {
+          "broj": 49,
+          "oznaka": "9.4",
+          "naslov": "Digitalno istraživanje: tragovi, analitika i veliki podaci",
+          "stranica_od": 43,
+          "stranica_do": 43,
+          "podnaslovi": []
+        },
+        {
+          "broj": 50,
+          "oznaka": "9.5",
+          "naslov": "Hrvatski izvori podataka: Tomas istraživanja i eVisitor",
+          "stranica_od": 43,
+          "stranica_do": 45,
+          "podnaslovi": [
+            {
+              "naslov": "Tomas istraživanja — zašto gost dolazi i koliko troši",
+              "stranica": 44
+            },
+            {
+              "naslov": "eVisitor — što, koliko i kada se događa",
+              "stranica": 44
+            }
+          ]
+        },
+        {
+          "broj": 51,
+          "oznaka": "9.6",
+          "naslov": "AI, automatizacija i agenti: istraživanje u stvarnom vremenu",
+          "stranica_od": 45,
+          "stranica_do": 45,
+          "podnaslovi": []
+        },
+        {
+          "broj": 52,
+          "oznaka": "9.7",
+          "naslov": "Metodološka i etička ograničenja",
+          "stranica_od": 45,
+          "stranica_do": 47,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 10,
+      "naslov": "Trendovi, etika i budućnost",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranica_od": 47,
+      "stranica_do": 49,
+      "lekcije": [
+        {
+          "broj": 53,
+          "oznaka": "10.1",
+          "naslov": "Novi potrošački trendovi",
+          "stranica_od": 47,
+          "stranica_do": 47,
+          "podnaslovi": []
+        },
+        {
+          "broj": 54,
+          "oznaka": "10.2",
+          "naslov": "Etika podataka i privatnost",
+          "stranica_od": 47,
+          "stranica_do": 47,
+          "podnaslovi": []
+        },
+        {
+          "broj": 55,
+          "oznaka": "10.3",
+          "naslov": "Odgovorno korištenje AI-ja u marketingu",
+          "stranica_od": 47,
+          "stranica_do": 48,
+          "podnaslovi": []
+        },
+        {
+          "broj": 56,
+          "oznaka": "10.4",
+          "naslov": "Pogled u budućnost: autonomni putni asistent",
+          "stranica_od": 48,
+          "stranica_do": 48,
+          "podnaslovi": []
+        },
+        {
+          "broj": 57,
+          "oznaka": "10.5",
+          "naslov": "Implikacije za turističke djelatnike",
+          "stranica_od": 48,
+          "stranica_do": 49,
+          "podnaslovi": []
+        }
+      ]
+    },
+    {
+      "broj": 11,
+      "naslov": "Dodaci — predgovor, pojmovnik i literatura",
+      "dio": "Dodaci",
+      "stranica_od": 3,
+      "stranica_do": 52,
+      "lekcije": [
+        {
+          "broj": 58,
+          "oznaka": "",
+          "naslov": "Predgovor",
+          "stranica_od": 3,
+          "stranica_do": 4,
+          "podnaslovi": [
+            {
+              "naslov": "Kako je priručnik organiziran",
+              "stranica": 3
+            },
+            {
+              "naslov": "Didaktički elementi",
+              "stranica": 3
+            }
+          ]
+        },
+        {
+          "broj": 59,
+          "oznaka": "",
+          "naslov": "Pojmovnik ključnih pojmova",
+          "stranica_od": 50,
+          "stranica_do": 51,
+          "podnaslovi": []
+        },
+        {
+          "broj": 60,
+          "oznaka": "",
+          "naslov": "Literatura i izvori za daljnje učenje",
+          "stranica_od": 52,
+          "stranica_do": 52,
+          "podnaslovi": [
+            {
+              "naslov": "Temeljni udžbenici i monografije",
+              "stranica": 52
+            },
+            {
+              "naslov": "Digitalno ponašanje i online odlučivanje",
+              "stranica": 52
+            },
+            {
+              "naslov": "Umjetna inteligencija u turizmu",
+              "stranica": 52
+            },
+            {
+              "naslov": "Etika, podaci i regulativa",
+              "stranica": 52
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
