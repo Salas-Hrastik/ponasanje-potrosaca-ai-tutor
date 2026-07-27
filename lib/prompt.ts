@@ -15,7 +15,7 @@ export const PRIRUCNIK = `veleučilišni priručnik „Ponašanje potrošača u 
 const ZAJEDNICKA_PRAVILA = `Temeljno načelo — VJERNOST IZVORU:
 1. Odgovaraš ISKLJUČIVO na temelju sadržaja priloženih isječaka (blok <izvori>) iz izvora ${PRIRUCNIK}. Nikad ne dodaješ opće znanje, primjere, brojke ni tvrdnje kojih nema u izvorima — čak i ako ih smatraš točnima.
 2. Svaki odgovor MORA sadržavati citate (poglavlje i raspon stranica) izvora koje si stvarno koristio/la. Bez citata odgovor nije valjan.
-3. Ako priloženi isječci NE sadrže dovoljno informacija za pouzdan odgovor, NEMOJ nagađati — vrati tip "nedovoljno_konteksta" s pristojnom porukom i prijedlogom u kojoj lekciji/poglavlju tražiti odgovor.
+3. Ako priloženi isječci NE sadrže dovoljno informacija za pouzdan odgovor, NEMOJ nagađati — vrati tip "nedovoljno_konteksta" s pristojnom porukom i prijedlogom u kojoj nastavnoj cjelini (poglavlju) ili odjeljku tražiti odgovor.
 4. Ako su isječci međusobno kontradiktorni ili nejasni, objasni to ograničenje i uputi gdje u priručniku provjeriti — nemoj izmišljati sintezu.
 5. Isječci označeni kao dopunski izvor (atribut vrsta="dopunski") služe SAMO kao dopuna; priručnik je izvor istine. Ako se razilaze, navedi stav priručnika i posebno označi što dolazi iz dopunskog izvora.
 6. Odgovaraš isključivo na hrvatskom jeziku, terminologijom usklađenom s priručnikom (npr. „makro i mikro odluke", „percipirani rizik", „eWOM", „nulti trenutak istine (ZMOT)" — koristi točne pojmove iz izvora, ne sinonime iz opće literature). Dopunski izvori mogu biti na engleskom; pojmove prevedi u terminologiju priručnika.
@@ -24,16 +24,16 @@ const ZAJEDNICKA_PRAVILA = `Temeljno načelo — VJERNOST IZVORU:
 
 const NEDOVOLJNO_SHEMA = `{
   "tip": "nedovoljno_konteksta",
-  "poruka": "objašnjenje i ljubazan zahtjev za pojašnjenje (lekcija/poglavlje/stranica)",
-  "predlozene_lekcije": ["naslov lekcije koji bi mogao pomoći", "..."],
+  "poruka": "objašnjenje i ljubazan zahtjev za pojašnjenje (poglavlje/odjeljak/stranica)",
+  "predlozene_cjeline": ["naslov poglavlja ili odjeljka koji bi mogao pomoći", "..."],
   "trazeni_metapodaci": ["poglavlje", "stranica"]
 }`;
 
-export function buildChatSystemPrompt(mode: 'lekcija' | 'opci'): string {
+export function buildChatSystemPrompt(mode: 'cjelina' | 'opci'): string {
   const napomena =
     mode === 'opci'
-      ? '\n\nOvo je OPĆI chat (izvan lekcije) — polje "kratko_objasnjenje" MORA započeti napomenom: "Odgovaram samo prema udžbeniku."'
-      : '\n\nOvo je chat UNUTAR LEKCIJE — odgovor kontekstualiziraj na trenutačnu lekciju, sažeto i bez općeg disclaimera.';
+      ? '\n\nOvo je OPĆI chat (izvan nastavne cjeline) — polje "kratko_objasnjenje" MORA započeti napomenom: "Odgovaram samo prema udžbeniku."'
+      : '\n\nOvo je chat UNUTAR NASTAVNE CJELINE (poglavlja) — odgovor kontekstualiziraj na tu cjelinu, sažeto i bez općeg disclaimera.';
 
   return `Ti si „${config.assistantName}", AI asistent kolegija ${config.kolegij} (${config.studij}, ${config.ustanova}), utemeljen isključivo na izvoru ${PRIRUCNIK}.
 
@@ -45,7 +45,7 @@ Shema odgovora (JSON):
   "odgovor": "glavni odgovor studentu — jasan, sažet, u Markdownu",
   "kratko_objasnjenje": "2-4 rečenice konteksta/obrazloženja",
   "citati": [{"poglavlje": "Pogl. N. Naslov — odjeljak", "stranice": "od–do", "isjecak": "kratak citat/parafraza"}],
-  "lekcija_id": "ID lekcije ili null ako je opći chat",
+  "poglavlje_broj": broj cjeline ili null ako je opći chat,
   "sigurnost_konteksta": "visoka" | "srednja" | "niska"
 }
 
@@ -56,11 +56,11 @@ ${NEDOVOLJNO_SHEMA}`;
 export function buildChatUserPrompt(
   pitanje: string,
   chunks: RetrievedChunk[],
-  lekcijaId?: string,
-  naslovLekcije?: string,
+  poglavljeBroj?: number,
+  naslovPoglavlja?: string,
 ): string {
-  const zaglavlje = lekcijaId
-    ? `Trenutačna lekcija: ${naslovLekcije ?? ''} (ID: ${lekcijaId})\n\n`
+  const zaglavlje = poglavljeBroj
+    ? `Trenutačna nastavna cjelina: Pogl. ${poglavljeBroj}. ${naslovPoglavlja ?? ''}\n\n`
     : '';
   return `${zaglavlje}<izvori>\n${formatIzvori(chunks)}\n</izvori>\n\nPitanje studenta: ${pitanje}`;
 }
@@ -120,7 +120,7 @@ function formatIzvori(chunks: RetrievedChunk[]): string {
           : c.izvorNaslov;
       return (
         `<izvor id="${i + 1}" vrsta="${c.izvorVrsta}" poglavlje="${escapeAttr(poglavlje)}"` +
-        ` odjeljak="${escapeAttr(c.naslovOdjeljka || c.naslovLekcije)}" stranice="${c.stranicaOd}-${c.stranicaDo}">\n` +
+        ` odjeljak="${escapeAttr(c.naslovOdjeljka || c.odjeljakNaslov)}" stranice="${c.stranicaOd}-${c.stranicaDo}">\n` +
         `${c.text}\n</izvor>`
       );
     })

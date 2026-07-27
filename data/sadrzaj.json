@@ -16,7 +16,7 @@
       "dio": "DIO I · Temelji ponašanja potrošača",
       "stranica_od": 4,
       "stranica_do": 9,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 1,
           "oznaka": "1.1",
@@ -65,7 +65,7 @@
       "dio": "DIO I · Temelji ponašanja potrošača",
       "stranica_od": 9,
       "stranica_do": 15,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 6,
           "oznaka": "2.1",
@@ -122,7 +122,7 @@
       "dio": "DIO I · Temelji ponašanja potrošača",
       "stranica_od": 15,
       "stranica_do": 22,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 12,
           "oznaka": "3.1",
@@ -188,7 +188,7 @@
       "dio": "DIO I · Temelji ponašanja potrošača",
       "stranica_od": 22,
       "stranica_do": 28,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 18,
           "oznaka": "4.1",
@@ -262,7 +262,7 @@
       "dio": "DIO I · Temelji ponašanja potrošača",
       "stranica_od": 28,
       "stranica_do": 33,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 25,
           "oznaka": "5.1",
@@ -316,7 +316,7 @@
       "dio": "DIO II · Digitalno doba i umjetna inteligencija",
       "stranica_od": 33,
       "stranica_do": 36,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 29,
           "oznaka": "6.1",
@@ -365,7 +365,7 @@
       "dio": "DIO II · Digitalno doba i umjetna inteligencija",
       "stranica_od": 36,
       "stranica_do": 39,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 34,
           "oznaka": "7.1",
@@ -414,7 +414,7 @@
       "dio": "DIO II · Digitalno doba i umjetna inteligencija",
       "stranica_od": 39,
       "stranica_do": 42,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 39,
           "oznaka": "8.1",
@@ -479,7 +479,7 @@
       "dio": "DIO II · Digitalno doba i umjetna inteligencija",
       "stranica_od": 42,
       "stranica_do": 47,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 46,
           "oznaka": "9.1",
@@ -553,7 +553,7 @@
       "dio": "DIO II · Digitalno doba i umjetna inteligencija",
       "stranica_od": 47,
       "stranica_do": 49,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 53,
           "oznaka": "10.1",
@@ -602,7 +602,7 @@
       "dio": "Dodaci",
       "stranica_od": 3,
       "stranica_do": 52,
-      "lekcije": [
+      "odjeljci": [
         {
           "broj": 58,
           "oznaka": "",

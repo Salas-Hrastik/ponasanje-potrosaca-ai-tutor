@@ -21,7 +21,7 @@ export async function rerankChunks(
     const lista = chunks
       .map(
         (c, i) =>
-          `[${i}] (${c.naslovOdjeljka || c.naslovLekcije || c.izvorNaslov}, str. ${c.stranicaOd}-${c.stranicaDo})\n${c.text.slice(0, SNIPPET_CHARS)}`,
+          `[${i}] (${c.naslovOdjeljka || c.odjeljakNaslov || c.izvorNaslov}, str. ${c.stranicaOd}-${c.stranicaDo})\n${c.text.slice(0, SNIPPET_CHARS)}`,
       )
       .join('\n\n');
 

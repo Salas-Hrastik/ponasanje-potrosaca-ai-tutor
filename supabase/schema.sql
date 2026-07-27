@@ -5,10 +5,15 @@
 -- Primjena: Supabase Dashboard → SQL Editor → zalijepite i izvršite
 -- (ili lokalno: psql "$SUPABASE_DB_URL" -f supabase/schema.sql)
 --
+-- NASTAVNA CJELINA = POGLAVLJE. Sažetak, ciljevi učenja, kartice za učenje,
+-- mediji, kviz, napredak i usmena vježba — sve visi o poglavlju.
+-- ODJELJCI (1.1, 4.4 …) nisu zasebne stranice: oni su struktura sažetka
+-- poglavlja i granularnost dohvata (svaki isječak zna iz kojeg je odjeljka i
+-- s koje stranice).
+--
 -- Izvor istine: veleučilišni priručnik „Ponašanje potrošača u turizmu".
--- Dopunski izvori (industrijska izvješća navedena u priručniku) žive u istoj
--- tablici isječaka, ali s vrstom 'dopunski' i NIKAD nisu u zadanom opsegu
--- dohvata — vidi funkcije match_chunks / search_chunks_fts.
+-- Dopunski izvori (izvori koje priručnik sam navodi) žive u istoj tablici
+-- isječaka, s vrstom 'dopunski', i NIKAD nisu u zadanom opsegu dohvata.
 --
 -- !! VAŽNO — DIMENZIJA VEKTORA !!
 -- Stupac ugradnje.ugradnja deklariran je kao vector(1536), za OpenAI
@@ -16,17 +21,16 @@
 -- "vector(1536)" i EMBEDDING_DIM u .env, pa ponovno pokrenite ingest.
 --
 -- Sigurnosni model: RLS je uključen na SVIM tablicama, namjerno BEZ politika —
--- čitanje/pisanje ide isključivo preko Next.js API ruta i server komponenata
--- koje koriste service-role klijent i same provjeravaju identitet (lib/auth.ts).
--- Anon klijent iz preglednika nema pristup ničemu osim vlastite Auth sesije.
+-- pristup ide isključivo preko Next.js koda koji koristi service-role klijent i
+-- sam provjerava identitet (lib/auth.ts).
 -- ===========================================================================
 
 create extension if not exists vector;
 create extension if not exists pgcrypto;
 create extension if not exists unaccent;
 
--- Normalizacija za full-text: bez dijakritika i malim slovima, jer hrvatski
--- nema ugrađenu tsearch konfiguraciju u Postgresu (koristi se 'simple').
+-- Normalizacija za full-text: bez dijakritika i malim slovima, jer Postgres
+-- nema hrvatsku tsearch konfiguraciju (koristi se 'simple').
 create or replace function fts_norm(p text)
 returns text language sql immutable as $$
   select unaccent(lower(coalesce(p, '')))
@@ -84,7 +88,7 @@ create table if not exists izvori (
 );
 
 -- ---------------------------------------------------------------------------
--- Hijerarhija sadržaja: Poglavlje → Lekcija → Ciljevi učenja / Mediji
+-- POGLAVLJE — nastavna cjelina
 -- ---------------------------------------------------------------------------
 create table if not exists poglavlja (
   id          uuid primary key default gen_random_uuid(),
@@ -94,62 +98,90 @@ create table if not exists poglavlja (
   opis        text not null default '',
   stranica_od int  not null default 0,
   stranica_do int  not null default 0,
+  -- Sažetak cjeline: doslovni tekst poglavlja u Markdownu, s "## oznaka naslov"
+  -- po odjeljku i "### " po pododjeljku. Podloga za kartice i kviz.
+  sazetak_md  text not null default '',
   created_at  timestamptz not null default now()
 );
 
-create table if not exists lekcije (
+-- ---------------------------------------------------------------------------
+-- ODJELJAK — pododjeljak poglavlja (1.1, 4.4 …). Nije zasebna stranica:
+-- daje strukturu sažetku i opseg dohvatu, te nosi raspon stranica za citate.
+-- ---------------------------------------------------------------------------
+create table if not exists odjeljci (
   id            uuid primary key default gen_random_uuid(),
   poglavlje_id  uuid not null references poglavlja (id) on delete cascade,
-  broj          int  not null,               -- globalni redni broj lekcije (L1..Ln)
-  oznaka        text not null default '',    -- oznaka odjeljka u priručniku, npr. "4.4"
+  broj          int  not null,               -- globalni redni broj odjeljka (1..60)
+  oznaka        text not null default '',    -- oznaka u priručniku, npr. "4.4"
   naslov        text not null,
   stranica_od   int  not null,
   stranica_do   int  not null,
   redoslijed    int  not null default 0,
-  sazetak_md    text not null default '',    -- Markdown s ### podnaslovima
+  sazetak_md    text not null default '',
   created_at    timestamptz not null default now(),
   unique (poglavlje_id, broj)
 );
 
-create index if not exists lekcije_poglavlje_idx on lekcije (poglavlje_id, redoslijed);
+create index if not exists odjeljci_poglavlje_idx on odjeljci (poglavlje_id, redoslijed);
 
+-- ---------------------------------------------------------------------------
+-- Nastavni elementi cjeline: ciljevi učenja, kartice za učenje, mediji
+--
+-- `odobreno` postoji svugdje gdje sadržaj može nastati kao NACRT iz teksta
+-- priručnika: studentu se prikazuje isključivo ono što je nastavnik potvrdio.
+-- ---------------------------------------------------------------------------
 create table if not exists ciljevi_ucenja (
   id                uuid primary key default gen_random_uuid(),
-  lekcija_id        uuid not null references lekcije (id) on delete cascade,
+  poglavlje_id      uuid not null references poglavlja (id) on delete cascade,
   tekst             text not null,
   kognitivna_razina text not null default '',  -- Bloom: "razumijevanje", "primjena", …
   stranica          int,
   redoslijed        int  not null default 0,
-  -- Nacrti koje je pripremila skripta čekaju potvrdu nastavnika.
   odobreno          boolean not null default false
 );
 
-create index if not exists ciljevi_lekcija_idx on ciljevi_ucenja (lekcija_id, redoslijed);
+create index if not exists ciljevi_poglavlje_idx on ciljevi_ucenja (poglavlje_id, redoslijed);
+
+-- Kartice za učenje: pojam → definicija, izvedeno iz sažetka cjeline.
+create table if not exists kartice (
+  id             uuid primary key default gen_random_uuid(),
+  poglavlje_id   uuid not null references poglavlja (id) on delete cascade,
+  odjeljak_id    uuid references odjeljci (id) on delete set null,
+  pojam          text not null,
+  definicija     text not null,
+  stranica_ref   text not null default '',    -- npr. "str. 24–25"
+  redoslijed     int  not null default 0,
+  odobreno       boolean not null default false,
+  izvor_unosa    text not null default 'nastavnik' check (izvor_unosa in ('nastavnik', 'nacrt')),
+  created_at     timestamptz not null default now()
+);
+
+create index if not exists kartice_poglavlje_idx on kartice (poglavlje_id, redoslijed) where odobreno;
 
 -- Mediji su izvan Gita: ovdje se čuva samo URL (Supabase Storage ili vanjski).
 -- Konvencija imenovanja u Storageu: NN-kratki-opis.ext (npr. 04-zmot.mp4).
 create table if not exists mediji (
-  id          uuid primary key default gen_random_uuid(),
-  lekcija_id  uuid not null references lekcije (id) on delete cascade,
-  tip         text not null check (tip in ('video', 'audio', 'prezentacija')),
-  naslov      text not null default '',
-  url         text not null,
-  trajanje_s  int,
-  redoslijed  int not null default 0,
-  created_at  timestamptz not null default now()
+  id            uuid primary key default gen_random_uuid(),
+  poglavlje_id  uuid not null references poglavlja (id) on delete cascade,
+  tip           text not null check (tip in ('video', 'audio', 'prezentacija')),
+  naslov        text not null default '',
+  url           text not null,
+  trajanje_s    int,
+  redoslijed    int not null default 0,
+  created_at    timestamptz not null default now()
 );
 
-create index if not exists mediji_lekcija_idx on mediji (lekcija_id);
+create index if not exists mediji_poglavlje_idx on mediji (poglavlje_id, redoslijed);
 
 -- ---------------------------------------------------------------------------
 -- RAG: isječci teksta (chunkovi) + vektorske ugradnje
 --
--- lekcija_id je NULL za isječke dopunskih izvora (oni nisu dio kurikuluma).
+-- odjeljak_id je NULL za isječke dopunskih izvora (nisu dio kurikuluma).
 -- ---------------------------------------------------------------------------
 create table if not exists chunkovi (
   id               uuid primary key default gen_random_uuid(),
   izvor_id         uuid not null references izvori (id) on delete cascade,
-  lekcija_id       uuid references lekcije (id) on delete cascade,
+  odjeljak_id      uuid references odjeljci (id) on delete cascade,
   chunk_index      int  not null,
   text             text not null,
   stranica_od      int  not null,
@@ -159,12 +191,12 @@ create table if not exists chunkovi (
   tokens_est       int  not null default 0,
   fts              tsvector generated always as (to_tsvector('simple', fts_norm(text))) stored,
   created_at       timestamptz not null default now(),
-  unique (izvor_id, lekcija_id, chunk_index)
+  unique (izvor_id, odjeljak_id, chunk_index)
 );
 
-create index if not exists chunkovi_lekcija_idx on chunkovi (lekcija_id);
-create index if not exists chunkovi_izvor_idx   on chunkovi (izvor_id);
-create index if not exists chunkovi_fts_idx     on chunkovi using gin (fts);
+create index if not exists chunkovi_odjeljak_idx on chunkovi (odjeljak_id);
+create index if not exists chunkovi_izvor_idx    on chunkovi (izvor_id);
+create index if not exists chunkovi_fts_idx      on chunkovi using gin (fts);
 
 create table if not exists ugradnje (
   chunk_id    uuid primary key references chunkovi (id) on delete cascade,
@@ -177,17 +209,16 @@ create index if not exists ugradnje_hnsw_idx
   on ugradnje using hnsw (ugradnja vector_cosine_ops);
 
 -- ---------------------------------------------------------------------------
--- Kviz: pitanja na razini poglavlja (kombiniraju pitanja svih lekcija)
+-- Kviz cjeline (poglavlja)
 --
 -- Pitanja unosi NASTAVNIK (scripts/uvezi-kviz.ts) ili se pripremaju kao NACRT
 -- (scripts/generiraj-nacrte.ts) i čekaju odobreno = true. Studentima se
--- prikazuju ISKLJUČIVO odobrena pitanja — asistent nikad ne postavlja
--- neodobrena pitanja kao gradivo.
+-- prikazuju ISKLJUČIVO odobrena pitanja.
 -- ---------------------------------------------------------------------------
 create table if not exists kviz_pitanja (
   id            uuid primary key default gen_random_uuid(),
   poglavlje_id  uuid not null references poglavlja (id) on delete cascade,
-  lekcija_id    uuid references lekcije (id) on delete set null,
+  odjeljak_id   uuid references odjeljci (id) on delete set null,
   pitanje       text not null,
   odgovori      jsonb not null,           -- ["a", "b", "c", "d"] (točno 4)
   tocan_index   int  not null check (tocan_index between 0 and 3),
@@ -215,16 +246,16 @@ create table if not exists kviz_pokusaji (
 create index if not exists kviz_pokusaji_user_idx on kviz_pokusaji (user_id, poglavlje_id);
 
 -- ---------------------------------------------------------------------------
--- Praćenje napretka po lekciji
+-- Praćenje napretka po cjelini (poglavlju)
 -- ---------------------------------------------------------------------------
 create table if not exists napredak (
   id                  uuid primary key default gen_random_uuid(),
   user_id             uuid not null,
-  lekcija_id          uuid not null references lekcije (id) on delete cascade,
+  poglavlje_id        uuid not null references poglavlja (id) on delete cascade,
   posjeceno           boolean not null default false,
   zavrseno            boolean not null default false,
   posljednji_pristup  timestamptz not null default now(),
-  unique (user_id, lekcija_id)
+  unique (user_id, poglavlje_id)
 );
 
 create index if not exists napredak_user_idx on napredak (user_id);
@@ -235,8 +266,8 @@ create index if not exists napredak_user_idx on napredak (user_id);
 create table if not exists usmene_vjezbe_pokusaji (
   id              uuid primary key default gen_random_uuid(),
   user_id         uuid not null,
-  lekcija_id      uuid references lekcije (id) on delete set null,
   poglavlje_id    uuid references poglavlja (id) on delete set null,
+  odjeljak_id     uuid references odjeljci (id) on delete set null,
   pitanje         text not null,
   transkript      text not null default '',
   procjena        text check (procjena in ('uglavnom točno', 'djelomično', 'netočno')),
@@ -256,8 +287,8 @@ create index if not exists usmene_vjezbe_user_idx on usmene_vjezbe_pokusaji (use
 create table if not exists telemetrija (
   id             bigserial primary key,
   vrsta          text not null,
-  lekcija_id     uuid,
   poglavlje_id   uuid,
+  odjeljak_id    uuid,
   ima_kontekst   boolean not null default false,
   broj_isjecaka  int not null default 0,
   najbolji_score real,
@@ -268,8 +299,7 @@ create table if not exists telemetrija (
 
 create index if not exists telemetrija_vrsta_idx on telemetrija (vrsta, created_at desc);
 
--- Sažeti pogled na kriterije uspjeha MVP-a (udio odgovora bez konteksta,
--- prosječno vrijeme odgovora, prosječna pokrivenost rubrikom).
+-- Sažeti pogled na kriterije uspjeha MVP-a.
 create or replace view telemetrija_sazetak as
   select
     vrsta,
@@ -281,14 +311,14 @@ create or replace view telemetrija_sazetak as
   group by vrsta;
 
 -- ---------------------------------------------------------------------------
--- RLS — uključeno svugdje, bez politika (pristup isključivo preko service role
--- iz Next.js koda, koji sam provjerava identitet i ulogu).
+-- RLS — uključeno svugdje, bez politika (pristup isključivo preko service role).
 -- ---------------------------------------------------------------------------
 alter table profili                  enable row level security;
 alter table izvori                   enable row level security;
 alter table poglavlja                enable row level security;
-alter table lekcije                  enable row level security;
+alter table odjeljci                 enable row level security;
 alter table ciljevi_ucenja           enable row level security;
+alter table kartice                  enable row level security;
 alter table mediji                   enable row level security;
 alter table chunkovi                 enable row level security;
 alter table ugradnje                 enable row level security;
@@ -301,14 +331,14 @@ alter table telemetrija              enable row level security;
 -- ===========================================================================
 -- RPC funkcije — hibridni RAG dohvat (semantička sličnost + full-text)
 --
--- Opseg: lekcija → poglavlje → cijeli priručnik. Dopunski izvori ulaze samo
--- kad je p_ukljuci_dopunske = true, i nikad ne sužavaju opseg po lekciji.
+-- Opseg: odjeljak → poglavlje → cijeli priručnik. Dopunski izvori ulaze samo
+-- kad je p_ukljuci_dopunske = true.
 -- ===========================================================================
 
 create or replace function match_chunks(
   query_embedding    vector(1536),
   match_count        int  default 12,
-  p_lekcija_id       uuid default null,
+  p_odjeljak_id      uuid default null,
   p_poglavlje_id     uuid default null,
   p_ukljuci_dopunske boolean default false
 )
@@ -317,8 +347,8 @@ returns table (
   text             text,
   izvor_vrsta      text,
   izvor_naslov     text,
-  lekcija_id       uuid,
-  naslov_lekcije   text,
+  odjeljak_id      uuid,
+  odjeljak_naslov  text,
   naslov_odjeljka  text,
   stranica_od      int,
   stranica_do      int,
@@ -328,17 +358,17 @@ returns table (
 )
 language sql stable as $$
   select
-    c.id, c.text, i.vrsta, i.naslov, c.lekcija_id, l.naslov, c.naslov_odjeljka,
+    c.id, c.text, i.vrsta, i.naslov, c.odjeljak_id, o.naslov, c.naslov_odjeljka,
     c.stranica_od, c.stranica_do, p.broj, p.naslov,
     1 - (u.ugradnja <=> query_embedding) as score
   from ugradnje u
   join chunkovi c  on c.id = u.chunk_id
   join izvori   i  on i.id = c.izvor_id
-  left join lekcije   l on l.id = c.lekcija_id
-  left join poglavlja p on p.id = l.poglavlje_id
+  left join odjeljci  o on o.id = c.odjeljak_id
+  left join poglavlja p on p.id = o.poglavlje_id
   where (i.vrsta = 'prirucnik' or p_ukljuci_dopunske)
-    and (p_lekcija_id   is null or c.lekcija_id   = p_lekcija_id or i.vrsta = 'dopunski')
-    and (p_poglavlje_id is null or l.poglavlje_id = p_poglavlje_id or i.vrsta = 'dopunski')
+    and (p_odjeljak_id  is null or c.odjeljak_id  = p_odjeljak_id  or i.vrsta = 'dopunski')
+    and (p_poglavlje_id is null or o.poglavlje_id = p_poglavlje_id or i.vrsta = 'dopunski')
   order by u.ugradnja <=> query_embedding
   limit match_count;
 $$;
@@ -346,7 +376,7 @@ $$;
 create or replace function search_chunks_fts(
   query_text         text,
   match_count        int  default 12,
-  p_lekcija_id       uuid default null,
+  p_odjeljak_id      uuid default null,
   p_poglavlje_id     uuid default null,
   p_ukljuci_dopunske boolean default false
 )
@@ -355,8 +385,8 @@ returns table (
   text             text,
   izvor_vrsta      text,
   izvor_naslov     text,
-  lekcija_id       uuid,
-  naslov_lekcije   text,
+  odjeljak_id      uuid,
+  odjeljak_naslov  text,
   naslov_odjeljka  text,
   stranica_od      int,
   stranica_do      int,
@@ -376,44 +406,44 @@ language sql stable as $$
     where length(w) >= 3
   )
   select
-    c.id, c.text, i.vrsta, i.naslov, c.lekcija_id, l.naslov, c.naslov_odjeljka,
+    c.id, c.text, i.vrsta, i.naslov, c.odjeljak_id, o.naslov, c.naslov_odjeljka,
     c.stranica_od, c.stranica_do, p.broj, p.naslov,
     ts_rank(c.fts, to_tsquery('simple', q.tsq))::float as score
   from chunkovi c
   join izvori i on i.id = c.izvor_id
-  left join lekcije   l on l.id = c.lekcija_id
-  left join poglavlja p on p.id = l.poglavlje_id
+  left join odjeljci  o on o.id = c.odjeljak_id
+  left join poglavlja p on p.id = o.poglavlje_id
   cross join q
   where coalesce(q.tsq, '') <> ''
     and c.fts @@ to_tsquery('simple', q.tsq)
     and (i.vrsta = 'prirucnik' or p_ukljuci_dopunske)
-    and (p_lekcija_id   is null or c.lekcija_id   = p_lekcija_id or i.vrsta = 'dopunski')
-    and (p_poglavlje_id is null or l.poglavlje_id = p_poglavlje_id or i.vrsta = 'dopunski')
+    and (p_odjeljak_id  is null or c.odjeljak_id  = p_odjeljak_id  or i.vrsta = 'dopunski')
+    and (p_poglavlje_id is null or o.poglavlje_id = p_poglavlje_id or i.vrsta = 'dopunski')
   order by score desc
   limit match_count;
 $$;
 
--- Transakcijski upsert isječaka jedne lekcije (ili jednog dopunskog izvora).
+-- Transakcijski upsert isječaka jednog odjeljka (ili jednog dopunskog izvora).
 -- p_chunks: [{chunk_index, text, stranica_od, stranica_do, naslov_odjeljka,
 --             kljucne_rijeci: [...], tokens_est, embedding: [...], norm}]
 create or replace function upsert_chunkovi(
-  p_izvor_id   uuid,
-  p_lekcija_id uuid,
-  p_chunks     jsonb
+  p_izvor_id    uuid,
+  p_odjeljak_id uuid,
+  p_chunks      jsonb
 )
 returns void
 language plpgsql as $$
 begin
   delete from chunkovi
    where izvor_id = p_izvor_id
-     and lekcija_id is not distinct from p_lekcija_id;
+     and odjeljak_id is not distinct from p_odjeljak_id;
 
   with ins as (
-    insert into chunkovi (izvor_id, lekcija_id, chunk_index, text, stranica_od, stranica_do,
+    insert into chunkovi (izvor_id, odjeljak_id, chunk_index, text, stranica_od, stranica_do,
                           naslov_odjeljka, kljucne_rijeci, tokens_est)
     select
       p_izvor_id,
-      p_lekcija_id,
+      p_odjeljak_id,
       (c->>'chunk_index')::int,
       c->>'text',
       (c->>'stranica_od')::int,

@@ -3,6 +3,10 @@
 Ovaj dokument opisuje kako se kolegij puni sadržajem i kako se održava. Namijenjen
 je nastavniku; programerski detalji su u [`../README.md`](../README.md).
 
+> **Nastavna cjelina = poglavlje.** Sažetak, ciljevi učenja, kartice za učenje,
+> mediji i kviz dodaju se **po poglavlju**. Odjeljci (1.1, 4.4 …) nisu zasebne
+> stranice — oni strukturiraju sažetak cjeline i nose brojeve stranica za citate.
+
 ---
 
 ## 0. Preduvjeti (jednokratno)
@@ -30,36 +34,36 @@ stilove naslova:
 | Stil | Značenje |
 | --- | --- |
 | `Heading 1` | Poglavlje (npr. `01 · Uvod u ponašanje potrošača u turizmu`) |
-| `Heading 2` | Lekcija / odjeljak (npr. `4.4 Traženje informacija`) |
-| `Heading 3` | Pododjeljak unutar lekcije |
+| `Heading 2` | Odjeljak cjeline (npr. `4.4 Traženje informacija`) |
+| `Heading 3` | Pododjeljak unutar odjeljka |
 | `List Paragraph` | Nabrajanje |
 
 Naslovi bez broja poglavlja (Predgovor, Pojmovnik, Literatura) automatski ulaze u
-poglavlje **Dodaci**.
+cjelinu **Dodaci**.
 
 > **Brojevi stranica** čitaju se iz Wordove paginacije zapisane u DOCX-u. Otvorite
 > li dokument i prelomite ga drukčije, ponovite korake 2 i 3 da citati ostanu točni.
 
 ---
 
-## 2. Potvrda mapiranja na poglavlja i lekcije
+## 2. Potvrda mapiranja na cjeline i odjeljke
 
 ```bash
 npm run struktura -- --provjeri   # samo ispis, ništa se ne mijenja
 npm run struktura                 # upiše data/sadrzaj.json
 ```
 
-Ispis pokazuje svako poglavlje i lekciju s rasponom stranica. **Pregledajte ga.**
+Ispis pokazuje svaku cjelinu i njezine odjeljke s rasponom stranica. **Pregledajte ga.**
 
 `data/sadrzaj.json` smijete ručno urediti:
 
-- promijeniti naslov lekcije (npr. skratiti ga za prikaz u sučelju);
-- promijeniti redoslijed ili globalni broj lekcije (`broj`);
-- izbaciti lekciju koja se ne obrađuje na kolegiju;
-- spojiti dvije lekcije (obrišite jedan unos, drugom proširite raspon stranica).
+- promijeniti naslov cjeline ili odjeljka (npr. skratiti ga za prikaz u sučelju);
+- promijeniti redoslijed ili globalni broj odjeljka (`broj`);
+- izbaciti odjeljak koji se ne obrađuje na kolegiju;
+- spojiti dva odjeljka (obrišite jedan unos, drugom proširite raspon stranica).
 
 Ingest čita **ovu potvrđenu datoteku**, a ne izvorne oznake iz dokumenta.
-Lekcije se s tekstom povezuju prvo po oznaci (`4.4`), a zatim po naslovu; ako
+Odjeljci se s tekstom povezuju prvo po oznaci (`4.4`), a zatim po naslovu; ako
 poklapanje ne uspije, ingest ispisuje upozorenje i preskače stavku.
 
 ---
@@ -67,19 +71,21 @@ poklapanje ne uspije, ingest ispisuje upozorenje i preskače stavku.
 ## 3. Ingest
 
 ```bash
-npm run ingest -- --suho     # probni prolaz: ništa se ne upisuje, ni embeddinzi
-npm run ingest               # pravi ingest
-npm run ingest -- --lekcija=22   # samo jedna lekcija (nakon ispravka teksta)
+npm run ingest -- --suho        # probni prolaz: ništa se ne upisuje, ni embeddinzi
+npm run ingest                  # pravi ingest
+npm run ingest -- --poglavlje=4 # samo jedna cjelina (nakon ispravka teksta)
 ```
 
 Što ingest upisuje:
 
-- `poglavlja`, `lekcije` (uključujući `sazetak_md`);
+- `poglavlja` — nastavne cjeline, uključujući **sažetak cjeline** (`sazetak_md`);
+- `odjeljci` — odjeljci cjeline s rasponima stranica;
 - `chunkovi` + `ugradnje` (isječci s metapodacima: poglavlje, raspon stranica,
   naslov odjeljka, ključne riječi).
 
-**Sažetak lekcije je doslovni tekst priručnika** pretvoren u Markdown
-(`### ` za pododjeljke, `- ` za nabrajanja). Ništa se ne prepričava.
+**Sažetak cjeline je doslovni tekst cijelog poglavlja** pretvoren u Markdown:
+`## 4.4 Traženje informacija` po odjeljku, `### ` po pododjeljku, `- ` za
+nabrajanja. Ništa se ne prepričava — taj je sažetak podloga za kartice i kviz.
 
 Provjera da je dohvat živ:
 
@@ -106,31 +112,49 @@ označavaju. Priručnik ostaje izvor istine.
 
 ---
 
-## 5. Ciljevi učenja i kviz
+## 5. Ciljevi učenja, kartice i kviz
 
 ### Ciljevi učenja
 
-Priručnik ih ne sadrži kao zaseban tekst. Nacrte možete pripremiti iz samog
-teksta priručnika:
+Priručnik ih ne sadrži kao zaseban tekst. Nacrte možete pripremiti iz sažetka
+cjeline:
 
 ```bash
 npm run nacrti -- --ciljevi
-npm run nacrti -- --ciljevi --lekcija=22
+npm run nacrti -- --ciljevi --poglavlje=4
 ```
 
 Nacrti se upisuju s `odobreno = false` i **ne prikazuju se studentima**.
 Odobravanje:
 
 ```sql
--- pregled nacrta za jednu lekciju
+-- pregled nacrta za jednu cjelinu
 select c.id, c.tekst, c.kognitivna_razina, c.stranica
 from ciljevi_ucenja c
-join lekcije l on l.id = c.lekcija_id
-where l.broj = 22 and not c.odobreno
+join poglavlja p on p.id = c.poglavlje_id
+where p.broj = 4 and not c.odobreno
 order by c.redoslijed;
 
 -- odobrenje
 update ciljevi_ucenja set odobreno = true where id = '…';
+```
+
+### Kartice za učenje
+
+Pojam → definicija, izvedeno iz sažetka cjeline, sa stranicom na poleđini.
+
+```bash
+npm run nacrti -- --kartice --poglavlje=4
+```
+
+```sql
+select k.id, k.pojam, k.definicija, k.stranica_ref
+from kartice k
+join poglavlja p on p.id = k.poglavlje_id
+where p.broj = 4 and not k.odobreno
+order by k.redoslijed;
+
+update kartice set odobreno = true where id = '…';
 ```
 
 ### Kviz
@@ -146,7 +170,7 @@ npm run kviz:uvezi -- --datoteka=data/kviz-poglavlje-4.json
 Ta su pitanja odmah odobrena i vidljiva studentima.
 
 **Pomoćni put — nacrti.** `npm run nacrti -- --kviz` pripremi po 8 prijedloga po
-poglavlju, strogo iz teksta priručnika, ali s `odobreno = false`. Prije objave ih
+cjelini, strogo iz sažetka cjeline, ali s `odobreno = false`. Prije objave ih
 pregledajte:
 
 ```sql
@@ -158,11 +182,11 @@ where poglavlje_id = (select id from poglavlja where broj = 4)
 update kviz_pitanja set odobreno = true where id = '…';
 ```
 
-Dok poglavlje nema odobrenih pitanja, kviz studentu pokazuje poruku da ih
+Dok cjelina nema odobrenih pitanja, kviz studentu pokazuje poruku da ih
 nastavnik još nije odobrio. **Asistent nikad sam ne objavljuje pitanja.**
 
-Završna provjera znanja automatski uzima do 3 odobrena pitanja iz **svakog**
-poglavlja, pa pokriva cijeli kolegij.
+Završna provjera znanja automatski uzima do 3 odobrena pitanja iz **svake**
+cjeline, pa pokriva cijeli kolegij.
 
 ---
 
@@ -172,12 +196,12 @@ Mediji nisu u gitu — učitavaju se u Supabase Storage.
 
 1. Konvencija imenovanja: `NN-kratki-opis.ext` (npr. `04-zmot.mp4`,
    `07-recenzije.mp3`, `08-agentski-ai.pptx`).
-2. Nakon uploada upišite red u tablicu `mediji`:
+2. Nakon uploada upišite red u tablicu `mediji` — vezan uz **cjelinu**:
 
 ```sql
-insert into mediji (lekcija_id, tip, naslov, url, trajanje_s, redoslijed)
+insert into mediji (poglavlje_id, tip, naslov, url, trajanje_s, redoslijed)
 values (
-  (select id from lekcije where broj = 36),
+  (select id from poglavlja where broj = 7),
   'video',
   'Nulti trenutak istine — objašnjenje',
   'https://<projekt>.supabase.co/storage/v1/object/public/mediji/07-zmot.mp4',
@@ -199,8 +223,8 @@ npm run typecheck && npm run lint && npm run build
 git add -A && git commit -m "…" && git push
 ```
 
-Nakon deploya: lekcije su statičke rute s revalidacijom svakih sat vremena, pa se
-promjene sadržaja na CDN-u vide s tim odmakom. Treba li odmah — pokrenite ručni
+Nakon deploya: stranice cjelina su statičke rute s revalidacijom svakih sat
+vremena, pa se promjene sadržaja na CDN-u vide s tim odmakom. Treba li odmah — pokrenite ručni
 redeploy na Vercelu.
 
 ---
@@ -212,9 +236,9 @@ select * from telemetrija_sazetak;
 ```
 
 - **`postotak_bez_konteksta` raste** → dohvat prečesto ostaje bez pokrića.
-  Provjerite je li lekcija ingestirana (`npm run rag:debug -- "…" --lekcija=N`) i
+  Provjerite je li cjelina ingestirana (`npm run rag:debug -- "…" --poglavlje=N`) i
   razmotrite blago sniženje `RAG_MIN_SCORE`.
 - **`prosjecno_ms` raste** → smanjite `RAG_TOP_K` ili isključite rerank
   (`RAG_RERANK=false`).
-- **`prosjecna_rubrika` niska** → pitanja usmene vježbe su preteška za opseg
-  lekcije; razmotrite vježbu na razini poglavlja.
+- **`prosjecna_rubrika` niska** → pitanja usmene vježbe su preteška; provjerite
+  pokrivaju li sažeci cjelina gradivo na koje se pitanja oslanjaju.

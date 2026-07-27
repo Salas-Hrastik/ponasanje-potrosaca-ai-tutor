@@ -11,7 +11,7 @@ export const metadata = { title: 'O priručniku' };
 export default function OPrirucnikuPage() {
   return (
     <div className="page page-autori">
-      <p className="lekcija-mrvice">
+      <p className="mrvice-redak">
         <Link href="/">← Naslovnica</Link>
       </p>
       <h1>O priručniku</h1>

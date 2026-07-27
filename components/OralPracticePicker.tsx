@@ -6,10 +6,10 @@ import OralPractice from './OralPractice';
 interface PoglavljeIzbor {
   broj: number;
   naslov: string;
-  brojLekcija: number;
+  brojOdjeljaka: number;
 }
 
-/** Izbor poglavlja za usmenu vježbu izvan konteksta pojedine lekcije. */
+/** Izbor nastavne cjeline za usmenu vježbu izvan konteksta same cjeline. */
 export default function OralPracticePicker({ poglavlja }: { poglavlja: PoglavljeIzbor[] }) {
   const [odabrano, setOdabrano] = useState<number | null>(null);
   const poglavlje = poglavlja.find((p) => p.broj === odabrano);
@@ -25,7 +25,7 @@ export default function OralPracticePicker({ poglavlja }: { poglavlja: Poglavlje
           >
             <span className="usmena-izbor-broj">{p.broj}.</span>
             <span className="usmena-izbor-naslov">{p.naslov}</span>
-            <span className="usmena-izbor-meta">{p.brojLekcija} lekcija</span>
+            <span className="usmena-izbor-meta">{p.brojOdjeljaka} odjeljaka</span>
           </button>
         ))}
       </div>

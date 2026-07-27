@@ -16,14 +16,17 @@ export default async function KvizPage({ params }: { params: { broj: string } })
 
   return (
     <div className="page page-kviz">
-      <p className="lekcija-mrvice">
-        <Link href="/">← Naslovnica</Link> · <Link href={`/poglavlje/${broj}`}>Poglavlje {broj}</Link>
+      <p className="mrvice-redak">
+        <Link href="/">← Naslovnica</Link> ·{' '}
+        <Link href={`/cjelina/${broj}`}>
+          {broj}. {pog.naslov}
+        </Link>
       </p>
       <h1>
         Kviz — {broj}. {pog.naslov}
       </h1>
       <p className="kviz-uvod">
-        Pitanja iz svih lekcija poglavlja (str. {pog.stranica_od}–{pog.stranica_do}). Jedno pitanje po
+        Pitanja iz cijele cjeline (str. {pog.stranica_od}–{pog.stranica_do}). Jedno pitanje po
         ekranu, odgovor se provjerava odmah.
       </p>
       <QuizRunner poglavljeBroj={broj} />

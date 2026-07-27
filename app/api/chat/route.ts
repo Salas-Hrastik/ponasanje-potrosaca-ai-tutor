@@ -7,10 +7,10 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
 
 /**
- * POST /api/chat — { pitanje, lekcijaId?, ukljuciDopunske? }
+ * POST /api/chat — { pitanje, poglavljeBroj?, naslovPoglavlja?, ukljuciDopunske? }
  *
  * Dva načina rada:
- *   - chat u lekciji (lekcijaId zadan): dohvat pristran prema toj lekciji, bez disclaimera;
+ *   - chat u cjelini (poglavljeBroj zadan): dohvat unutar te cjeline, bez disclaimera;
  *   - opći chat: dohvat po cijelom priručniku, uz napomenu „Odgovaram samo prema udžbeniku.".
  *
  * Ako dohvat nema dovoljno pokrića, odgovor se odbija PRIJE poziva generativnom
@@ -23,18 +23,25 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
   const pitanje: string = (body?.pitanje || '').trim();
-  const lekcijaId: string | undefined = body?.lekcijaId || undefined;
+  const poglavljeBroj: number | undefined = body?.poglavljeBroj || undefined;
   const ukljuciDopunske: boolean = body?.ukljuciDopunske === true;
   if (!pitanje) return NextResponse.json({ greska: 'Nedostaje pitanje.' }, { status: 400 });
 
+  const admin = supabaseAdmin();
+  let poglavljeId: string | undefined;
+  if (poglavljeBroj) {
+    const { data } = await admin.from('poglavlja').select('id').eq('broj', poglavljeBroj).single();
+    poglavljeId = data?.id;
+  }
+
   const kraj = mjeri();
-  const chunks = await retrieve(pitanje, { lekcijaId, ukljuciDopunske });
+  const chunks = await retrieve(pitanje, { poglavljeId, ukljuciDopunske });
   const imaKontekst = dovoljnoKonteksta(chunks);
 
   if (!imaKontekst) {
     await zabiljezi({
       vrsta: 'chat',
-      lekcijaId,
+      poglavljeId,
       imaKontekst: false,
       brojIsjecaka: chunks.length,
       najboljiScore: chunks[0]?.score ?? null,
@@ -42,16 +49,16 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(
       nedovoljnoKonteksta(
-        'U priručniku nisam pronašao dovoljno podloge za pouzdan odgovor na to pitanje. Možete li ga preciznije postaviti — ili navesti poglavlje, lekciju ili stranicu na koju se odnosi?',
-        await predlozeneLekcije(pitanje),
+        'U priručniku nisam pronašao dovoljno podloge za pouzdan odgovor na to pitanje. Možete li ga preciznije postaviti — ili navesti poglavlje, odjeljak ili stranicu na koju se odnosi?',
+        await predlozeneCjeline(pitanje),
       ),
     );
   }
 
-  const nacin: 'lekcija' | 'opci' = lekcijaId ? 'lekcija' : 'opci';
+  const nacin: 'cjelina' | 'opci' = poglavljeBroj ? 'cjelina' : 'opci';
   const odgovor = await askClaudeJson<Record<string, unknown>>(
     buildChatSystemPrompt(nacin),
-    buildChatUserPrompt(pitanje, chunks, lekcijaId, body?.naslovLekcije),
+    buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja),
   );
 
   // Citati su uvjet vjernosti izvoru: ako ih model izostavi, dopisuju se iz
@@ -63,7 +70,7 @@ export async function POST(request: NextRequest) {
 
   await zabiljezi({
     vrsta: 'chat',
-    lekcijaId,
+    poglavljeId,
     imaKontekst: true,
     brojIsjecaka: chunks.length,
     najboljiScore: chunks[0]?.score ?? null,
@@ -73,8 +80,8 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(odgovor);
 }
 
-/** Tri lekcije s najboljim leksičkim poklapanjem — prijedlog kad dohvat zakaže. */
-async function predlozeneLekcije(pitanje: string): Promise<string[]> {
+/** Odjeljci s najboljim leksičkim poklapanjem — prijedlog kad dohvat zakaže. */
+async function predlozeneCjeline(pitanje: string): Promise<string[]> {
   const rijeci = pitanje
     .split(/\s+/)
     .map((w) => w.replace(/[^\p{L}\p{N}]/gu, ''))
@@ -82,10 +89,10 @@ async function predlozeneLekcije(pitanje: string): Promise<string[]> {
   if (rijeci.length === 0) return [];
 
   const { data } = await supabaseAdmin()
-    .from('lekcije')
+    .from('odjeljci')
     .select('oznaka, naslov')
     .or(rijeci.slice(0, 4).map((w) => `naslov.ilike.%${w}%`).join(','))
     .limit(3);
 
-  return (data ?? []).map((l) => (l.oznaka ? `${l.oznaka} ${l.naslov}` : l.naslov));
+  return (data ?? []).map((o) => (o.oznaka ? `${o.oznaka} ${o.naslov}` : o.naslov));
 }

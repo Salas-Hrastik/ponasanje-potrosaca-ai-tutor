@@ -27,14 +27,12 @@ const SIGURNOST_OZNAKA: Record<string, string> = {
 };
 
 export default function AiChat({
-  lekcijaId,
-  naslovLekcije,
   poglavljeBroj,
+  naslovPoglavlja,
   predlozenaPitanja = [],
 }: {
-  lekcijaId?: string;
-  naslovLekcije?: string;
   poglavljeBroj?: number;
+  naslovPoglavlja?: string;
   predlozenaPitanja?: string[];
 }) {
   const [poruke, setPoruke] = useState<Poruka[]>([]);
@@ -57,13 +55,13 @@ export default function AiChat({
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pitanje, lekcijaId, naslovLekcije, ukljuciDopunske: dopunski }),
+        body: JSON.stringify({ pitanje, poglavljeBroj, naslovPoglavlja, ukljuciDopunske: dopunski }),
       });
       const data = await res.json();
 
       if (data.tip === 'nedovoljno_konteksta') {
-        const prijedlozi = data.predlozene_lekcije?.length
-          ? `\n\n**Možda tražite u:** ${data.predlozene_lekcije.join(' · ')}`
+        const prijedlozi = data.predlozene_cjeline?.length
+          ? `\n\n**Možda tražite u:** ${data.predlozene_cjeline.join(' · ')}`
           : '';
         setPoruke((p) => [...p, { autor: 'asistent', tekst: `${data.poruka}${prijedlozi}` }]);
       } else if (data.greska) {
@@ -106,17 +104,17 @@ export default function AiChat({
     <div className="ai-chat">
       <div className="chat-zaglavlje">
         <h3>🤖 AI asistent</h3>
-        {poglavljeBroj && <span className="chat-poglavlje">{poglavljeBroj}. poglavlje</span>}
+        {poglavljeBroj && <span className="chat-poglavlje">{poglavljeBroj}. cjelina</span>}
       </div>
 
-      {/* Opći chat (izvan lekcije) uvijek nosi kratak disclaimer. */}
-      {!lekcijaId && <p className="chat-disclaimer">Odgovaram samo prema udžbeniku.</p>}
+      {/* Opći chat (izvan nastavne cjeline) uvijek nosi kratak disclaimer. */}
+      {!poglavljeBroj && <p className="chat-disclaimer">Odgovaram samo prema udžbeniku.</p>}
 
       <div className="chat-poruke">
         {poruke.length === 0 && (
           <div className="chat-dobrodoslica">
             <p>
-              Tema: <strong>{naslovLekcije ?? 'cijeli priručnik'}</strong>. Pitajte me bilo što —
+              Tema: <strong>{naslovPoglavlja ?? 'cijeli priručnik'}</strong>. Pitajte me bilo što —
               odgovaram isključivo prema priručniku i uz svaki odgovor navodim stranicu.
             </p>
           </div>
@@ -166,7 +164,7 @@ export default function AiChat({
         <input
           value={upit}
           onChange={(e) => setUpit(e.target.value)}
-          placeholder={lekcijaId ? 'Postavite pitanje o ovoj lekciji…' : 'Postavite pitanje o gradivu…'}
+          placeholder={poglavljeBroj ? 'Postavite pitanje o ovoj cjelini…' : 'Postavite pitanje o gradivu…'}
           disabled={ucitava}
         />
         <button type="submit" className="chat-posalji" aria-label="Pošalji" disabled={ucitava || !upit.trim()}>

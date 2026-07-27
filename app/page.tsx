@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { config } from '@/lib/config';
 import { dohvatiKorisnika } from '@/lib/auth';
-import { getPoglavljaSaLekcijama, getNapredakMap, type NapredakStanje } from '@/lib/content';
+import { getPoglavlja, getNapredakMap, type NapredakStanje } from '@/lib/content';
 import VodicModal from '@/components/VodicModal';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NaslovnicaPage() {
-  const [poglavlja, korisnik] = await Promise.all([getPoglavljaSaLekcijama(), dohvatiKorisnika()]);
+  const [poglavlja, korisnik] = await Promise.all([getPoglavlja(), dohvatiKorisnika()]);
   const napredak: Map<string, NapredakStanje> = korisnik
     ? await getNapredakMap(korisnik.id)
     : new Map();
@@ -25,13 +25,12 @@ export default async function NaslovnicaPage() {
     );
   }
 
-  const sveLekcije = poglavlja.flatMap((p) => p.lekcije);
-  const zavrsenih = sveLekcije.filter((l) => napredak.get(l.id)?.zavrseno).length;
-  const ukupnoPostotak = sveLekcije.length > 0 ? Math.round((zavrsenih / sveLekcije.length) * 100) : 0;
-  const prvaLekcija = sveLekcije[0];
-  const sljedecaLekcija = sveLekcije.find((l) => !napredak.get(l.id)?.zavrseno) ?? prvaLekcija;
+  const zavrsenih = poglavlja.filter((p) => napredak.get(p.id)?.zavrseno).length;
+  const ukupnoPostotak = Math.round((zavrsenih / poglavlja.length) * 100);
+  const prva = poglavlja[0];
+  const sljedeca = poglavlja.find((p) => !napredak.get(p.id)?.zavrseno) ?? prva;
 
-  // Poglavlja se na naslovnici prikazuju grupirana po dijelovima knjige.
+  // Cjeline se na naslovnici prikazuju grupirane po dijelovima priručnika.
   const dijelovi: { naslov: string; poglavlja: typeof poglavlja }[] = [];
   for (const pog of poglavlja) {
     const zadnji = dijelovi[dijelovi.length - 1];
@@ -43,26 +42,29 @@ export default async function NaslovnicaPage() {
     <div className="page page-naslovnica">
       <section className="hero">
         <div className="hero-tekst">
-          <p className="hero-institucija">{config.ustanova} · {config.studij}</p>
+          <p className="hero-institucija">
+            {config.ustanova} · {config.studij}
+          </p>
           <h1 className="hero-naslov">Ponašanje potrošača u turizmu</h1>
           <p className="hero-podnaslov">
             Od klasičnih čimbenika odlučivanja do interneta i umjetne inteligencije
           </p>
+          {config.autorPrirucnika && (
+            <p className="hero-autor">
+              <Link href="/o-prirucniku">{config.autorPrirucnika}</Link>
+            </p>
+          )}
           <div className="hero-opis">
-            Interaktivno učenje po lekcijama — ciljevi, sažetak, mediji i kviz, uz AI asistenta
-            koji svaki odgovor <strong>citira iz priručnika</strong> (poglavlje i stranica).
+            Učenje po nastavnim cjelinama — ciljevi, sažetak, kartice, mediji i kviz, uz AI
+            asistenta koji svaki odgovor <strong>citira iz priručnika</strong> (poglavlje i stranica).
           </div>
           <div className="hero-gumbi">
-            {prvaLekcija && (
-              <Link href={`/lekcija/${prvaLekcija.id}`} className="hero-gumb hero-gumb-bijeli">
-                Kreni od početka
-              </Link>
-            )}
-            {sljedecaLekcija && (
-              <Link href={`/lekcija/${sljedecaLekcija.id}`} className="hero-gumb hero-gumb-obrub">
-                Nastavi učenje →
-              </Link>
-            )}
+            <Link href={`/cjelina/${prva.broj}`} className="hero-gumb hero-gumb-bijeli">
+              Kreni od početka
+            </Link>
+            <Link href={`/cjelina/${sljedeca.broj}`} className="hero-gumb hero-gumb-obrub">
+              Nastavi učenje →
+            </Link>
             <Link href="/usmena-vjezba" className="hero-gumb hero-gumb-obrub">
               🎙️ Usmena vježba
             </Link>
@@ -85,7 +87,7 @@ export default async function NaslovnicaPage() {
             <span className="korice-oznaka">Veleučilišni priručnik</span>
             <span className="korice-naslov">Ponašanje potrošača u turizmu</span>
           </div>
-          <span className="korice-dno">Management u turizmu i ugostiteljstvu</span>
+          <span className="korice-dno">{config.autorPrirucnika || config.studij}</span>
         </div>
       </section>
 
@@ -93,7 +95,7 @@ export default async function NaslovnicaPage() {
         <div className="put-zaglavlje">
           <h2>Tvoj put kroz priručnik</h2>
           <p className="napredak-tekst">
-            {zavrsenih}/{sveLekcije.length} lekcija <strong>{ukupnoPostotak}%</strong>
+            {zavrsenih}/{poglavlja.length} cjelina <strong>{ukupnoPostotak}%</strong>
           </p>
         </div>
         <div className="napredak-traka">
@@ -106,51 +108,41 @@ export default async function NaslovnicaPage() {
           <h2 className="dio-naslov">{dio.naslov}</h2>
           <div className="poglavlja-lista">
             {dio.poglavlja.map((pog) => {
-              const zavrsenoUPoglavlju = pog.lekcije.filter((l) => napredak.get(l.id)?.zavrseno).length;
-              const prva = pog.lekcije[0];
-              const postotak =
-                pog.lekcije.length > 0 ? Math.round((zavrsenoUPoglavlju / pog.lekcije.length) * 100) : 0;
+              const stanje = napredak.get(pog.id);
               return (
-                <div key={pog.id} className="poglavlje-kartica">
-                  <h3>
-                    {/* Klikabilni naslov poglavlja svugdje vodi na prvu lekciju poglavlja. */}
-                    {prva ? (
-                      <Link href={`/lekcija/${prva.id}`}>
-                        {pog.broj}. {pog.naslov}
-                      </Link>
-                    ) : (
-                      <>
-                        {pog.broj}. {pog.naslov}
-                      </>
-                    )}
-                  </h3>
-                  <p className="poglavlje-meta">
-                    str. {pog.stranica_od}–{pog.stranica_do} · {zavrsenoUPoglavlju}/{pog.lekcije.length} lekcija ·{' '}
-                    <Link href={`/poglavlje/${pog.broj}/kviz`}>Kviz poglavlja</Link>
-                  </p>
-                  <div className="napredak-traka napredak-traka-mala">
-                    <div className="napredak-traka-ispuna" style={{ width: `${postotak}%` }} />
+                <Link
+                  key={pog.id}
+                  href={`/cjelina/${pog.broj}`}
+                  className={`cjelina-kartica ${stanje?.zavrseno ? 'cjelina-zavrsena' : ''}`}
+                >
+                  <div className="cjelina-vrh">
+                    <span className="cjelina-broj">{pog.broj}</span>
+                    {stanje?.zavrseno ? (
+                      <span className="cjelina-znak" title="Pregledano">
+                        ✓
+                      </span>
+                    ) : stanje?.posjeceno ? (
+                      <span className="cjelina-znak cjelina-znak-tih" title="Započeto">
+                        ·
+                      </span>
+                    ) : null}
                   </div>
-                  <ol className="lekcije-lista">
-                    {pog.lekcije.map((lek) => {
-                      const stanje = napredak.get(lek.id);
-                      return (
-                        <li key={lek.id} className={stanje?.zavrseno ? 'lekcija-zavrsena' : ''}>
-                          <Link href={`/lekcija/${lek.id}`}>
-                            <span className="lekcija-oznaka" aria-hidden="true">
-                              {stanje?.zavrseno ? '✓' : stanje?.posjeceno ? '·' : ''}
-                            </span>
-                            {lek.oznaka ? `${lek.oznaka} ` : ''}
-                            {lek.naslov}
-                          </Link>{' '}
-                          <span className="lekcija-stranice">
-                            (str. {lek.stranica_od}–{lek.stranica_do})
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ol>
-                </div>
+                  <h3>{pog.naslov}</h3>
+                  <p className="cjelina-meta">
+                    str. {pog.stranica_od}–{pog.stranica_do} · {pog.odjeljci.length} odjeljaka
+                  </p>
+                  <ul className="odjeljci-pregled">
+                    {pog.odjeljci.slice(0, 4).map((o) => (
+                      <li key={o.id}>
+                        {o.oznaka ? `${o.oznaka} ` : ''}
+                        {o.naslov}
+                      </li>
+                    ))}
+                    {pog.odjeljci.length > 4 && (
+                      <li className="odjeljci-jos">+ još {pog.odjeljci.length - 4}</li>
+                    )}
+                  </ul>
+                </Link>
               );
             })}
           </div>

@@ -12,17 +12,17 @@ interface Cjelina {
 }
 
 /**
- * Dijeli Markdown sažetka na cjeline prema pododjeljcima („### …"). Tekst prije
- * prvog pododjeljka čini uvodni „Pregled".
+ * Dijeli sažetak cjeline na odjeljke prema naslovima druge razine („## 4.4 …").
+ * Tekst prije prvog odjeljka čini uvodni „Pregled".
  */
 function podijeliNaCjeline(md: string): Cjelina[] {
   const cjeline: Cjelina[] = [];
   let naslov = 'Pregled';
   let redci: string[] = [];
   for (const redak of md.split('\n')) {
-    if (redak.startsWith('### ')) {
+    if (redak.startsWith('## ') && !redak.startsWith('### ')) {
       if (redci.join('').trim()) cjeline.push({ naslov, sadrzaj: redci.join('\n') });
-      naslov = redak.slice(4).trim();
+      naslov = redak.slice(3).trim();
       redci = [];
     } else {
       redci.push(redak);
@@ -57,7 +57,7 @@ export default function SazetakModal({
   return (
     <>
       <button className="sazetak-redak" onClick={() => setOtvoren(true)}>
-        <span className="sazetak-redak-naslov">📄 Tekstualni sažetak lekcije</span>
+        <span className="sazetak-redak-naslov">📄 Sažetak cjeline</span>
         <span className="sazetak-redak-otvori">Otvori ▼</span>
       </button>
 

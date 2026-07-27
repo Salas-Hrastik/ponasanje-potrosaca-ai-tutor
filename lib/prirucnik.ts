@@ -168,7 +168,7 @@ function zaokruziRaspone(poglavlja: SegPoglavlje[], ukupnoStranica: number): voi
   }
 }
 
-/** Markdown sažetak lekcije — doslovno iz priručnika, bez ijedne dodane rečenice. */
+/** Markdown sažetak odjeljka — doslovno iz priručnika, bez ijedne dodane rečenice. */
 export function sazetakMarkdown(lek: SegLekcija): string {
   const redci: string[] = [];
   for (const b of lek.blokovi) {
@@ -180,7 +180,25 @@ export function sazetakMarkdown(lek: SegLekcija): string {
   return redci.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
-/** Ravni tekst lekcije s oznakom stranice po bloku — ulaz u chunking. */
+/**
+ * Sažetak CJELINE (poglavlja) — doslovni tekst cijelog poglavlja u Markdownu.
+ * Odjeljci postaju naslovi druge razine (`## 4.4 Traženje informacija`), a
+ * pododjeljci ostaju treće (`### …`). Ta hijerarhija je ujedno i navigacija
+ * sažetka u sučelju te podloga za kartice i kviz cjeline.
+ */
+export function sazetakPoglavlja(pog: SegPoglavlje): string {
+  return pog.lekcije
+    .map((lek) => {
+      const naslov = lek.oznaka ? `${lek.oznaka} ${lek.naslov}` : lek.naslov;
+      const tijelo = sazetakMarkdown(lek);
+      return `## ${naslov}\n\n${tijelo}`;
+    })
+    .join('\n\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+/** Blokovi odjeljka s oznakom stranice — ulaz u chunking. */
 export function blokoviZaChunking(lek: SegLekcija): Blok[] {
   return lek.blokovi.filter((b) => b.tekst.trim().length > 0);
 }

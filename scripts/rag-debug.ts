@@ -5,7 +5,7 @@
  *
  * Pokretanje:
  *   npm run rag:debug -- "Što je nulti trenutak istine?"
- *   npm run rag:debug -- "eWOM" --lekcija=37
+ *   npm run rag:debug -- "eWOM" --poglavlje=7
  *   npm run rag:debug -- "agentski AI" --dopunski
  */
 import { retrieve, dovoljnoKonteksta } from '../lib/retrieval';
@@ -15,32 +15,32 @@ async function main() {
   const args = process.argv.slice(2);
   const upit = args.filter((a) => !a.startsWith('--')).join(' ');
   if (!upit) {
-    console.log('Upotreba: npm run rag:debug -- "vaše pitanje" [--lekcija=N] [--poglavlje=N] [--dopunski]');
+    console.log('Upotreba: npm run rag:debug -- "vaše pitanje" [--poglavlje=N] [--odjeljak=N] [--dopunski]');
     return;
   }
-  const lekcijaBroj = args.find((a) => a.startsWith('--lekcija='))?.split('=')[1];
+  const odjeljakBroj = args.find((a) => a.startsWith('--odjeljak='))?.split('=')[1];
   const poglavljeBroj = args.find((a) => a.startsWith('--poglavlje='))?.split('=')[1];
   const dopunski = args.includes('--dopunski');
 
   const sb = supabaseAdmin();
-  let lekcijaId: string | undefined;
+  let odjeljakId: string | undefined;
   let poglavljeId: string | undefined;
 
-  if (lekcijaBroj) {
-    const { data } = await sb.from('lekcije').select('id, naslov').eq('broj', Number(lekcijaBroj)).single();
-    if (!data) throw new Error(`Lekcija ${lekcijaBroj} nije pronađena.`);
-    lekcijaId = data.id;
-    console.log(`Opseg: lekcija L${lekcijaBroj} „${data.naslov}"`);
+  if (odjeljakBroj) {
+    const { data } = await sb.from('odjeljci').select('id, oznaka, naslov').eq('broj', Number(odjeljakBroj)).single();
+    if (!data) throw new Error(`Odjeljak ${odjeljakBroj} nije pronađen.`);
+    odjeljakId = data.id;
+    console.log(`Opseg: odjeljak ${data.oznaka} „${data.naslov}"`);
   }
   if (poglavljeBroj) {
     const { data } = await sb.from('poglavlja').select('id, naslov').eq('broj', Number(poglavljeBroj)).single();
-    if (!data) throw new Error(`Poglavlje ${poglavljeBroj} nije pronađeno.`);
+    if (!data) throw new Error(`Cjelina ${poglavljeBroj} nije pronađena.`);
     poglavljeId = data.id;
-    console.log(`Opseg: poglavlje ${poglavljeBroj}. ${data.naslov}`);
+    console.log(`Opseg: cjelina ${poglavljeBroj}. ${data.naslov}`);
   }
 
   const pocetak = Date.now();
-  const chunks = await retrieve(upit, { lekcijaId, poglavljeId, ukljuciDopunske: dopunski });
+  const chunks = await retrieve(upit, { odjeljakId, poglavljeId, ukljuciDopunske: dopunski });
   const trajanje = Date.now() - pocetak;
 
   console.log(`\nUpit: „${upit}"`);

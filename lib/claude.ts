@@ -5,18 +5,18 @@ import { config } from './config';
 export interface NedovoljnoKonteksta {
   tip: 'nedovoljno_konteksta';
   poruka: string;
-  predlozene_lekcije: string[];
+  predlozene_cjeline: string[];
   trazeni_metapodaci: string[];
 }
 
 export function nedovoljnoKonteksta(
   poruka: string,
-  predlozeneLekcije: string[] = [],
+  predlozeneCjeline: string[] = [],
 ): NedovoljnoKonteksta {
   return {
     tip: 'nedovoljno_konteksta',
     poruka,
-    predlozene_lekcije: predlozeneLekcije,
+    predlozene_cjeline: predlozeneCjeline,
     trazeni_metapodaci: ['poglavlje', 'stranica'],
   };
 }

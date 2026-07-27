@@ -9,7 +9,7 @@ export default async function IzvoriPage() {
 
   return (
     <div className="page page-izvori">
-      <p className="lekcija-mrvice">
+      <p className="mrvice-redak">
         <Link href="/">← Naslovnica</Link>
       </p>
       <h1>Izvori</h1>
@@ -59,7 +59,7 @@ export default async function IzvoriPage() {
         <h2>Literatura iz priručnika</h2>
         <p>
           Cjelovit popis literature nalazi se u samom priručniku, u poglavlju{' '}
-          <em>„Literatura i izvori za daljnje učenje&ldquo;</em> — dostupno kao lekcija u dijelu{' '}
+          <em>„Literatura i izvori za daljnje učenje&ldquo;</em> — dostupno kao odjeljak u cjelini{' '}
           <strong>Dodaci</strong>.
         </p>
       </section>

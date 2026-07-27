@@ -39,12 +39,10 @@ const PROCJENA_KLASA: Record<string, string> = {
 };
 
 export default function OralPractice({
-  lekcijaId,
   poglavljeBroj,
   naslovOpsega,
 }: {
-  lekcijaId?: string;
-  poglavljeBroj?: number;
+  poglavljeBroj: number;
   naslovOpsega?: string;
 }) {
   const [faza, setFaza] = useState<Faza>('pocetak');
@@ -68,8 +66,6 @@ export default function OralPractice({
     [],
   );
 
-  const upitParametri = lekcijaId ? `lekcijaId=${lekcijaId}` : `poglavljeBroj=${poglavljeBroj}`;
-
   const pokreni = useCallback(async () => {
     setGreska(null);
     setPovratna(null);
@@ -77,7 +73,7 @@ export default function OralPractice({
     setPotvrdjen(false);
     setFaza('ucitavanje');
     try {
-      const res = await fetch(`/api/usmena-vjezba/pitanje?${upitParametri}`);
+      const res = await fetch(`/api/usmena-vjezba/pitanje?poglavljeBroj=${poglavljeBroj}`);
       const data: Pitanje = await res.json();
       setPitanje(data);
       setFaza(data.pitanje ? 'odgovaranje' : 'pocetak');
@@ -86,7 +82,7 @@ export default function OralPractice({
       setGreska('Nije moguće dohvatiti pitanje. Pokušajte ponovno.');
       setFaza('pocetak');
     }
-  }, [upitParametri]);
+  }, [poglavljeBroj]);
 
   async function pocniSnimanje() {
     setGreska(null);
@@ -146,7 +142,7 @@ export default function OralPractice({
       const res = await fetch('/api/usmena-vjezba/ocijeni', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lekcijaId, poglavljeBroj, pitanje: pitanje.pitanje, transkript }),
+        body: JSON.stringify({ poglavljeBroj, pitanje: pitanje.pitanje, transkript }),
       });
       const data: Povratna = await res.json();
       setPovratna(data);

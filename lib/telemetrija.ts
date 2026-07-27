@@ -16,8 +16,8 @@ export type DogadjajVrsta = 'chat' | 'usmena_pitanje' | 'usmena_ocjena' | 'kviz'
 
 export interface TelemetrijaZapis {
   vrsta: DogadjajVrsta;
-  lekcijaId?: string | null;
   poglavljeId?: string | null;
+  odjeljakId?: string | null;
   imaKontekst: boolean;
   brojIsjecaka?: number;
   najboljiScore?: number | null;
@@ -30,8 +30,8 @@ export async function zabiljezi(zapis: TelemetrijaZapis): Promise<void> {
   try {
     await supabaseAdmin().from('telemetrija').insert({
       vrsta: zapis.vrsta,
-      lekcija_id: zapis.lekcijaId ?? null,
       poglavlje_id: zapis.poglavljeId ?? null,
+      odjeljak_id: zapis.odjeljakId ?? null,
       ima_kontekst: zapis.imaKontekst,
       broj_isjecaka: zapis.brojIsjecaka ?? 0,
       najbolji_score: zapis.najboljiScore ?? null,

@@ -10,9 +10,9 @@ interface Smjernica {
 
 const SMJERNICE: Smjernica[] = [
   {
-    naslov: 'Slijedite redoslijed lekcija',
+    naslov: 'Slijedite redoslijed cjelina',
     tekst:
-      'Gradivo je razloženo pedagoški promišljeno — preskakanje lekcija često znači propuštanje pojmova bez kojih kasnije gradivo nije razumljivo.',
+      'Gradivo je razloženo pedagoški promišljeno — preskakanje cjelina često znači propuštanje pojmova bez kojih kasnije gradivo nije razumljivo.',
   },
   {
     naslov: 'Prvo pročitajte sažetak, tek onda pitajte',

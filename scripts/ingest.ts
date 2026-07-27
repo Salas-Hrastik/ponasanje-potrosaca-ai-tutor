@@ -3,28 +3,35 @@
  *
  * Ulaz:  lokalni DOCX priručnika (PRIRUCNIK_DOCX_PATH; NIKAD se ne commita) +
  *        potvrđena struktura data/sadrzaj.json (vidi npm run struktura).
- * Izlaz: redovi u Supabaseu — izvori, poglavlja, lekcije (sa sažetkom),
- *        chunkovi i ugradnje. Mediji NE ulaze ovom skriptom; njih nastavnik
- *        učitava u Supabase Storage prema konvenciji NN-kratki-opis.ext.
+ * Izlaz: redovi u Supabaseu — izvori, poglavlja (nastavne cjeline, sa sažetkom
+ *        cjeline), odjeljci, chunkovi i ugradnje. Mediji NE ulaze ovom skriptom;
+ *        njih nastavnik učitava u Supabase Storage.
  *
- * Sažetak lekcije (sazetak_md) je DOSLOVNI tekst pripadajućeg odjeljka
- * priručnika pretvoren u Markdown — ništa se ne prepričava ni ne dodaje.
+ * Sažetak cjeline (poglavlja.sazetak_md) je DOSLOVNI tekst cijelog poglavlja
+ * pretvoren u Markdown — odjeljci su naslovi druge razine, pododjeljci treće.
+ * Ništa se ne prepričava ni ne dodaje; taj je sažetak podloga za kartice i kviz.
  *
  * Pokretanje:
  *   npm run ingest -- --suho            # bez upisa u bazu i bez embeddinga
- *   npm run ingest -- --lekcija=22      # samo jedna lekcija (testiranje)
+ *   npm run ingest -- --poglavlje=4     # samo jedna cjelina (testiranje)
  *   npm run ingest                      # puni ingest priručnika
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../lib/config';
 import { readDocx } from '../lib/docx';
-import { segmentirajPrirucnik, sazetakMarkdown, blokoviZaChunking, type SegLekcija } from '../lib/prirucnik';
+import {
+  segmentirajPrirucnik,
+  sazetakMarkdown,
+  sazetakPoglavlja,
+  blokoviZaChunking,
+  type SegLekcija,
+} from '../lib/prirucnik';
 import { extractKeywords, normalizeText, splitBySentences } from '../lib/chunking';
 import { embedTexts, l2norm } from '../lib/embeddings';
 import { supabaseAdmin } from '../lib/supabase';
 
-interface SadrzajLekcija {
+interface SadrzajOdjeljak {
   broj: number;
   oznaka: string;
   naslov: string;
@@ -37,7 +44,7 @@ interface SadrzajPoglavlje {
   dio: string;
   stranica_od: number;
   stranica_do: number;
-  lekcije: SadrzajLekcija[];
+  odjeljci: SadrzajOdjeljak[];
 }
 interface Sadrzaj {
   izvor: { oznaka: string; naslov: string; ustanova: string; ukupno_stranica: number };
@@ -46,7 +53,7 @@ interface Sadrzaj {
 
 const ARGS = process.argv.slice(2);
 const SUHO = ARGS.includes('--suho') || ARGS.includes('--dry-run');
-const SAMO_LEKCIJA = ARGS.find((a) => a.startsWith('--lekcija='))?.split('=')[1];
+const SAMO_POGLAVLJE = ARGS.find((a) => a.startsWith('--poglavlje='))?.split('=')[1];
 
 async function main() {
   const docxPath = path.resolve(process.cwd(), config.prirucnikDocxPath);
@@ -59,7 +66,9 @@ async function main() {
   console.log(`[ingest] Čitam priručnik: ${docxPath}`);
   const { odlomci, ukupnoStranica } = await readDocx(docxPath);
   const segmenti = segmentirajPrirucnik(odlomci, ukupnoStranica);
-  console.log(`[ingest] Segmentirano: ${segmenti.length} poglavlja, ${segmenti.flatMap((p) => p.lekcije).length} lekcija, ${ukupnoStranica} stranica.`);
+  console.log(
+    `[ingest] Segmentirano: ${segmenti.length} cjelina, ${segmenti.flatMap((p) => p.lekcije).length} odjeljaka, ${ukupnoStranica} stranica.`,
+  );
 
   const sb = SUHO ? null : supabaseAdmin();
 
@@ -90,6 +99,8 @@ async function main() {
   let nepovezanih = 0;
 
   for (const pogSadrzaj of sadrzaj.poglavlja) {
+    if (SAMO_POGLAVLJE && String(pogSadrzaj.broj) !== SAMO_POGLAVLJE) continue;
+
     const pogSeg = segmenti.find((p) => p.broj === pogSadrzaj.broj);
     if (!pogSeg) {
       console.warn(`[ingest] UPOZORENJE: poglavlje ${pogSadrzaj.broj} iz sadrzaj.json nije pronađeno u DOCX-u — preskačem.`);
@@ -108,6 +119,7 @@ async function main() {
             dio: pogSadrzaj.dio,
             stranica_od: pogSadrzaj.stranica_od,
             stranica_do: pogSadrzaj.stranica_do,
+            sazetak_md: sazetakPoglavlja(pogSeg),
           },
           { onConflict: 'broj' },
         )
@@ -117,42 +129,42 @@ async function main() {
       poglavljeId = data.id;
     }
 
-    for (const lekSadrzaj of pogSadrzaj.lekcije) {
-      if (SAMO_LEKCIJA && String(lekSadrzaj.broj) !== SAMO_LEKCIJA) continue;
-
-      const lekSeg = nadjiLekciju(pogSeg.lekcije, lekSadrzaj);
-      if (!lekSeg) {
-        console.warn(`[ingest] UPOZORENJE: lekcija L${lekSadrzaj.broj} „${lekSadrzaj.naslov}" nije pronađena u DOCX-u — preskačem.`);
+    for (const odjSadrzaj of pogSadrzaj.odjeljci) {
+      const odjSeg = nadjiOdjeljak(pogSeg.lekcije, odjSadrzaj);
+      if (!odjSeg) {
+        console.warn(
+          `[ingest] UPOZORENJE: odjeljak ${odjSadrzaj.oznaka || odjSadrzaj.broj} „${odjSadrzaj.naslov}" nije pronađen u DOCX-u — preskačem.`,
+        );
         nepovezanih++;
         continue;
       }
 
-      const isjecci = izradiIsjecke(lekSeg, lekSadrzaj);
+      const isjecci = izradiIsjecke(odjSeg, odjSadrzaj);
       ukupnoIsjecaka += isjecci.length;
       console.log(
-        `[ingest] Pogl. ${pogSadrzaj.broj} / L${lekSadrzaj.broj} ${lekSadrzaj.oznaka} „${lekSadrzaj.naslov}" (str. ${lekSadrzaj.stranica_od}–${lekSadrzaj.stranica_do}): ${isjecci.length} isječaka`,
+        `[ingest] Pogl. ${pogSadrzaj.broj} · ${odjSadrzaj.oznaka || '—'} „${odjSadrzaj.naslov}" (str. ${odjSadrzaj.stranica_od}–${odjSadrzaj.stranica_do}): ${isjecci.length} isječaka`,
       );
 
       if (!sb) continue;
 
-      const { data: lekData, error: lekErr } = await sb
-        .from('lekcije')
+      const { data: odjData, error: odjErr } = await sb
+        .from('odjeljci')
         .upsert(
           {
             poglavlje_id: poglavljeId,
-            broj: lekSadrzaj.broj,
-            oznaka: lekSadrzaj.oznaka,
-            naslov: lekSadrzaj.naslov,
-            stranica_od: lekSadrzaj.stranica_od,
-            stranica_do: lekSadrzaj.stranica_do,
-            redoslijed: lekSadrzaj.broj,
-            sazetak_md: sazetakMarkdown(lekSeg),
+            broj: odjSadrzaj.broj,
+            oznaka: odjSadrzaj.oznaka,
+            naslov: odjSadrzaj.naslov,
+            stranica_od: odjSadrzaj.stranica_od,
+            stranica_do: odjSadrzaj.stranica_do,
+            redoslijed: odjSadrzaj.broj,
+            sazetak_md: sazetakMarkdown(odjSeg),
           },
           { onConflict: 'poglavlje_id,broj' },
         )
         .select('id')
         .single();
-      if (lekErr) throw new Error(`upsert lekcije (L${lekSadrzaj.broj}): ${lekErr.message}`);
+      if (odjErr) throw new Error(`upsert odjeljka (${odjSadrzaj.broj}): ${odjErr.message}`);
 
       if (isjecci.length === 0) continue;
 
@@ -171,10 +183,10 @@ async function main() {
 
       const { error: rpcErr } = await sb.rpc('upsert_chunkovi', {
         p_izvor_id: izvorId,
-        p_lekcija_id: lekData.id,
+        p_odjeljak_id: odjData.id,
         p_chunks: payload,
       });
-      if (rpcErr) throw new Error(`upsert_chunkovi (L${lekSadrzaj.broj}): ${rpcErr.message}`);
+      if (rpcErr) throw new Error(`upsert_chunkovi (odjeljak ${odjSadrzaj.broj}): ${rpcErr.message}`);
     }
   }
 
@@ -186,8 +198,8 @@ async function main() {
   }
 }
 
-/** Poklapanje lekcije iz sadrzaj.json sa segmentom DOCX-a: po oznaci, pa po naslovu. */
-function nadjiLekciju(segmenti: SegLekcija[], trazena: SadrzajLekcija): SegLekcija | undefined {
+/** Poklapanje odjeljka iz sadrzaj.json sa segmentom DOCX-a: po oznaci, pa po naslovu. */
+function nadjiOdjeljak(segmenti: SegLekcija[], trazena: SadrzajOdjeljak): SegLekcija | undefined {
   if (trazena.oznaka) {
     const poOznaci = segmenti.find((s) => s.oznaka === trazena.oznaka);
     if (poOznaci) return poOznaci;
@@ -219,7 +231,7 @@ interface Isjecak {
  * svakom isječku se pamti najmanja i najveća stranica blokova koje sadrži —
  * odatle dolazi raspon stranica u citatu.
  */
-function izradiIsjecke(lek: SegLekcija, meta: SadrzajLekcija): Isjecak[] {
+function izradiIsjecke(lek: SegLekcija, meta: SadrzajOdjeljak): Isjecak[] {
   const maxChars = config.maxChunkTokens * 4;
   const overlapChars = config.chunkOverlapTokens * 4;
   const oznakaOdjeljka = meta.oznaka ? `${meta.oznaka} ${meta.naslov}` : meta.naslov;

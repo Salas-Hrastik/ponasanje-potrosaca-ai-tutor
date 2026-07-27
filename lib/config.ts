@@ -20,6 +20,11 @@ export const config = {
   siteName: process.env.NEXT_PUBLIC_SITE_NAME || 'Ponašanje potrošača u turizmu — AI asistent kolegija',
   assistantName: process.env.NEXT_PUBLIC_ASSISTANT_NAME || 'Vita',
   ustanova: process.env.NEXT_PUBLIC_USTANOVA || 'Veleučilište Baltazar Zaprešić',
+  /**
+   * Autor priručnika. Isporučeni dokument ga ne navodi, pa se postavlja ovdje;
+   * prazna vrijednost znači da se potpis nigdje ne prikazuje.
+   */
+  autorPrirucnika: process.env.NEXT_PUBLIC_AUTOR_PRIRUCNIKA || 'prof. dr. sc. Drago Ružić',
   kolegij: 'Ponašanje potrošača u turizmu',
   studij: 'Management u turizmu i ugostiteljstvu',
 

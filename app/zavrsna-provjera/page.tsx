@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export default function ZavrsnaProvjeraPage() {
   return (
     <div className="page page-kviz">
-      <p className="lekcija-mrvice">
+      <p className="mrvice-redak">
         <Link href="/">← Naslovnica</Link>
       </p>
       <h1>Završna provjera znanja</h1>

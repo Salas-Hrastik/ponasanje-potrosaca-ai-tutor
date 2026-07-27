@@ -200,7 +200,7 @@ code {
   border-top: 1px solid var(--rub);
 }
 
-.lekcija-mrvice {
+.mrvice-redak {
   font-size: 14px;
   color: var(--tekst-blijedi);
   margin: 0 0 12px;
@@ -243,6 +243,14 @@ code {
   letter-spacing: -0.02em;
 }
 
+.hero-autor {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+.hero-autor a {
+  color: var(--pijesak-500);
+  border-bottom: 1px solid rgba(232, 163, 60, 0.4);
+}
 .hero-podnaslov {
   margin: 0 0 16px;
   font-size: 16px;
@@ -387,7 +395,7 @@ code {
   transition: width 0.35s ease;
 }
 
-/* --- Poglavlja / lekcije ------------------------------------------------- */
+/* --- Nastavne cjeline ---------------------------------------------------- */
 .dio-sekcija {
   margin-bottom: 32px;
 }
@@ -427,42 +435,84 @@ code {
   color: var(--tekst-blijedi);
 }
 
-.lekcije-lista {
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
+.cjelina-kartica {
+  display: block;
+  background: var(--ploha);
+  border: 1px solid var(--rub);
+  border-radius: var(--radijus);
+  padding: 18px 20px;
+  box-shadow: var(--sjena);
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.cjelina-kartica:hover {
+  text-decoration: none;
+  border-color: var(--more-500);
+  transform: translateY(-2px);
+}
+.cjelina-kartica h3 {
+  font-size: 17px;
+  margin: 4px 0 4px;
+  color: var(--more-900);
+}
+.cjelina-zavrsena {
+  border-left: 4px solid var(--zelena-600);
+}
+.cjelina-vrh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cjelina-broj {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--more-050);
+  border: 1px solid var(--more-100);
+  color: var(--more-700);
+  font-weight: 700;
   font-size: 14px;
 }
-.lekcije-lista li {
-  padding: 5px 0;
-  border-bottom: 1px dashed var(--rub);
-}
-.lekcije-lista li:last-child {
-  border-bottom: none;
-}
-.lekcija-oznaka {
-  display: inline-block;
-  width: 14px;
+.cjelina-znak {
   color: var(--zelena-600);
   font-weight: 700;
 }
-.lekcija-zavrsena > a {
+.cjelina-znak-tih {
+  color: var(--rub-jaci);
+}
+.cjelina-meta {
+  margin: 0 0 10px;
+  font-size: 13px;
   color: var(--tekst-blijedi);
 }
-.lekcija-stranice {
+.odjeljci-pregled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13.5px;
   color: var(--tekst-blijedi);
-  font-size: 12px;
-  white-space: nowrap;
+}
+.odjeljci-pregled li {
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--rub);
+}
+.odjeljci-pregled li:last-child {
+  border-bottom: none;
+}
+.odjeljci-jos {
+  color: var(--more-700);
 }
 
-/* --- Stranica lekcije ---------------------------------------------------- */
-.page-lekcija-okvir {
+/* --- Stranica cjeline ---------------------------------------------------- */
+.page-cjelina-okvir {
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px 24px 48px;
 }
 
-.lekcija-traka {
+.cjelina-traka {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -494,54 +544,52 @@ code {
   flex: 1;
   min-width: 200px;
 }
-.mrvice-poglavlje,
-.mrvice-lekcija {
+.mrvice-dio,
+.mrvice-cjelina {
   margin: 0;
   font-size: 13px;
 }
-.mrvice-lekcija {
+.mrvice-dio {
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--tekst-blijedi);
 }
 
-.lekcije-niz {
+.odjeljci-niz {
   display: flex;
-  align-items: center;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
   margin: 16px 0;
-  font-size: 13px;
 }
-.lekcija-chip {
-  display: inline-block;
+.odjeljak-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
   background: var(--ploha);
   border: 1px solid var(--rub);
+  font-size: 13px;
   color: var(--more-800);
 }
-.lekcija-chip-aktivna {
-  background: var(--more-800);
-  border-color: var(--more-800);
-  color: #fff;
-  font-weight: 600;
+.odjeljak-oznaka {
+  font-weight: 700;
+  color: var(--more-600);
 }
-.lekcija-chip-spoj {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.lekcija-chip-strelica {
-  color: var(--rub-jaci);
+.odjeljak-str {
+  font-size: 11.5px;
+  color: var(--tekst-blijedi);
 }
 
-.page-lekcija-dvostupac {
+.page-cjelina-dvostupac {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
   gap: 24px;
   align-items: start;
 }
 
-.lekcija-desno {
+.cjelina-desno {
   position: sticky;
   top: 84px;
 }
@@ -707,7 +755,7 @@ code {
   font-size: 14px;
 }
 
-/* Gumbi lekcije */
+/* Gumbi cjeline */
 .gumb-kviz-veliki {
   display: block;
   text-align: center;
@@ -724,7 +772,7 @@ code {
   color: #fff;
 }
 
-.lekcija-navigacija {
+.cjelina-navigacija {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -732,7 +780,7 @@ code {
   flex-wrap: wrap;
   margin-top: 20px;
 }
-.lekcija-navigacija-desno {
+.cjelina-navigacija-desno {
   display: flex;
   gap: 10px;
 }
@@ -757,6 +805,79 @@ code {
 .gumb-onemogucen {
   opacity: 0.45;
   cursor: default;
+}
+
+.kartice-blok {
+  border-left: 4px solid var(--pijesak-500);
+}
+.kartice-zaglavlje {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.kartice-zaglavlje h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.gumb-tekstualni {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--more-700);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.kartice-uputa {
+  margin: 6px 0 14px;
+  font-size: 13px;
+  color: var(--tekst-blijedi);
+}
+.kartice-mreza {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.ucenje-kartica {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  background: var(--more-050);
+  border: 1px solid var(--more-100);
+  border-radius: var(--radijus-mali);
+  padding: 12px 14px;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 92px;
+}
+.ucenje-kartica:hover {
+  border-color: var(--more-500);
+}
+.ucenje-kartica.otvorena {
+  background: var(--ploha);
+  border-color: var(--pijesak-500);
+}
+.ucenje-pojam {
+  font-weight: 650;
+  font-size: 14.5px;
+  color: var(--more-900);
+}
+.ucenje-definicija {
+  font-size: 13.5px;
+  color: var(--tekst);
+}
+.ucenje-stranica {
+  font-size: 11.5px;
+  color: var(--tekst-blijedi);
+}
+.ucenje-nagovjestaj {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--more-600);
 }
 
 /* --- AI chat ------------------------------------------------------------- */
@@ -1564,10 +1685,10 @@ code {
 
 /* --- Responzivno --------------------------------------------------------- */
 @media (max-width: 1080px) {
-  .page-lekcija-dvostupac {
+  .page-cjelina-dvostupac {
     grid-template-columns: 1fr;
   }
-  .lekcija-desno {
+  .cjelina-desno {
     position: static;
   }
   .ai-chat {
@@ -1598,7 +1719,7 @@ code {
     padding-bottom: 2px;
   }
   .page,
-  .page-lekcija-okvir {
+  .page-cjelina-okvir {
     padding: 20px 16px 40px;
   }
 }

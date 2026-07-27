@@ -15,7 +15,7 @@ import { supabaseAdmin } from '../lib/supabase';
 
 interface UlaznoPitanje {
   poglavlje_broj: number;
-  lekcija_oznaka?: string;
+  odjeljak_oznaka?: string;
   pitanje: string;
   odgovori: string[];
   tocan_index: number;
@@ -46,20 +46,20 @@ async function main() {
 
   const sb = supabaseAdmin();
   const { data: poglavlja } = await sb.from('poglavlja').select('id, broj');
-  const { data: lekcije } = await sb.from('lekcije').select('id, oznaka');
+  const { data: odjeljci } = await sb.from('odjeljci').select('id, oznaka');
   const pogPoBroju = new Map((poglavlja ?? []).map((p) => [p.broj, p.id]));
-  const lekPoOznaci = new Map((lekcije ?? []).filter((l) => l.oznaka).map((l) => [l.oznaka, l.id]));
+  const odjPoOznaci = new Map((odjeljci ?? []).filter((o) => o.oznaka).map((o) => [o.oznaka, o.id]));
 
   let uneseno = 0;
   for (const p of pitanja) {
     const poglavljeId = pogPoBroju.get(p.poglavlje_broj);
     if (!poglavljeId) {
-      console.warn(`[kviz] Poglavlje ${p.poglavlje_broj} ne postoji u bazi — preskačem pitanje: ${p.pitanje.slice(0, 60)}…`);
+      console.warn(`[kviz] Cjelina ${p.poglavlje_broj} ne postoji u bazi — preskačem pitanje: ${p.pitanje.slice(0, 60)}…`);
       continue;
     }
     const { error } = await sb.from('kviz_pitanja').insert({
       poglavlje_id: poglavljeId,
-      lekcija_id: p.lekcija_oznaka ? lekPoOznaci.get(p.lekcija_oznaka) ?? null : null,
+      odjeljak_id: p.odjeljak_oznaka ? odjPoOznaci.get(p.odjeljak_oznaka) ?? null : null,
       pitanje: p.pitanje,
       odgovori: p.odgovori,
       tocan_index: p.tocan_index,

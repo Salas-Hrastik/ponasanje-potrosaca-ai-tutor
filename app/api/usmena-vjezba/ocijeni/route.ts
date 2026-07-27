@@ -25,7 +25,7 @@ interface Povratna {
 }
 
 /**
- * POST /api/usmena-vjezba/ocijeni — { lekcijaId?, poglavljeBroj?, pitanje, transkript }
+ * POST /api/usmena-vjezba/ocijeni — { poglavljeBroj, pitanje, transkript }
  *
  * PRIVATNOST: ova ruta prima i pohranjuje ISKLJUČIVO potvrđeni tekstualni
  * transkript i metrike. Audio snimka nikad ne dolazi ovamo niti se igdje
@@ -39,7 +39,6 @@ export async function POST(request: NextRequest) {
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
   const body = await request.json();
-  const lekcijaId: string | undefined = body?.lekcijaId || undefined;
   const poglavljeBroj: number | undefined = body?.poglavljeBroj || undefined;
   const pitanje: string = (body?.pitanje || '').trim();
   const transkript: string = (body?.transkript || '').trim();
@@ -58,15 +57,14 @@ export async function POST(request: NextRequest) {
   // Dohvat vodi pitanje; transkript se dodaje samo kao pomoćni signal (skraćen),
   // da studentove vlastite formulacije ne odvuku dohvat s teme pitanja.
   const chunks = await retrieve(`${pitanje}\n${transkript.slice(0, 400)}`, {
-    lekcijaId,
-    poglavljeId: lekcijaId ? undefined : poglavljeId,
+    poglavljeId,
     topK: 8,
   });
 
   if (!dovoljnoKonteksta(chunks)) {
-    await zabiljezi({ vrsta: 'usmena_ocjena', lekcijaId, poglavljeId, imaKontekst: false, brojIsjecaka: chunks.length, trajanjeMs: kraj() });
+    await zabiljezi({ vrsta: 'usmena_ocjena', poglavljeId, imaKontekst: false, brojIsjecaka: chunks.length, trajanjeMs: kraj() });
     return NextResponse.json(
-      nedovoljnoKonteksta('Nemam dovoljno podloge u priručniku da bih pouzdano vrednovao ovaj odgovor. Pokušajte s pitanjem iz druge lekcije.'),
+      nedovoljnoKonteksta('Nemam dovoljno podloge u priručniku da bih pouzdano vrednovao ovaj odgovor. Pokušajte s pitanjem iz druge cjeline.'),
     );
   }
 
@@ -81,7 +79,6 @@ export async function POST(request: NextRequest) {
     }
     await admin.from('usmene_vjezbe_pokusaji').insert({
       user_id: auth.korisnik.id,
-      lekcija_id: lekcijaId ?? null,
       poglavlje_id: poglavljeId ?? null,
       pitanje,
       transkript,
@@ -96,7 +93,6 @@ export async function POST(request: NextRequest) {
 
   await zabiljezi({
     vrsta: 'usmena_ocjena',
-    lekcijaId,
     poglavljeId,
     imaKontekst: true,
     brojIsjecaka: chunks.length,

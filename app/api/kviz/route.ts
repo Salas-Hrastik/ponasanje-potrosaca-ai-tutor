@@ -12,8 +12,8 @@ function preporuka(postotak: number): string {
 }
 
 /**
- * GET /api/kviz?poglavljeBroj=4 — kviz poglavlja (kombinira pitanja svih lekcija)
- * GET /api/kviz?zavrsna=1       — završna provjera: reprezentativna pitanja iz SVAKOG poglavlja
+ * GET /api/kviz?poglavljeBroj=4 — kviz nastavne cjeline (pitanja iz svih njezinih odjeljaka)
+ * GET /api/kviz?zavrsna=1       — završna provjera: reprezentativna pitanja iz SVAKE cjeline
  *
  * Vraćaju se ISKLJUČIVO odobrena pitanja (odobreno = true). Nacrti koje je
  * pripremila skripta ne dolaze pred studenta dok ih nastavnik ne potvrdi.
@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Reprezentativan izbor: do ZAVRSNA_PO_POGLAVLJU pitanja iz svakog poglavlja,
-    // da završna provjera pokrije cijeli kolegij, a ne samo poglavlja s najviše pitanja.
+    // Reprezentativan izbor: do ZAVRSNA_PO_POGLAVLJU pitanja iz svake cjeline, da
+    // završna provjera pokrije cijeli kolegij, a ne samo cjeline s najviše pitanja.
     const poPoglavlju = new Map<string, typeof sva>();
     for (const p of promijesaj(sva)) {
       const lista = poPoglavlju.get(p.poglavlje_id) ?? [];
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
     .select('id, naslov')
     .eq('broj', poglavljeBroj)
     .single();
-  if (pogErr || !pog) return NextResponse.json({ greska: 'Poglavlje nije pronađeno.' }, { status: 404 });
+  if (pogErr || !pog) return NextResponse.json({ greska: 'Cjelina nije pronađena.' }, { status: 404 });
 
   // Ovo je NEFORMALNI kviz za samoprovjeru (bez nadzora), pa se točan odgovor
   // šalje uz pitanja radi trenutačnog ✓/✗ na klijentu.
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 
   if (!pitanja || pitanja.length === 0) {
     return NextResponse.json(
-      nedovoljnoKonteksta(`Za poglavlje „${pog.naslov}" nastavnik još nije odobrio pitanja za kviz.`),
+      nedovoljnoKonteksta(`Za cjelinu „${pog.naslov}" nastavnik još nije odobrio pitanja za kviz.`),
     );
   }
 
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
   if (!zavrsna) {
     if (!poglavljeBroj) return NextResponse.json({ greska: 'Nedostaje poglavljeBroj.' }, { status: 400 });
     const { data: pog } = await admin.from('poglavlja').select('id').eq('broj', poglavljeBroj).single();
-    if (!pog) return NextResponse.json({ greska: 'Poglavlje nije pronađeno.' }, { status: 404 });
+    if (!pog) return NextResponse.json({ greska: 'Cjelina nije pronađena.' }, { status: 404 });
     poglavljeId = pog.id;
   }
 

@@ -1,10 +1,10 @@
 /**
  * Korak 1 radnog tijeka punjenja sadržaja: iz priručnika (DOCX) izvuci
- * strukturu kolegija u data/sadrzaj.json — poglavlja, lekcije, oznake odjeljaka,
- * rasponi stranica i pododjeljci.
+ * strukturu kolegija u data/sadrzaj.json — poglavlja (nastavne cjeline),
+ * njihove odjeljke, raspone stranica i pododjeljke.
  *
  * NASTAVNIK zatim POTVRĐUJE mapiranje: datoteka se smije ručno urediti (spojiti
- * dvije lekcije, preimenovati naslov, promijeniti redoslijed). Ingest čita
+ * dva odjeljka, preimenovati naslov, promijeniti redoslijed). Ingest čita
  * upravo tu potvrđenu datoteku, pa se izvorne oznake iz dokumenta ne uzimaju
  * zdravo za gotovo.
  *
@@ -29,7 +29,7 @@ async function main() {
   const { odlomci, ukupnoStranica } = await readDocx(putanja);
   const poglavlja = segmentirajPrirucnik(odlomci, ukupnoStranica);
 
-  let brojLekcije = 0;
+  let brojOdjeljka = 0;
   const izlaz = {
     izvor: {
       oznaka: 'prirucnik',
@@ -47,8 +47,8 @@ async function main() {
       dio: p.dio,
       stranica_od: p.stranicaOd,
       stranica_do: p.stranicaDo,
-      lekcije: p.lekcije.map((l) => ({
-        broj: ++brojLekcije,
+      odjeljci: p.lekcije.map((l) => ({
+        broj: ++brojOdjeljka,
         oznaka: l.oznaka,
         naslov: l.naslov,
         stranica_od: l.stranicaOd,
@@ -59,12 +59,12 @@ async function main() {
   };
 
   console.log(
-    `[struktura] Poglavlja: ${poglavlja.length} | lekcije: ${brojLekcije} | stranica: ${ukupnoStranica}`,
+    `[struktura] Nastavnih cjelina (poglavlja): ${poglavlja.length} | odjeljaka: ${brojOdjeljka} | stranica: ${ukupnoStranica}`,
   );
   for (const p of izlaz.poglavlja) {
-    console.log(`  ${String(p.broj).padStart(2)}. ${p.naslov}  (str. ${p.stranica_od}–${p.stranica_do}, lekcija: ${p.lekcije.length})`);
-    for (const l of p.lekcije) {
-      console.log(`       L${l.broj} ${l.oznaka.padEnd(5)} ${l.naslov}  (str. ${l.stranica_od}–${l.stranica_do})`);
+    console.log(`  ${String(p.broj).padStart(2)}. ${p.naslov}  (str. ${p.stranica_od}–${p.stranica_do}, odjeljaka: ${p.odjeljci.length})`);
+    for (const o of p.odjeljci) {
+      console.log(`       ${String(o.broj).padStart(2)}. ${o.oznaka.padEnd(5)} ${o.naslov}  (str. ${o.stranica_od}–${o.stranica_do})`);
     }
   }
 

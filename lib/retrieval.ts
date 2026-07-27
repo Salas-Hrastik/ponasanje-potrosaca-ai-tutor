@@ -2,8 +2,8 @@
  * Retrieval — hibridni RAG dohvat (pgvector + full-text) uz rerank manjim modelom.
  *
  * Opseg dohvata (scope) ovisi o načinu rada:
- *   - lekcijaId zadan   → pristran dohvat prema toj lekciji (chat u lekciji)
- *   - poglavljeId zadan → dohvat iz cijelog poglavlja (kviz, usmena vježba)
+ *   - poglavljeId zadan → dohvat iz cijele cjeline (chat u cjelini, kviz, usmena vježba)
+ *   - odjeljakId zadan  → suženje na jedan odjeljak (npr. ciljano pitanje o 4.4)
  *   - ništa zadano      → dohvat iz cijelog priručnika (opći chat)
  *
  * Dopunski izvori (npr. industrijska izvješća navedena u priručniku) NISU u
@@ -20,8 +20,8 @@ export interface RetrievedChunk {
   text: string;
   izvorVrsta: 'prirucnik' | 'dopunski';
   izvorNaslov: string;
-  lekcijaId: string | null;
-  naslovLekcije: string;
+  odjeljakId: string | null;
+  odjeljakNaslov: string;
   naslovOdjeljka: string;
   stranicaOd: number;
   stranicaDo: number;
@@ -31,8 +31,8 @@ export interface RetrievedChunk {
 }
 
 export interface RetrieveOptions {
-  lekcijaId?: string;
   poglavljeId?: string;
+  odjeljakId?: string;
   topK?: number;
   ukljuciDopunske?: boolean;
 }
@@ -42,8 +42,8 @@ type RpcRow = {
   text: string;
   izvor_vrsta: 'prirucnik' | 'dopunski';
   izvor_naslov: string;
-  lekcija_id: string | null;
-  naslov_lekcije: string | null;
+  odjeljak_id: string | null;
+  odjeljak_naslov: string | null;
   naslov_odjeljka: string | null;
   stranica_od: number;
   stranica_do: number;
@@ -58,8 +58,8 @@ function fromRow(r: RpcRow): RetrievedChunk {
     text: r.text,
     izvorVrsta: r.izvor_vrsta,
     izvorNaslov: r.izvor_naslov,
-    lekcijaId: r.lekcija_id,
-    naslovLekcije: r.naslov_lekcije ?? '',
+    odjeljakId: r.odjeljak_id,
+    odjeljakNaslov: r.odjeljak_naslov ?? '',
     naslovOdjeljka: r.naslov_odjeljka ?? '',
     stranicaOd: r.stranica_od,
     stranicaDo: r.stranica_do,
@@ -79,7 +79,7 @@ export async function retrieve(
 
   const params = {
     match_count: poolSize,
-    p_lekcija_id: options.lekcijaId ?? null,
+    p_odjeljak_id: options.odjeljakId ?? null,
     p_poglavlje_id: options.poglavljeId ?? null,
     p_ukljuci_dopunske: options.ukljuciDopunske ?? false,
   };
@@ -112,16 +112,16 @@ export async function retrieve(
 
   const ordered = await rerankChunks(query, candidates, Math.min(candidates.length, config.ragRerankTopN + 2));
 
-  // Deduplikacija: najviše 2 isječka po lekciji, ograničeno proračunom znakova.
-  const poLekciji = new Map<string, number>();
+  // Deduplikacija: najviše 2 isječka po odjeljku, ograničeno proračunom znakova.
+  const poOdjeljku = new Map<string, number>();
   const final: RetrievedChunk[] = [];
   let budget = config.ragContextCharBudget;
   for (const r of ordered) {
-    const kljuc = r.lekcijaId ?? `dopunski:${r.izvorNaslov}`;
-    const n = poLekciji.get(kljuc) ?? 0;
+    const kljuc = r.odjeljakId ?? `dopunski:${r.izvorNaslov}`;
+    const n = poOdjeljku.get(kljuc) ?? 0;
     if (n >= 2) continue;
     if (r.text.length > budget) continue;
-    poLekciji.set(kljuc, n + 1);
+    poOdjeljku.set(kljuc, n + 1);
     budget -= r.text.length;
     final.push(r);
     if (final.length >= topK) break;

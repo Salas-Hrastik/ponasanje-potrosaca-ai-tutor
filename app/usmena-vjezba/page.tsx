@@ -1,15 +1,15 @@
 import Link from 'next/link';
-import { getPoglavljaSaLekcijama } from '@/lib/content';
+import { getPoglavlja } from '@/lib/content';
 import OralPracticePicker from '@/components/OralPracticePicker';
 
 export const dynamic = 'force-dynamic';
 
 export default async function UsmenaVjezbaPage() {
-  const poglavlja = await getPoglavljaSaLekcijama();
+  const poglavlja = await getPoglavlja();
 
   return (
     <div className="page page-usmena">
-      <p className="lekcija-mrvice">
+      <p className="mrvice-redak">
         <Link href="/">← Naslovnica</Link>
       </p>
       <h1>Usmena vježba</h1>
@@ -27,7 +27,11 @@ export default async function UsmenaVjezbaPage() {
         <p>Sadržaj kolegija još nije učitan.</p>
       ) : (
         <OralPracticePicker
-          poglavlja={poglavlja.map((p) => ({ broj: p.broj, naslov: p.naslov, brojLekcija: p.lekcije.length }))}
+          poglavlja={poglavlja.map((p) => ({
+            broj: p.broj,
+            naslov: p.naslov,
+            brojOdjeljaka: p.odjeljci.length,
+          }))}
         />
       )}
     </div>

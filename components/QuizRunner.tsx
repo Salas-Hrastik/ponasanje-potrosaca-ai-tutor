@@ -20,8 +20,8 @@ interface Rezultat {
 
 const PREPORUKA_OPIS: Record<string, string> = {
   Izvrsno: 'Gradivo je usvojeno. Prijeđite na sljedeće poglavlje.',
-  Dobro: 'Solidno — prođite još jednom lekcije u kojima ste griješili.',
-  'Potrebno ponoviti gradivo': 'Vratite se na lekcije poglavlja i ponovite sažetke prije novog pokušaja.',
+  Dobro: 'Solidno — prođite još jednom odjeljke u kojima ste griješili.',
+  'Potrebno ponoviti gradivo': 'Vratite se na sažetak cjeline i kartice prije novog pokušaja.',
 };
 
 export default function QuizRunner({ poglavljeBroj, zavrsna }: { poglavljeBroj?: number; zavrsna?: boolean }) {

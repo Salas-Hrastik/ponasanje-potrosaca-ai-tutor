@@ -1,6 +1,6 @@
 import { supabaseAdmin } from './supabase';
 
-export interface LekcijaSazetak {
+export interface Odjeljak {
   id: string;
   poglavlje_id: string;
   broj: number;
@@ -11,14 +11,14 @@ export interface LekcijaSazetak {
   redoslijed: number;
 }
 
-export interface PoglavljeSaLekcijama {
+export interface PoglavljeSaOdjeljcima {
   id: string;
   broj: number;
   naslov: string;
   dio: string;
   stranica_od: number;
   stranica_do: number;
-  lekcije: LekcijaSazetak[];
+  odjeljci: Odjeljak[];
 }
 
 export interface NapredakStanje {
@@ -26,77 +26,94 @@ export interface NapredakStanje {
   zavrseno: boolean;
 }
 
-export async function getPoglavljaSaLekcijama(): Promise<PoglavljeSaLekcijama[]> {
+/** Cijela karta kolegija: poglavlja (nastavne cjeline) s pripadajućim odjeljcima. */
+export async function getPoglavlja(): Promise<PoglavljeSaOdjeljcima[]> {
   const admin = supabaseAdmin();
-  const [{ data: poglavlja, error: e1 }, { data: lekcije, error: e2 }] = await Promise.all([
+  const [{ data: poglavlja, error: e1 }, { data: odjeljci, error: e2 }] = await Promise.all([
     admin.from('poglavlja').select('id, broj, naslov, dio, stranica_od, stranica_do').order('broj'),
     admin
-      .from('lekcije')
+      .from('odjeljci')
       .select('id, poglavlje_id, broj, oznaka, naslov, stranica_od, stranica_do, redoslijed')
       .order('redoslijed'),
   ]);
   if (e1 || !poglavlja) return [];
-  if (e2) return poglavlja.map((p) => ({ ...p, lekcije: [] }));
+  if (e2) return poglavlja.map((p) => ({ ...p, odjeljci: [] }));
 
   return poglavlja.map((p) => ({
     ...p,
-    lekcije: (lekcije ?? []).filter((l) => l.poglavlje_id === p.id),
+    odjeljci: (odjeljci ?? []).filter((o) => o.poglavlje_id === p.id),
   }));
 }
 
-export async function getLekcijaDetalji(lekcijaId: string) {
+/**
+ * Sve što stranica cjeline treba. Studentima se prikazuju samo ODOBRENI ciljevi
+ * i kartice — nacrti pripremljeni iz teksta priručnika čekaju nastavnika.
+ */
+export async function getCjelina(broj: number) {
   const admin = supabaseAdmin();
-  const { data: lekcija, error } = await admin
-    .from('lekcije')
-    .select(
-      'id, broj, oznaka, naslov, stranica_od, stranica_do, sazetak_md, poglavlje_id, poglavlja(broj, naslov)',
-    )
-    .eq('id', lekcijaId)
+  const { data: poglavlje, error } = await admin
+    .from('poglavlja')
+    .select('id, broj, naslov, dio, opis, stranica_od, stranica_do, sazetak_md')
+    .eq('broj', broj)
     .single();
-  if (error || !lekcija) return null;
+  if (error || !poglavlje) return null;
 
-  // Paralelno — svaka sekvencijalna tura do baze košta ~duljinu mrežnog puta.
-  const [{ data: ciljevi }, { data: mediji }] = await Promise.all([
-    admin
-      .from('ciljevi_ucenja')
-      .select('id, tekst, kognitivna_razina, stranica, odobreno')
-      .eq('lekcija_id', lekcijaId)
-      .order('redoslijed'),
-    admin
-      .from('mediji')
-      .select('id, tip, naslov, url, trajanje_s')
-      .eq('lekcija_id', lekcijaId)
-      .order('redoslijed'),
-  ]);
+  // Paralelno — baza je udaljena, pa sekvencijalni upiti množe mrežnu latenciju.
+  const [{ data: odjeljci }, { data: ciljevi }, { data: kartice }, { data: mediji }, { count }] =
+    await Promise.all([
+      admin
+        .from('odjeljci')
+        .select('id, broj, oznaka, naslov, stranica_od, stranica_do')
+        .eq('poglavlje_id', poglavlje.id)
+        .order('redoslijed'),
+      admin
+        .from('ciljevi_ucenja')
+        .select('id, tekst, kognitivna_razina, stranica')
+        .eq('poglavlje_id', poglavlje.id)
+        .eq('odobreno', true)
+        .order('redoslijed'),
+      admin
+        .from('kartice')
+        .select('id, pojam, definicija, stranica_ref')
+        .eq('poglavlje_id', poglavlje.id)
+        .eq('odobreno', true)
+        .order('redoslijed'),
+      admin
+        .from('mediji')
+        .select('id, tip, naslov, url, trajanje_s')
+        .eq('poglavlje_id', poglavlje.id)
+        .order('redoslijed'),
+      admin
+        .from('kviz_pitanja')
+        .select('*', { count: 'exact', head: true })
+        .eq('poglavlje_id', poglavlje.id)
+        .eq('odobreno', true),
+    ]);
 
-  return { lekcija, ciljevi: ciljevi ?? [], mediji: mediji ?? [] };
-}
-
-/** Broj odobrenih kviz pitanja za poglavlje (za prikaz na gumbu kviza). */
-export async function getBrojOdobrenihPitanja(poglavljeId: string): Promise<number> {
-  const admin = supabaseAdmin();
-  const { count } = await admin
-    .from('kviz_pitanja')
-    .select('*', { count: 'exact', head: true })
-    .eq('poglavlje_id', poglavljeId)
-    .eq('odobreno', true);
-  return count ?? 0;
+  return {
+    poglavlje,
+    odjeljci: odjeljci ?? [],
+    ciljevi: ciljevi ?? [],
+    kartice: kartice ?? [],
+    mediji: mediji ?? [],
+    brojPitanja: count ?? 0,
+  };
 }
 
 export async function getNapredakMap(userId: string): Promise<Map<string, NapredakStanje>> {
   const admin = supabaseAdmin();
   const { data } = await admin
     .from('napredak')
-    .select('lekcija_id, posjeceno, zavrseno')
+    .select('poglavlje_id, posjeceno, zavrseno')
     .eq('user_id', userId);
   const map = new Map<string, NapredakStanje>();
   for (const row of data ?? []) {
-    map.set(row.lekcija_id, { posjeceno: row.posjeceno, zavrseno: row.zavrseno });
+    map.set(row.poglavlje_id, { posjeceno: row.posjeceno, zavrseno: row.zavrseno });
   }
   return map;
 }
 
-/** Popis dopunskih izvora (npr. industrijska izvješća navedena u priručniku). */
+/** Popis dopunskih izvora (izvora koje priručnik sam navodi). */
 export async function getDopunskiIzvori() {
   const admin = supabaseAdmin();
   const { data } = await admin
