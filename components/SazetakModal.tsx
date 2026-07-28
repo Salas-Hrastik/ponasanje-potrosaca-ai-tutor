@@ -46,20 +46,29 @@ export default function SazetakModal({
   naslov,
   sazetakMd,
   stranice,
+  kompaktno = false,
 }: {
   naslov: string;
   sazetakMd: string;
   stranice?: string;
+  /** Kompaktna varijanta: mala pilula umjesto pune trake (koristi se u traci načina rada). */
+  kompaktno?: boolean;
 }) {
   const [otvoren, setOtvoren] = useState(false);
   const cjeline = podijeliNaCjeline(sazetakMd);
 
   return (
     <>
-      <button className="sazetak-redak" onClick={() => setOtvoren(true)}>
-        <span className="sazetak-redak-naslov">📄 Sažetak cjeline</span>
-        <span className="sazetak-redak-otvori">Otvori ▼</span>
-      </button>
+      {kompaktno ? (
+        <button className="gumb-sazetak-kompaktni" onClick={() => setOtvoren(true)}>
+          📄 Sažetak cjeline
+        </button>
+      ) : (
+        <button className="sazetak-redak" onClick={() => setOtvoren(true)}>
+          <span className="sazetak-redak-naslov">📄 Sažetak cjeline</span>
+          <span className="sazetak-redak-otvori">Otvori ▼</span>
+        </button>
+      )}
 
       {otvoren && (
         <Modal
