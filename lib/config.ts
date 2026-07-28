@@ -36,7 +36,7 @@ export const config = {
   authEnabled: bool('AUTH_ENABLED', false),
 
   claudeModel: process.env.CLAUDE_MODEL || 'claude-sonnet-5',
-  claudeMaxTokens: int('CLAUDE_MAX_TOKENS', 1400),
+  claudeMaxTokens: int('CLAUDE_MAX_TOKENS', 3000),
 
   embeddingProvider: (process.env.EMBEDDING_PROVIDER || 'openai') as 'openai' | 'voyage',
   embeddingModel: process.env.EMBEDDING_MODEL || 'text-embedding-3-small',
