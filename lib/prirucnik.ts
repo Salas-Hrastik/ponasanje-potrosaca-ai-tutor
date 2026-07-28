@@ -174,7 +174,7 @@ export function sazetakMarkdown(lek: SegLekcija): string {
   for (const b of lek.blokovi) {
     if (b.vrsta === 'naslov3') redci.push(`\n### ${b.tekst}\n`);
     else if (b.vrsta === 'popis') redci.push(`- ${b.tekst}`);
-    else if (b.vrsta === 'tablica') redci.push(`\n> ${b.tekst}\n`);
+    else if (b.vrsta === 'tablica') redci.push(`\n${b.tekst}\n`);
     else redci.push(`\n${b.tekst}\n`);
   }
   return redci.join('\n').replace(/\n{3,}/g, '\n\n').trim();

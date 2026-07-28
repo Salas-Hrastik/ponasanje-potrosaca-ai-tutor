@@ -62,7 +62,11 @@ export function parseDocumentXml(xml: string): DocxDokument {
   let stil = '';
   let dijelovi: string[] = [];
   let pocetnaStranica = 1;
-  let celijeTablice: string[] = [];
+  // Tablica: jedan w:tc (ćelija) može sadržavati više w:p odlomaka, pa se
+  // odlomci unutar ćelije spajaju, a ćelije grupiraju u retke preko w:tr.
+  let sadrzajCelije: string[] = [];
+  let redakTablice: string[] = [];
+  let redoviTablice: string[][] = [];
 
   const tagRe = /<([^>]+)>/g;
   let zadnjiKraj = 0;
@@ -99,20 +103,31 @@ export function parseDocumentXml(xml: string): DocxDokument {
       else if (ime === 'w:p' && uOdlomku) {
         if (uTablici) {
           const t = ocistiTekst(dijelovi.join(''));
-          if (t) celijeTablice.push(t);
+          if (t) sadrzajCelije.push(t);
           uOdlomku = false;
           stil = '';
           dijelovi = [];
         } else {
           zavrsiOdlomak();
         }
+      } else if (ime === 'w:tc') {
+        // Unutar jedne ćelije nerijetko stoji naslov + popis kao odvojeni
+        // odlomci (npr. okvir "Ključni pojmovi poglavlja"). Razmak bi ih
+        // spojio u nečitljivu kašu, pa se odlomci unutar iste ćelije
+        // spajaju s "·" — isti spoj kao i prije, samo sad ograničen na
+        // stvarnu ćeliju umjesto na cijelu tablicu.
+        redakTablice.push(sadrzajCelije.join(' · '));
+        sadrzajCelije = [];
+      } else if (ime === 'w:tr') {
+        if (redakTablice.some((c) => c.trim())) redoviTablice.push(redakTablice);
+        redakTablice = [];
       } else if (ime === 'w:tbl') {
         uTablici = false;
-        const tekst = celijeTablice.join(' · ');
+        const tekst = tabliceUMarkdown(redoviTablice);
         if (tekst) {
           odlomci.push({ vrsta: 'tablica', tekst, stranicaOd: pocetnaStranica, stranicaDo: stranica });
         }
-        celijeTablice = [];
+        redoviTablice = [];
       }
       continue;
     }
@@ -120,7 +135,9 @@ export function parseDocumentXml(xml: string): DocxDokument {
     switch (ime) {
       case 'w:tbl':
         uTablici = true;
-        celijeTablice = [];
+        redoviTablice = [];
+        redakTablice = [];
+        sadrzajCelije = [];
         pocetnaStranica = stranica;
         break;
       case 'w:p':
@@ -178,4 +195,36 @@ function dekodiraj(s: string): string {
 
 function ocistiTekst(s: string): string {
   return s.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Redci tablice → GitHub-flavored Markdown tablica (prvi redak je zaglavlje).
+ * Jednoredna "tablica" (npr. natpis ispod slike raspoređen u ćelije) nema
+ * smisla kao tablica sa zaglavljem, pa se vraća kao običan red spojen crticom.
+ */
+function tabliceUMarkdown(redovi: string[][]): string {
+  const ociscenoSvi = redovi
+    .map((r) => r.map((c) => escapiTekstCelije(c)))
+    .filter((r) => r.some((c) => c.trim()));
+  if (ociscenoSvi.length === 0) return '';
+  if (ociscenoSvi.length === 1) return ociscenoSvi[0].filter(Boolean).join(' — ');
+
+  const brojStupaca = Math.max(...ociscenoSvi.map((r) => r.length));
+  const poravnano = ociscenoSvi.map((r) => {
+    const kopija = [...r];
+    while (kopija.length < brojStupaca) kopija.push('');
+    return kopija;
+  });
+
+  const [zaglavlje, ...tijelo] = poravnano;
+  const redakZaglavlja = `| ${zaglavlje.join(' | ')} |`;
+  const razdjelnik = `| ${zaglavlje.map(() => '---').join(' | ')} |`;
+  const redciTijela = tijelo.map((r) => `| ${r.join(' | ')} |`);
+
+  return [redakZaglavlja, razdjelnik, ...redciTijela].join('\n');
+}
+
+/** Markdown tablica koristi "|" kao razdjelnik — u sadržaju ćelije se mora escapeirati. */
+function escapiTekstCelije(s: string): string {
+  return s.replace(/\|/g, '\\|').replace(/\n+/g, ' ').trim();
 }
