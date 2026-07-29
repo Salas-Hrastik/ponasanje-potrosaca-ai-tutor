@@ -117,10 +117,12 @@ code {
   flex: 0 0 40px;
   border-radius: 10px;
   background: var(--pijesak-500);
-  color: var(--more-900);
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  font-size: 13px;
+  padding: 5px;
+}
+.logo-oznaka-slika {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .logo-tekst {
@@ -314,15 +316,10 @@ code {
   gap: 10px;
 }
 .korice-znak {
-  display: grid;
-  place-items: center;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
-  background: var(--more-900);
-  color: #fff;
-  font-weight: 800;
-  font-size: 11px;
+  flex: 0 0 34px;
+  object-fit: contain;
 }
 .korice-izdavac {
   font-size: 11px;

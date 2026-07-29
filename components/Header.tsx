@@ -19,7 +19,7 @@ export default async function Header() {
       <div className="zaglavlje-lijevo">
         <Link href="/" className="logo-link">
           <span className="logo-oznaka" aria-hidden="true">
-            VBZ
+            <img src="/baltazar-logo.svg" alt="" className="logo-oznaka-slika" />
           </span>
           <span className="logo-tekst">
             <span className="naslov-app">{config.kolegij}</span>

@@ -61,7 +61,7 @@ export default function VodicModal() {
 
   return (
     <>
-      <button className="hero-gumb hero-gumb-obrub" onClick={() => setOtvoren(true)}>
+      <button className="hero-gumb hero-gumb-zuti" onClick={() => setOtvoren(true)}>
         📘 Vodič za korisnike
       </button>
 

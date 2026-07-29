@@ -65,18 +65,12 @@ export default async function NaslovnicaPage() {
             <Link href={`/cjelina/${sljedeca.broj}`} className="hero-gumb hero-gumb-obrub">
               Nastavi učenje →
             </Link>
-            <Link href="/usmena-vjezba" className="hero-gumb hero-gumb-obrub">
-              🎙️ Usmena vježba
-            </Link>
-            <Link href="/zavrsna-provjera" className="hero-gumb hero-gumb-zuti">
-              🎓 Završna provjera znanja
-            </Link>
             <VodicModal />
           </div>
         </div>
         <div className="hero-korice" aria-hidden="true">
           <div className="korice-vrh">
-            <span className="korice-znak">VBZ</span>
+            <img src="/baltazar-logo.svg" alt="" className="korice-znak" />
             <span className="korice-izdavac">
               Veleučilište
               <br />
