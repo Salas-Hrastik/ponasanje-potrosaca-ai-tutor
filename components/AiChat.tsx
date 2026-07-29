@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import TtsGumb from './TtsGumb';
 
 interface Citat {
   poglavlje: string;
@@ -19,6 +20,16 @@ interface Poruka {
 }
 
 const VIDLJIVIH_PRIJEDLOGA = 3;
+
+/** Uklanja Markdown oznake da TTS ne čita zvjezdice i crtice naglas. */
+function zaCitanje(md: string): string {
+  return md
+    .replace(/^#+\s*/gm, '')
+    .replace(/[*_`>]/g, '')
+    .replace(/\n{2,}/g, '. ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 const SIGURNOST_OZNAKA: Record<string, string> = {
   visoka: 'Pokriće u priručniku: visoko',
@@ -40,12 +51,73 @@ export default function AiChat({
   const [ucitava, setUcitava] = useState(false);
   const [dopunski, setDopunski] = useState(false);
   const [iskoristena, setIskoristena] = useState<Set<number>>(new Set());
+  const [snima, setSnima] = useState(false);
+  const [transkribira, setTranskribira] = useState(false);
+  const [glasovnaGreska, setGlasovnaGreska] = useState<string | null>(null);
+
+  const recorderRef = useRef<MediaRecorder | null>(null);
+  const dijeloviRef = useRef<Blob[]>([]);
+
+  // Mikrofon se otpušta i kad korisnik napusti stranicu usred snimanja.
+  useEffect(
+    () => () => {
+      recorderRef.current?.stream.getTracks().forEach((t) => t.stop());
+    },
+    [],
+  );
 
   // Red čekanja: iskorišteni prijedlog nestaje, a sljedeći neiskorišteni ulazi na njegovo mjesto.
   const vidljiviPrijedlozi = predlozenaPitanja
     .map((tekst, i) => ({ tekst, i }))
     .filter((p) => !iskoristena.has(p.i))
     .slice(0, VIDLJIVIH_PRIJEDLOGA);
+
+  async function pocniSnimanje() {
+    setGlasovnaGreska(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const rec = new MediaRecorder(stream);
+      dijeloviRef.current = [];
+      rec.ondataavailable = (e) => {
+        if (e.data.size > 0) dijeloviRef.current.push(e.data);
+      };
+      rec.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(dijeloviRef.current, { type: rec.mimeType || 'audio/webm' });
+        await transkribiraj(blob);
+      };
+      recorderRef.current = rec;
+      rec.start();
+      setSnima(true);
+    } catch {
+      setGlasovnaGreska('Pristup mikrofonu nije odobren. Pitanje možete i utipkati.');
+    }
+  }
+
+  function zaustaviSnimanje() {
+    recorderRef.current?.stop();
+    setSnima(false);
+  }
+
+  /** Snimka putuje izravno na transkripciju i nigdje se ne pohranjuje. */
+  async function transkribiraj(blob: Blob) {
+    setTranskribira(true);
+    try {
+      const forma = new FormData();
+      forma.append('audio', blob, 'pitanje.webm');
+      const res = await fetch('/api/transkript', { method: 'POST', body: forma });
+      const data = await res.json();
+      if (data.transkript) {
+        setUpit(data.transkript);
+      } else {
+        setGlasovnaGreska(data.greska ?? 'Transkripcija nije uspjela.');
+      }
+    } catch {
+      setGlasovnaGreska('Transkripcija nije uspjela. Pitanje možete i utipkati.');
+    } finally {
+      setTranskribira(false);
+    }
+  }
 
   async function posaljiPitanje(pitanje: string) {
     if (!pitanje || ucitava) return;
@@ -134,6 +206,9 @@ export default function AiChat({
             {p.sigurnost && SIGURNOST_OZNAKA[p.sigurnost] && (
               <p className={`chat-sigurnost sigurnost-${p.sigurnost}`}>{SIGURNOST_OZNAKA[p.sigurnost]}</p>
             )}
+            {p.autor === 'asistent' && (
+              <TtsGumb tekst={zaCitanje(p.tekst).slice(0, 1800)} oznaka="Preslušaj odgovor" />
+            )}
           </div>
         ))}
         {ucitava && <div className="chat-poruka chat-asistent chat-ucitava">…</div>}
@@ -155,22 +230,41 @@ export default function AiChat({
         </div>
       )}
 
+      {glasovnaGreska && <p className="chat-glasovna-greska">{glasovnaGreska}</p>}
+
       <label className="chat-dopunski">
         <input type="checkbox" checked={dopunski} onChange={(e) => setDopunski(e.target.checked)} />
         Uključi dopunske izvore (uz priručnik)
       </label>
 
       <form className="chat-forma" onSubmit={posalji}>
+        <button
+          type="button"
+          className={`chat-mikrofon ${snima ? 'snima' : ''}`}
+          onClick={snima ? zaustaviSnimanje : pocniSnimanje}
+          disabled={ucitava || transkribira}
+          aria-label={snima ? 'Zaustavi snimanje' : 'Postavi pitanje glasom'}
+          title={snima ? 'Zaustavi snimanje' : 'Postavi pitanje glasom'}
+        >
+          {snima ? '⏹' : '🎤'}
+        </button>
         <input
           value={upit}
           onChange={(e) => setUpit(e.target.value)}
-          placeholder={poglavljeBroj ? 'Postavite pitanje o ovoj cjelini…' : 'Postavite pitanje o gradivu…'}
-          disabled={ucitava}
+          placeholder={
+            transkribira
+              ? 'Prepoznajem govor…'
+              : poglavljeBroj
+                ? 'Postavite pitanje o ovoj cjelini…'
+                : 'Postavite pitanje o gradivu…'
+          }
+          disabled={ucitava || transkribira}
         />
         <button type="submit" className="chat-posalji" aria-label="Pošalji" disabled={ucitava || !upit.trim()}>
           ➤
         </button>
       </form>
+      <p className="chat-glasovna-napomena">Snimka glasa se ne pohranjuje — čuva se samo prepoznati tekst.</p>
     </div>
   );
 }

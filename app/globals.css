@@ -1059,6 +1059,51 @@ code {
   cursor: default;
 }
 
+.chat-mikrofon {
+  flex: 0 0 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--rub-jaci);
+  background: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+.chat-mikrofon:hover:not(:disabled) {
+  border-color: var(--more-500);
+}
+.chat-mikrofon:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.chat-mikrofon.snima {
+  background: var(--crvena-600);
+  border-color: var(--crvena-600);
+  color: #fff;
+  animation: chat-mikrofon-pulsira 1.4s ease-in-out infinite;
+}
+@keyframes chat-mikrofon-pulsira {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(176, 54, 54, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(176, 54, 54, 0);
+  }
+}
+.chat-glasovna-greska {
+  margin: 0 16px 8px;
+  font-size: 12.5px;
+  color: var(--crvena-600);
+}
+.chat-glasovna-napomena {
+  margin: 6px 16px 12px;
+  font-size: 11px;
+  color: var(--tekst-blijedi);
+}
+.chat-poruka .gumb-tts {
+  display: inline-block;
+  margin-top: 8px;
+}
+
 /* --- Kviz ---------------------------------------------------------------- */
 .page-kviz {
   max-width: 800px;
