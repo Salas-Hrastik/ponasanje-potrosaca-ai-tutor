@@ -4,7 +4,7 @@
  * zakaže, vraća se izvorni poredak — dohvat nikad ne pada zbog reranka.
  */
 import Anthropic from '@anthropic-ai/sdk';
-import { config } from './config';
+import { config, requireEnv } from './config';
 import type { RetrievedChunk } from './retrieval';
 
 const SNIPPET_CHARS = 450;
@@ -25,7 +25,7 @@ export async function rerankChunks(
       )
       .join('\n\n');
 
-    const anthropic = new Anthropic();
+    const anthropic = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
     const msg = await anthropic.messages.create(
       {
         model: config.rerankModel,

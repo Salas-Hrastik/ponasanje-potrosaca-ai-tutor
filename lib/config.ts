@@ -60,15 +60,37 @@ export const config = {
   dopunskiDir: process.env.DOPUNSKI_DIR || './materijali/dopunski',
 };
 
+/**
+ * API ključ ide u HTTP zaglavlje, koje podnosi samo znakove do 255. Ako se u
+ * varijablu zalijepi MASKIRANI prikaz ključa (niz „••••"), fetch pukne uz
+ * nerazumljivo „Cannot convert argument to a ByteString". Zato se vrijednost
+ * provjerava ovdje i greška se imenuje jasno.
+ */
+function provjeriKljuc(name: string, vrijednost: string): string {
+  const cist = vrijednost.trim();
+  const problem = [...cist].find((z) => z.charCodeAt(0) > 255);
+  if (problem) {
+    const maskiran = cist.includes('•') || cist.includes('●') || cist.includes('*');
+    throw new Error(
+      `Vrijednost varijable ${name} sadrži nedopušten znak „${problem}". ` +
+        (maskiran
+          ? 'Izgleda da je spremljen MASKIRANI prikaz ključa (točkice) umjesto stvarne vrijednosti — upišite pravi ključ.'
+          : 'Ključ smije sadržavati samo obične ASCII znakove.'),
+    );
+  }
+  return cist;
+}
+
 export function requireEnv(name: string): string {
   const v = process.env[name];
-  if (!v) throw new Error(`Nedostaje obavezna ENV varijabla: ${name}`);
-  return v;
+  if (!v || !v.trim()) throw new Error(`Nedostaje obavezna ENV varijabla: ${name}`);
+  return provjeriKljuc(name, v);
 }
 
 /** Ključ za OpenAI govorne usluge (ASR/TTS); pada natrag na OPENAI_API_KEY. */
 export function speechApiKey(): string {
+  const ime = process.env.SPEECH_API_KEY?.trim() ? 'SPEECH_API_KEY' : 'OPENAI_API_KEY';
   const v = process.env.SPEECH_API_KEY || process.env.OPENAI_API_KEY;
-  if (!v) throw new Error('Nedostaje SPEECH_API_KEY (ili OPENAI_API_KEY) za ASR/TTS.');
-  return v;
+  if (!v || !v.trim()) throw new Error('Nedostaje SPEECH_API_KEY (ili OPENAI_API_KEY) za ASR/TTS.');
+  return provjeriKljuc(ime, v);
 }

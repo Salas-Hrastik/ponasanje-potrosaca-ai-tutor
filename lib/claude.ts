@@ -1,6 +1,6 @@
 /** Poziv Claudeu s očekivanim STROGO JSON izlazom (vidi lib/prompt.ts sheme). */
 import Anthropic from '@anthropic-ai/sdk';
-import { config } from './config';
+import { config, requireEnv } from './config';
 
 export interface NedovoljnoKonteksta {
   tip: 'nedovoljno_konteksta';
@@ -26,7 +26,7 @@ export async function askClaudeJson<T = unknown>(
   userMessage: string,
   maxTokens: number = config.claudeMaxTokens,
 ): Promise<T> {
-  const anthropic = new Anthropic();
+  const anthropic = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   const msg = await anthropic.messages.create({
     model: config.claudeModel,
     max_tokens: maxTokens,
