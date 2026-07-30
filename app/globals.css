@@ -56,7 +56,7 @@ body {
   background: var(--pozadina);
   color: var(--tekst);
   font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -134,7 +134,7 @@ code {
 }
 .naslov-app {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,7 +142,7 @@ code {
 .zaglavlje-nav {
   display: flex;
   gap: 18px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .zaglavlje-nav a {
   color: var(--more-700);
@@ -155,7 +155,7 @@ code {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 14.5px;
+  font-size: 16px;
 }
 .korisnik-email {
   color: var(--tekst-blijedi);
@@ -192,12 +192,12 @@ code {
   gap: 8px 24px;
   justify-content: space-between;
   color: var(--tekst-blijedi);
-  font-size: 14.5px;
+  font-size: 16px;
   border-top: 1px solid var(--rub);
 }
 
 .mrvice-redak {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--tekst-blijedi);
   margin: 0 0 12px;
 }
@@ -226,7 +226,7 @@ code {
 
 .hero-institucija {
   margin: 0 0 8px;
-  font-size: 14.5px;
+  font-size: 16px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--pijesak-500);
@@ -234,14 +234,14 @@ code {
 }
 
 .hero-naslov {
-  font-size: 40px;
+  font-size: 42px;
   margin: 0 0 6px;
   letter-spacing: -0.02em;
 }
 
 .hero-autor {
   margin: 0 0 12px;
-  font-size: 17px;
+  font-size: 19px;
 }
 .hero-autor a {
   color: var(--pijesak-500);
@@ -249,7 +249,7 @@ code {
 }
 .hero-podnaslov {
   margin: 0 0 16px;
-  font-size: 18px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.82);
 }
 
@@ -270,7 +270,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 10px 16px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   border: 1px solid transparent;
   cursor: pointer;
   font-family: inherit;
@@ -316,7 +316,7 @@ code {
   object-fit: contain;
 }
 .korice-izdavac {
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.3;
   color: var(--more-800);
 }
@@ -326,19 +326,19 @@ code {
   gap: 8px;
 }
 .korice-oznaka {
-  font-size: 12.5px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--pijesak-600);
   font-weight: 700;
 }
 .korice-naslov {
-  font-size: 23.5px;
+  font-size: 25.5px;
   font-weight: 700;
   line-height: 1.2;
 }
 .korice-dno {
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--tekst-blijedi);
 }
 
@@ -361,12 +361,12 @@ code {
 }
 .put-zaglavlje h2 {
   margin: 0;
-  font-size: 20.5px;
+  font-size: 22px;
 }
 .napredak-tekst {
   margin: 0;
   color: var(--tekst-blijedi);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .napredak-traka {
@@ -391,7 +391,7 @@ code {
   margin-bottom: 32px;
 }
 .dio-naslov {
-  font-size: 14.5px;
+  font-size: 16px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--more-700);
@@ -414,7 +414,7 @@ code {
   box-shadow: var(--sjena);
 }
 .poglavlje-kartica h3 {
-  font-size: 19px;
+  font-size: 21.5px;
   margin: 0 0 4px;
 }
 .poglavlje-kartica h3 a {
@@ -422,7 +422,7 @@ code {
 }
 .poglavlje-meta {
   margin: 0;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 
@@ -442,7 +442,7 @@ code {
   transform: translateY(-2px);
 }
 .cjelina-kartica h3 {
-  font-size: 19px;
+  font-size: 21.5px;
   margin: 4px 0 4px;
   color: var(--more-900);
 }
@@ -464,7 +464,7 @@ code {
   border: 1px solid var(--more-100);
   color: var(--more-700);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
 }
 .cjelina-znak {
   color: var(--zelena-600);
@@ -475,14 +475,14 @@ code {
 }
 .cjelina-meta {
   margin: 0 0 10px;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 .odjeljci-pregled {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst-blijedi);
 }
 .odjeljci-pregled li {
@@ -500,7 +500,7 @@ code {
 .page-cjelina-okvir {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px 24px 48px;
+  padding: 14px 24px 32px;
 }
 
 .odjeljci-niz {
@@ -517,7 +517,7 @@ code {
   border-radius: 999px;
   background: var(--ploha);
   border: 1px solid var(--rub);
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--more-800);
 }
 .odjeljak-oznaka {
@@ -525,7 +525,7 @@ code {
   color: var(--more-600);
 }
 .odjeljak-str {
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--tekst-blijedi);
 }
 
@@ -543,7 +543,7 @@ code {
 
 /* Ciljevi učenja */
 .ciljevi-kartica h3 {
-  font-size: 18px;
+  font-size: 20px;
 }
 .ciljevi-lista {
   list-style: none;
@@ -576,7 +576,7 @@ code {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 4px;
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--tekst-blijedi);
 }
 .cilj-razina-chip {
@@ -594,7 +594,7 @@ code {
 }
 .ciljevi-kartica-kompaktna h3 {
   margin: 0 0 4px;
-  font-size: 14.5px;
+  font-size: 16px;
 }
 .ciljevi-lista-kompaktna {
   display: grid;
@@ -612,19 +612,19 @@ code {
   margin-top: 6px;
 }
 .ciljevi-lista-kompaktna .cilj-sadrzaj {
-  font-size: 14px;
+  font-size: 15.5px;
   line-height: 1.4;
 }
 .ciljevi-lista-kompaktna .cilj-razina-chip {
   display: inline-block;
   margin-left: 6px;
-  font-size: 11.5px;
+  font-size: 13px;
   padding: 0 6px;
 }
 .ciljevi-lista-kompaktna .cilj-stranica {
   display: inline-block;
   margin-left: 6px;
-  font-size: 11.5px;
+  font-size: 13px;
   color: var(--tekst-blijedi);
   white-space: nowrap;
 }
@@ -642,7 +642,7 @@ code {
   padding: 16px 20px;
   margin-bottom: 20px;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 19px;
   cursor: pointer;
   box-shadow: var(--sjena);
 }
@@ -655,14 +655,14 @@ code {
 }
 .sazetak-redak-otvori {
   color: var(--more-700);
-  font-size: 14.5px;
+  font-size: 16px;
 }
 .sazetak-prazno {
   margin: 0;
   color: var(--tekst-blijedi);
 }
 .sazetak-sadrzaj {
-  font-size: 17px;
+  font-size: 19px;
 }
 .sazetak-cjelina {
   border: 1px solid var(--rub);
@@ -709,7 +709,7 @@ code {
   border-color: var(--more-500);
 }
 .medij-ikona {
-  font-size: 23.5px;
+  font-size: 25.5px;
 }
 .medij-tekst {
   flex: 1;
@@ -718,10 +718,10 @@ code {
 }
 .medij-naslov {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 }
 .medij-podnaslov {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--tekst-blijedi);
 }
 .medij-strelica {
@@ -741,7 +741,7 @@ code {
 .prezentacija-fallback {
   display: inline-block;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 /* Gumbi cjeline */
@@ -781,7 +781,7 @@ code {
   border: 1px solid var(--rub-jaci);
   background: var(--ploha);
   color: var(--more-800);
-  font-size: 16px;
+  font-size: 18px;
   font-family: inherit;
   cursor: pointer;
 }
@@ -808,21 +808,21 @@ code {
 }
 .kartice-zaglavlje h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
 }
 .gumb-tekstualni {
   background: none;
   border: none;
   padding: 0;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--more-700);
   cursor: pointer;
   text-decoration: underline;
 }
 .kartice-uputa {
   margin: 6px 0 14px;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 .kartice-mreza {
@@ -852,20 +852,20 @@ code {
 }
 .ucenje-pojam {
   font-weight: 650;
-  font-size: 16.5px;
+  font-size: 18.5px;
   color: var(--more-900);
 }
 .ucenje-definicija {
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst);
 }
 .ucenje-stranica {
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--tekst-blijedi);
 }
 .ucenje-nagovjestaj {
   margin-top: auto;
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--more-600);
 }
 
@@ -892,10 +892,10 @@ code {
 }
 .chat-zaglavlje h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 19px;
 }
 .chat-poglavlje {
-  font-size: 13.5px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -904,7 +904,7 @@ code {
   padding: 8px 16px;
   background: var(--jantar-100);
   color: var(--jantar-600);
-  font-size: 13.5px;
+  font-size: 15px;
   border-bottom: 1px solid var(--rub);
 }
 
@@ -923,7 +923,7 @@ code {
   border: 1px solid var(--more-100);
   border-radius: var(--radijus-mali);
   padding: 12px 14px;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--more-800);
 }
 .chat-dobrodoslica p {
@@ -933,7 +933,7 @@ code {
 .chat-poruka {
   border-radius: var(--radijus-mali);
   padding: 10px 14px;
-  font-size: 16.5px;
+  font-size: 18.5px;
   max-width: 92%;
 }
 .chat-poruka p {
@@ -962,7 +962,7 @@ code {
   margin: 10px 0 0;
   padding: 8px 0 0;
   border-top: 1px dashed var(--rub-jaci);
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--more-700);
 }
 .chat-citati li::before {
@@ -977,7 +977,7 @@ code {
 
 .chat-sigurnost {
   margin: 8px 0 0;
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--tekst-blijedi);
 }
 .sigurnost-niska {
@@ -996,7 +996,7 @@ code {
   border: 1px solid var(--rub);
   border-radius: 999px;
   padding: 7px 13px;
-  font-size: 14.5px;
+  font-size: 16px;
   font-family: inherit;
   color: var(--more-800);
   cursor: pointer;
@@ -1011,7 +1011,7 @@ code {
   align-items: center;
   gap: 8px;
   padding: 0 16px 10px;
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--tekst-blijedi);
   cursor: pointer;
 }
@@ -1029,7 +1029,7 @@ code {
   border-radius: 999px;
   padding: 10px 16px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 18px;
   background: #fff;
 }
 .chat-forma input:focus {
@@ -1043,7 +1043,7 @@ code {
   border: none;
   background: var(--more-700);
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
 }
 .chat-posalji:disabled {
@@ -1057,7 +1057,7 @@ code {
   border-radius: 50%;
   border: 1px solid var(--rub-jaci);
   background: #fff;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
 }
 .chat-mikrofon:hover:not(:disabled) {
@@ -1083,12 +1083,12 @@ code {
 }
 .chat-glasovna-greska {
   margin: 0 16px 8px;
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--crvena-600);
 }
 .chat-glasovna-napomena {
   margin: 6px 16px 12px;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--tekst-blijedi);
 }
 .chat-poruka .gumb-tts {
@@ -1127,11 +1127,11 @@ code {
 }
 .kviz-napredak {
   margin: 8px 0 20px;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 .kviz-pitanje {
-  font-size: 21.5px;
+  font-size: 23px;
   margin-bottom: 20px;
 }
 .kviz-odgovori {
@@ -1153,7 +1153,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 12px 14px;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 19px;
   cursor: pointer;
 }
 .kviz-odgovor-gumb:hover:not(:disabled) {
@@ -1167,7 +1167,7 @@ code {
   border-radius: 50%;
   background: var(--more-050);
   border: 1px solid var(--more-100);
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--more-700);
 }
@@ -1194,7 +1194,7 @@ code {
   border-left: 3px solid var(--more-500);
   border-radius: var(--radijus-mali);
   padding: 10px 14px;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 16px;
 }
 .kviz-stranica {
@@ -1213,7 +1213,7 @@ code {
   color: var(--more-800);
 }
 .kviz-rezultat-brojka {
-  font-size: 20.5px;
+  font-size: 22px;
 }
 .kviz-rezultat-opis {
   color: var(--tekst-blijedi);
@@ -1229,7 +1229,7 @@ code {
   border-radius: var(--radijus-mali);
   color: var(--zelena-600);
   padding: 10px 14px;
-  font-size: 15.5px;
+  font-size: 17.5px;
   margin-bottom: 24px;
 }
 
@@ -1259,16 +1259,16 @@ code {
   background: var(--more-050);
 }
 .usmena-izbor-broj {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--more-600);
 }
 .usmena-izbor-naslov {
   font-weight: 600;
-  font-size: 16.5px;
+  font-size: 18.5px;
 }
 .usmena-izbor-meta {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--tekst-blijedi);
 }
 
@@ -1283,10 +1283,10 @@ code {
 }
 .usmena-zaglavlje h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
 }
 .usmena-oznaka {
-  font-size: 13px;
+  font-size: 14.5px;
   background: var(--jantar-100);
   color: var(--jantar-600);
   border-radius: 999px;
@@ -1294,7 +1294,7 @@ code {
 }
 .usmena-opseg {
   margin: 6px 0 14px;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 .usmena-greska {
@@ -1302,11 +1302,11 @@ code {
   color: var(--crvena-600);
   border-radius: var(--radijus-mali);
   padding: 10px 14px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .usmena-cekanje {
   color: var(--tekst-blijedi);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .usmena-pitanje-blok {
@@ -1318,7 +1318,7 @@ code {
 }
 .usmena-pitanje {
   margin: 0 0 10px;
-  font-size: 19px;
+  font-size: 21.5px;
   font-weight: 600;
   color: var(--more-900);
 }
@@ -1337,7 +1337,7 @@ code {
   border-radius: 999px;
   padding: 10px 18px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1351,13 +1351,13 @@ code {
   }
 }
 .usmena-privatnost-mala {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--tekst-blijedi);
 }
 
 .usmena-label {
   display: block;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
   margin-bottom: 12px;
 }
@@ -1369,14 +1369,14 @@ code {
   border-radius: var(--radijus-mali);
   padding: 12px;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 19px;
   color: var(--tekst);
   resize: vertical;
 }
 
 .usmena-natuknice {
   margin-top: 14px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .usmena-natuknice summary {
   cursor: pointer;
@@ -1392,7 +1392,7 @@ code {
   display: inline-block;
   border-radius: 999px;
   padding: 6px 16px;
-  font-size: 17px;
+  font-size: 19px;
   margin: 0 0 16px;
 }
 .procjena-dobro {
@@ -1424,7 +1424,7 @@ code {
   border: 1px solid var(--more-100);
   border-radius: var(--radijus-mali);
   padding: 8px 12px;
-  font-size: 14.5px;
+  font-size: 16px;
 }
 .usmena-rubrika span {
   font-weight: 700;
@@ -1438,12 +1438,12 @@ code {
 }
 .usmena-blok h4 {
   margin: 0 0 4px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .usmena-blok ul {
   margin: 0;
   padding-left: 18px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .blok-tocno {
   border-color: var(--zelena-600);
@@ -1467,7 +1467,7 @@ code {
 }
 .usmena-idealni h4 {
   margin: 0 0 6px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .usmena-idealni p {
   margin: 0 0 10px;
@@ -1479,7 +1479,7 @@ code {
   color: var(--more-700);
   border-radius: 999px;
   padding: 5px 13px;
-  font-size: 14px;
+  font-size: 15.5px;
   font-family: inherit;
   cursor: pointer;
 }
@@ -1493,7 +1493,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 11px 18px;
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 18.5px;
   font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
@@ -1552,7 +1552,7 @@ code {
   border: 1px solid var(--rub);
   background: var(--ploha);
   color: var(--tekst-blijedi);
-  font-size: 17px;
+  font-size: 19px;
   cursor: pointer;
 }
 .modal-zatvori:hover {
@@ -1561,11 +1561,11 @@ code {
 }
 .modal-naslov {
   margin: 0 40px 4px 0;
-  font-size: 21.5px;
+  font-size: 23px;
 }
 .modal-podnaslov {
   margin: 0 0 14px;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
 }
 .modal-tijelo {
@@ -1582,7 +1582,7 @@ code {
 .vodic-lista p {
   margin: 2px 0 0;
   color: var(--tekst-blijedi);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 /* --- O priručniku / izvori ---------------------------------------------- */
@@ -1603,7 +1603,7 @@ code {
   font-style: italic;
 }
 .autor-napomena {
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst-blijedi);
   border-top: 1px solid var(--rub);
   padding-top: 12px;
@@ -1622,7 +1622,7 @@ code {
 }
 .izvor-napomena {
   margin: 4px 0;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst-blijedi);
 }
 .izvori-prazno {
@@ -1641,12 +1641,12 @@ code {
   box-shadow: var(--sjena);
 }
 .auth-form h1 {
-  font-size: 25.5px;
+  font-size: 27.5px;
   margin-bottom: 4px;
 }
 .auth-podnaslov {
   color: var(--tekst-blijedi);
-  font-size: 15.5px;
+  font-size: 17.5px;
   margin-top: 0;
 }
 .auth-napomena {
@@ -1654,11 +1654,11 @@ code {
   color: var(--jantar-600);
   border-radius: var(--radijus-mali);
   padding: 10px 14px;
-  font-size: 14.5px;
+  font-size: 16px;
 }
 .auth-form label {
   display: block;
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--tekst-blijedi);
   margin-bottom: 14px;
 }
@@ -1670,7 +1670,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 10px 12px;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 19px;
 }
 .auth-form button[type='submit'] {
   width: 100%;
@@ -1680,7 +1680,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 12px;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1692,7 +1692,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 10px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--more-800);
   cursor: pointer;
 }
@@ -1701,17 +1701,17 @@ code {
   color: var(--crvena-600);
   border-radius: var(--radijus-mali);
   padding: 9px 12px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .auth-poruka {
   background: var(--zelena-100);
   color: var(--zelena-600);
   border-radius: var(--radijus-mali);
   padding: 9px 12px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .auth-link {
-  font-size: 15.5px;
+  font-size: 17.5px;
   text-align: center;
   color: var(--tekst-blijedi);
   margin-bottom: 0;
@@ -1735,7 +1735,7 @@ code {
 }
 .cjelina-hero-oznaka {
   margin: 0 0 4px;
-  font-size: 12.5px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--pijesak-500);
@@ -1744,8 +1744,12 @@ code {
 .cjelina-hero-podnaslov {
   margin: 0;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 14.5px;
-  max-width: 56ch;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.cjelina-hero-tekst {
+  min-width: 0;
+  flex: 1;
 }
 .cjelina-hero-znacka {
   flex-shrink: 0;
@@ -1759,23 +1763,23 @@ code {
   border: 2px solid var(--pijesak-500);
 }
 .cjelina-hero-broj {
-  font-size: 21.5px;
+  font-size: 23px;
   font-weight: 800;
   line-height: 1.1;
 }
 .cjelina-hero-oznaka-mala {
-  font-size: 9.5px;
+  font-size: 10.5px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--pijesak-500);
 }
 
 .nacin-odabir {
-  margin: 14px 0 0;
+  margin: 8px 0 0;
 }
 .nacin-odabir-naslov {
   margin: 0 0 8px;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1806,10 +1810,10 @@ code {
 .nacin-gumb-naslov {
   font-weight: 700;
   color: var(--more-900);
-  font-size: 17px;
+  font-size: 19px;
 }
 .nacin-gumb-opis {
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--tekst-blijedi);
 }
 
@@ -1884,7 +1888,7 @@ code {
   padding: 10px 8px;
   font-family: inherit;
   font-weight: 600;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst-blijedi);
   cursor: pointer;
 }
@@ -1970,7 +1974,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 8px 12px;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--tekst-blijedi);
   cursor: pointer;
@@ -1984,7 +1988,7 @@ code {
 }
 .nacin-oznaka {
   margin: 0 0 4px;
-  font-size: 13px;
+  font-size: 14.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--more-600);
@@ -1992,11 +1996,11 @@ code {
 }
 .nacin-podzaglavlje-tekst h2 {
   margin: 0 0 4px;
-  font-size: 21px;
+  font-size: 22.5px;
 }
 .nacin-opis {
   margin: 0;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--tekst-blijedi);
 }
 .gumb-sazetak-kompaktni {
@@ -2006,7 +2010,7 @@ code {
   border-radius: var(--radijus-mali);
   padding: 8px 14px;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--pijesak-600);
   cursor: pointer;
@@ -2022,7 +2026,7 @@ code {
 }
 .prazno-stanje {
   color: var(--tekst-blijedi);
-  font-size: 16px;
+  font-size: 18px;
   background: var(--ploha);
   border: 1px dashed var(--rub-jaci);
   border-radius: var(--radijus);
@@ -2044,7 +2048,7 @@ code {
 }
 .korak-oznaka {
   margin: 0 0 6px;
-  font-size: 13px;
+  font-size: 14.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--pijesak-600);
@@ -2052,15 +2056,15 @@ code {
 }
 .korak-kartica h3 {
   margin: 0 0 10px;
-  font-size: 20.5px;
+  font-size: 22px;
   color: var(--more-900);
 }
 .korak-sadrzaj {
-  font-size: 16.5px;
+  font-size: 18.5px;
   line-height: 1.65;
 }
 .korak-sadrzaj :is(h1, h2, h3, h4) {
-  font-size: 17px;
+  font-size: 19px;
   margin: 14px 0 6px;
   color: var(--more-800);
 }
@@ -2068,7 +2072,7 @@ code {
   width: 100%;
   border-collapse: collapse;
   margin: 12px 0;
-  font-size: 15.5px;
+  font-size: 17.5px;
 }
 .korak-sadrzaj th,
 .korak-sadrzaj td {
@@ -2090,7 +2094,7 @@ code {
 }
 .razgovaraj-stupac-naslov {
   margin: 0 0 10px;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--more-700);
@@ -2141,7 +2145,7 @@ code {
 .gledaj-broj {
   font-weight: 800;
   color: var(--more-600);
-  font-size: 16px;
+  font-size: 18px;
 }
 .gledaj-stavka-tekst {
   display: flex;
@@ -2149,11 +2153,11 @@ code {
 }
 .gledaj-stavka-naslov {
   font-weight: 700;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--more-900);
 }
 .gledaj-stavka-meta {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--tekst-blijedi);
 }
 .gledaj-detalj {
@@ -2165,7 +2169,7 @@ code {
 }
 .gledaj-detalj-oznaka {
   margin: 0 0 4px;
-  font-size: 13.5px;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--more-600);
@@ -2173,7 +2177,7 @@ code {
 }
 .gledaj-detalj h3 {
   margin: 0 0 14px;
-  font-size: 19px;
+  font-size: 21.5px;
 }
 
 /* Vježbaj */
@@ -2207,23 +2211,23 @@ code {
   background: var(--more-050);
 }
 .vjezbaj-pozicija {
-  font-size: 13.5px;
+  font-size: 15px;
   letter-spacing: 0.06em;
   color: var(--tekst-blijedi);
   font-weight: 600;
 }
 .vjezbaj-pojam {
-  font-size: 25.5px;
+  font-size: 27.5px;
   font-weight: 700;
   color: var(--more-900);
 }
 .vjezbaj-definicija {
-  font-size: 17px;
+  font-size: 19px;
   color: var(--tekst);
   max-width: 52ch;
 }
 .vjezbaj-nagovjestaj {
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--more-600);
 }
 .vjezbaj-navigacija {
@@ -2253,7 +2257,7 @@ code {
     display: none;
   }
   .hero-naslov {
-    font-size: 30px;
+    font-size: 31.5px;
   }
   .zaglavlje {
     flex-wrap: wrap;
@@ -2274,6 +2278,9 @@ code {
     flex-direction: column;
     align-items: flex-start;
     padding: 22px;
+  }
+  .cjelina-hero-podnaslov {
+    white-space: normal;
   }
   .cjelina-hero-znacka {
     align-self: flex-end;
