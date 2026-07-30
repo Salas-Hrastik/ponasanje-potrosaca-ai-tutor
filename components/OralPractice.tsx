@@ -164,9 +164,20 @@ export default function OralPractice({
       {greska && <p className="usmena-greska">{greska}</p>}
 
       {faza === 'pocetak' && (
-        <button className="gumb-primarni" onClick={pokreni}>
-          Postavi mi pitanje
-        </button>
+        <div className="usmena-pocetak">
+          <span className="usmena-znak" aria-hidden="true">
+            🎙️
+          </span>
+          <h4 className="usmena-pocetak-naslov">Razgovaraj o sadržaju poglavlja</h4>
+          <p className="usmena-pocetak-stanje">Glasovni razgovor nije pokrenut</p>
+          <p className="usmena-pocetak-opis">
+            Asistent postavlja pitanje iz priručnika. Odgovorite glasom ili upišite odgovor —
+            snimka se nigdje ne pohranjuje.
+          </p>
+          <button className="gumb-pilula" onClick={pokreni}>
+            Pokreni glasovni razgovor
+          </button>
+        </div>
       )}
 
       {faza === 'ucitavanje' && <p className="usmena-cekanje">Pripremam pitanje iz priručnika…</p>}

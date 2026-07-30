@@ -5,6 +5,7 @@ import { retrieve, dovoljnoKonteksta, toCitations } from '@/lib/retrieval';
 import { buildPitanjeSystemPrompt } from '@/lib/prompt';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
+import { odgovorNaGresku } from '@/lib/greske';
 
 /** Dohvat + generiranje pitanja premašuje Vercelovu zadanu granicu od 10 s. */
 export const runtime = 'nodejs';
@@ -16,7 +17,7 @@ export const maxDuration = 60;
  * Postavlja JEDNO pitanje iz nastavne cjeline, strogo utemeljeno na isječcima
  * dohvaćenima za to poglavlje — bez izmišljanja izvan priručnika.
  */
-export async function GET(request: NextRequest) {
+async function GETImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
@@ -94,4 +95,13 @@ export async function GET(request: NextRequest) {
     kljucne_tocke: rezultat.kljucne_tocke ?? [],
     citati: toCitations(chunks).slice(0, 3),
   });
+}
+
+/** Neuhvaćena greška (npr. nedostajuća ENV varijabla) inače postane prazan 500. */
+export async function GET(request: NextRequest) {
+  try {
+    return await GETImpl(request);
+  } catch (e) {
+    return odgovorNaGresku(e, 'Pitanje trenutačno nije moguće pripremiti.');
+  }
 }

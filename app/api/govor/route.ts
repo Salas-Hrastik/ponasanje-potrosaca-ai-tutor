@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { zahtijevajKorisnika } from '@/lib/auth';
 import { config, speechApiKey } from '@/lib/config';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
+import { odgovorNaGresku } from '@/lib/greske';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -14,7 +15,7 @@ const MAX_ZNAKOVA = 1800;
  * Čitanje pitanja i sažetaka naglas (TTS) u usmenoj vježbi. Generirani zvuk se
  * streama pregledniku i nigdje se ne pohranjuje.
  */
-export async function POST(request: NextRequest) {
+async function POSTImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
@@ -50,4 +51,13 @@ export async function POST(request: NextRequest) {
       'Cache-Control': 'no-store',
     },
   });
+}
+
+/** Neuhvaćena greška (npr. nedostajuća ENV varijabla) inače postane prazan 500. */
+export async function POST(request: NextRequest) {
+  try {
+    return await POSTImpl(request);
+  } catch (e) {
+    return odgovorNaGresku(e, 'Čitanje naglas trenutačno nije dostupno.');
+  }
 }

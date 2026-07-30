@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { zahtijevajKorisnika } from '@/lib/auth';
 import { config, speechApiKey } from '@/lib/config';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
+import { odgovorNaGresku } from '@/lib/greske';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -16,7 +17,7 @@ const MAX_BAJTOVA = 20 * 1024 * 1024; // ~20 MB (nekoliko minuta govora)
  * se samo tekstualni transkript (i to tek kad ga student potvrdi, u ruti
  * /api/usmena-vjezba/ocijeni) te tehničke metrike bez sadržaja.
  */
-export async function POST(request: NextRequest) {
+async function POSTImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
@@ -70,4 +71,13 @@ function normaliziraj(t: string): string {
     .replace(/\s+/g, ' ')
     .replace(/\s+([,.!?;:])/g, '$1')
     .trim();
+}
+
+/** Neuhvaćena greška (npr. nedostajuća ENV varijabla) inače postane prazan 500. */
+export async function POST(request: NextRequest) {
+  try {
+    return await POSTImpl(request);
+  } catch (e) {
+    return odgovorNaGresku(e, 'Transkripcija trenutačno nije dostupna.');
+  }
 }

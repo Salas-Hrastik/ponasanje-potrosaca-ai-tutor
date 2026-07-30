@@ -5,6 +5,7 @@ import { buildChatSystemPrompt, buildChatUserPrompt } from '@/lib/prompt';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
+import { odgovorNaGresku } from '@/lib/greske';
 
 /**
  * Dohvat (embedding + vektorska i leksička pretraga + reranking) pa generiranje
@@ -25,7 +26,7 @@ export const maxDuration = 60;
  * modelu — jeftinije je i pouzdanije nego se osloniti na to da model sam prizna
  * neznanje.
  */
-export async function POST(request: NextRequest) {
+async function POSTImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
@@ -103,4 +104,13 @@ async function predlozeneCjeline(pitanje: string): Promise<string[]> {
     .limit(3);
 
   return (data ?? []).map((o) => (o.oznaka ? `${o.oznaka} ${o.naslov}` : o.naslov));
+}
+
+/** Neuhvaćena greška (npr. nedostajuća ENV varijabla) inače postane prazan 500. */
+export async function POST(request: NextRequest) {
+  try {
+    return await POSTImpl(request);
+  } catch (e) {
+    return odgovorNaGresku(e, 'Došlo je do pogreške pri dohvatu odgovora. Pokušajte ponovno.');
+  }
 }

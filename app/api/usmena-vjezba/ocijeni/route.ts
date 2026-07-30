@@ -5,6 +5,7 @@ import { retrieve, dovoljnoKonteksta, toCitations } from '@/lib/retrieval';
 import { buildOralSystemPrompt, buildOralUserPrompt } from '@/lib/prompt';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
+import { odgovorNaGresku } from '@/lib/greske';
 
 /** Dohvat + ocjenjivanje odgovora premašuje Vercelovu zadanu granicu od 10 s. */
 export const runtime = 'nodejs';
@@ -38,7 +39,7 @@ interface Povratna {
  * Vježba je TRENING: procjena je opisna („uglavnom točno / djelomično /
  * netočno"), bez službenog ocjenjivanja.
  */
-export async function POST(request: NextRequest) {
+async function POSTImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
   if (!auth.ok) return NextResponse.json({ greska: auth.poruka }, { status: 401 });
 
@@ -114,4 +115,13 @@ function zbrojRubrike(r?: Rubrika): number | null {
     (v): v is number => typeof v === 'number',
   );
   return vrijednosti.length > 0 ? vrijednosti.reduce((a, b) => a + b, 0) : null;
+}
+
+/** Neuhvaćena greška (npr. nedostajuća ENV varijabla) inače postane prazan 500. */
+export async function POST(request: NextRequest) {
+  try {
+    return await POSTImpl(request);
+  } catch (e) {
+    return odgovorNaGresku(e, 'Povratnu informaciju trenutačno nije moguće pripremiti.');
+  }
 }
