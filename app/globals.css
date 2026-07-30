@@ -112,12 +112,12 @@ code {
 .logo-oznaka {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
   border-radius: 10px;
   background: var(--pijesak-500);
-  padding: 5px;
+  padding: 4px;
 }
 .logo-oznaka-slika {
   width: 100%;
@@ -316,9 +316,9 @@ code {
   gap: 10px;
 }
 .korice-znak {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
   object-fit: contain;
 }
 .korice-izdavac {

@@ -19,12 +19,12 @@ export default async function Header() {
       <div className="zaglavlje-lijevo">
         <Link href="/" className="logo-link">
           <span className="logo-oznaka" aria-hidden="true">
-            <img src="/baltazar-logo.svg" alt="" className="logo-oznaka-slika" />
+            <img src="/baltazar-logo.png" alt="" className="logo-oznaka-slika" />
           </span>
           <span className="logo-tekst">
-            <span className="naslov-app">{config.kolegij}</span>
+            <span className="naslov-app">Baltazarov AI asistent za učenje</span>
             <span className="podnaslov-app">
-              {config.ustanova} · AI asistent „{config.assistantName}&ldquo;
+              {config.kolegij} · {config.ustanova}
             </span>
           </span>
         </Link>

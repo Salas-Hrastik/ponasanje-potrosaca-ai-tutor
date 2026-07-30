@@ -70,7 +70,7 @@ export default async function NaslovnicaPage() {
         </div>
         <div className="hero-korice" aria-hidden="true">
           <div className="korice-vrh">
-            <img src="/baltazar-logo.svg" alt="" className="korice-znak" />
+            <img src="/baltazar-logo.png" alt="" className="korice-znak" />
             <span className="korice-izdavac">
               Veleučilište
               <br />
