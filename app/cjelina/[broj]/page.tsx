@@ -41,24 +41,6 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
 
   return (
     <div className="page-cjelina-okvir">
-      <div className="cjelina-traka">
-        <Link href="/" className="gumb-pocetak">
-          🏠 Početak
-        </Link>
-        <div className="mrvice-okvir">
-          <p className="mrvice-dio">{poglavlje.dio}</p>
-          <p className="mrvice-cjelina">
-            <strong>
-              {poglavlje.broj}. {poglavlje.naslov}
-            </strong>{' '}
-            · str. {poglavlje.stranica_od}–{poglavlje.stranica_do}
-          </p>
-        </div>
-        <Link href={`/cjelina/${broj}/kviz`} className="gumb-kviz-vrh">
-          Kviz cjeline ({brojPitanja}) →
-        </Link>
-      </div>
-
       <CjelinaRadniProstor
         broj={broj}
         naslov={poglavlje.naslov}

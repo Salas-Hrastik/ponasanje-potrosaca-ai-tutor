@@ -27,8 +27,6 @@ export default async function Header() {
         </Link>
       </div>
       <nav className="zaglavlje-nav">
-        <Link href="/usmena-vjezba">Usmena vježba</Link>
-        <Link href="/zavrsna-provjera">Završna provjera</Link>
         <Link href="/izvori">Izvori</Link>
         <Link href="/o-prirucniku">O priručniku</Link>
       </nav>
