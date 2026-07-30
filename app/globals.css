@@ -87,8 +87,9 @@ code {
   align-items: center;
   gap: 24px;
   padding: 8px 24px;
-  background: var(--more-900);
-  color: #fff;
+  background: var(--pozadina);
+  color: var(--more-900);
+  border-bottom: 1px solid var(--rub);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -103,7 +104,7 @@ code {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #fff;
+  color: var(--more-900);
 }
 .logo-link:hover {
   text-decoration: none;
@@ -140,10 +141,10 @@ code {
   font-size: 14px;
 }
 .zaglavlje-nav a {
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--more-700);
 }
 .zaglavlje-nav a:hover {
-  color: #fff;
+  color: var(--more-900);
 }
 
 .zaglavlje-desno {
@@ -153,18 +154,18 @@ code {
   font-size: 13px;
 }
 .korisnik-email {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--tekst-blijedi);
 }
 .gumb-odjava {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #fff;
+  color: var(--more-900);
+  border: 1px solid var(--rub-jaci);
   border-radius: var(--radijus-mali);
   padding: 6px 12px;
   cursor: pointer;
 }
 .gumb-odjava:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--more-050);
 }
 
 /* --- Okvir stranice ------------------------------------------------------ */
