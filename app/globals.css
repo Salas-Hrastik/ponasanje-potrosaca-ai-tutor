@@ -1285,13 +1285,6 @@ code {
   margin: 0;
   font-size: 20px;
 }
-.usmena-oznaka {
-  font-size: 14.5px;
-  background: var(--jantar-100);
-  color: var(--jantar-600);
-  border-radius: 999px;
-  padding: 2px 10px;
-}
 .usmena-opseg {
   margin: 6px 0 14px;
   font-size: 16px;
@@ -2085,19 +2078,67 @@ code {
   background: var(--more-050);
 }
 
-/* Razgovaraj — dva stupca: usmeni razgovor (lijevo) i pismeni razgovor (desno) */
+/* Razgovaraj — dva stupca: usmeni razgovor (lijevo) i pismeni razgovor (desno).
+   Svaki je stupac zaseban uokvireni panel s vlastitim zaglavljem i bojom, da se
+   dva načina komunikacije jasno razlikuju na prvi pogled. */
 .nacin-panel-razgovaraj {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: start;
+  gap: 28px;
+  align-items: stretch;
+}
+.razgovaraj-stupac {
+  display: flex;
+  flex-direction: column;
+  background: var(--ploha);
+  border: 1px solid var(--rub);
+  border-radius: var(--radijus);
+  box-shadow: var(--sjena);
+  overflow: hidden;
 }
 .razgovaraj-stupac-naslov {
-  margin: 0 0 10px;
+  margin: 0;
+  padding: 12px 20px;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--rub);
+}
+.razgovaraj-stupac-usmeni {
+  border-color: var(--more-100);
+}
+.razgovaraj-stupac-usmeni .razgovaraj-stupac-naslov {
+  background: var(--more-050);
   color: var(--more-700);
+  border-bottom-color: var(--more-100);
+}
+.razgovaraj-stupac-pismeni {
+  border-color: #f0dcb3;
+}
+.razgovaraj-stupac-pismeni .razgovaraj-stupac-naslov {
+  background: var(--pijesak-100);
+  color: var(--pijesak-600);
+  border-bottom-color: #f0dcb3;
+}
+
+/* Sadržaj unutar stupca ne nosi vlastiti okvir — panel je već okvir. */
+.nacin-panel-razgovaraj .usmena-vjezba,
+.nacin-panel-razgovaraj .ai-chat {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+  flex: 1;
+}
+/* Unutarnja zaglavlja („AI asistent", „Usmena vježba") dupliciraju naslov stupca. */
+.nacin-panel-razgovaraj .chat-zaglavlje,
+.nacin-panel-razgovaraj .usmena-zaglavlje {
+  display: none;
+}
+.nacin-panel-razgovaraj .usmena-opseg {
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--rub);
 }
 .nacin-panel-razgovaraj .ai-chat {
   max-height: calc(100vh - 300px);

@@ -57,6 +57,7 @@ export default function AiChat({
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dijeloviRef = useRef<Blob[]>([]);
+  const porukeRef = useRef<HTMLDivElement | null>(null);
 
   // Mikrofon se otpušta i kad korisnik napusti stranicu usred snimanja.
   useEffect(
@@ -65,6 +66,12 @@ export default function AiChat({
     },
     [],
   );
+
+  // Novi odgovor bi inače ostao izvan vidljivog dijela prozora poruka.
+  useEffect(() => {
+    const el = porukeRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [poruke, ucitava]);
 
   // Red čekanja: iskorišteni prijedlog nestaje, a sljedeći neiskorišteni ulazi na njegovo mjesto.
   const vidljiviPrijedlozi = predlozenaPitanja
@@ -182,7 +189,7 @@ export default function AiChat({
       {/* Opći chat (izvan nastavne cjeline) uvijek nosi kratak disclaimer. */}
       {!poglavljeBroj && <p className="chat-disclaimer">Odgovaram samo prema udžbeniku.</p>}
 
-      <div className="chat-poruke">
+      <div className="chat-poruke" ref={porukeRef}>
         {poruke.length === 0 && (
           <div className="chat-dobrodoslica">
             <p>

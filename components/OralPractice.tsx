@@ -158,7 +158,6 @@ export default function OralPractice({
     <section className="usmena-vjezba kartica">
       <div className="usmena-zaglavlje">
         <h3>🎙️ Usmena vježba</h3>
-        <span className="usmena-oznaka">trening — bez službenog ocjenjivanja</span>
       </div>
       {naslovOpsega && <p className="usmena-opseg">Opseg: {naslovOpsega}</p>}
 
