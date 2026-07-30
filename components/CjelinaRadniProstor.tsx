@@ -133,22 +133,20 @@ export default function CjelinaRadniProstor({
         </div>
 
         {ciljevi.length > 0 && (
-          <section className="kartica ciljevi-kartica">
+          <section className="kartica ciljevi-kartica ciljevi-kartica-kompaktna">
             <h3>🎯 Što ćete naučiti?</h3>
-            <ul className="ciljevi-lista">
+            <ul className="ciljevi-lista ciljevi-lista-kompaktna">
               {ciljevi.map((c) => (
                 <li key={c.id}>
                   <span className="cilj-krug" aria-hidden="true" />
                   <span className="cilj-sadrzaj">
                     {c.tekst}
-                    <span className="cilj-meta">
-                      {c.kognitivna_razina && (
-                        <span className="cilj-razina-chip">
-                          {c.kognitivna_razina.charAt(0).toUpperCase() + c.kognitivna_razina.slice(1)}
-                        </span>
-                      )}
-                      <span className="cilj-stranica">[Priručnik: str. {c.stranica ?? stranice}]</span>
-                    </span>
+                    {c.kognitivna_razina && (
+                      <span className="cilj-razina-chip">
+                        {c.kognitivna_razina.charAt(0).toUpperCase() + c.kognitivna_razina.slice(1)}
+                      </span>
+                    )}
+                    <span className="cilj-stranica">str. {c.stranica ?? stranice}</span>
                   </span>
                 </li>
               ))}
@@ -167,8 +165,6 @@ export default function CjelinaRadniProstor({
             ))}
           </div>
         </div>
-
-        <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
       </div>
     );
   }
@@ -208,6 +204,7 @@ export default function CjelinaRadniProstor({
       {nacin === 'razgovaraj' && (
         <div className="nacin-panel nacin-panel-razgovaraj">
           <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
+          <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
         </div>
       )}
 

@@ -627,6 +627,47 @@ code {
   color: var(--more-700);
 }
 
+/* Kompaktna varijanta — landing prikaz cjeline, prostor je ograničen. */
+.ciljevi-kartica-kompaktna {
+  padding: 14px 20px;
+}
+.ciljevi-kartica-kompaktna h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+.ciljevi-lista-kompaktna {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+}
+.ciljevi-lista-kompaktna li {
+  padding: 3px 0;
+  gap: 6px;
+}
+.ciljevi-lista-kompaktna .cilj-krug {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  margin-top: 6px;
+}
+.ciljevi-lista-kompaktna .cilj-sadrzaj {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.ciljevi-lista-kompaktna .cilj-razina-chip {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10px;
+  padding: 0 6px;
+}
+.ciljevi-lista-kompaktna .cilj-stranica {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10px;
+  color: var(--tekst-blijedi);
+  white-space: nowrap;
+}
+
 /* Sažetak */
 .sazetak-redak {
   width: 100%;
@@ -2161,6 +2202,9 @@ code {
     flex-wrap: wrap;
   }
   .nacin-panel-gledaj {
+    grid-template-columns: 1fr;
+  }
+  .ciljevi-lista-kompaktna {
     grid-template-columns: 1fr;
   }
 }

@@ -59,18 +59,6 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
         </Link>
       </div>
 
-      {odjeljci.length > 0 && (
-        <nav className="odjeljci-niz" aria-label="Odjeljci cjeline">
-          {odjeljci.map((o) => (
-            <span key={o.id} className="odjeljak-chip">
-              {o.oznaka ? <span className="odjeljak-oznaka">{o.oznaka}</span> : null}
-              {o.naslov}
-              <span className="odjeljak-str">str. {o.stranica_od}–{o.stranica_do}</span>
-            </span>
-          ))}
-        </nav>
-      )}
-
       <CjelinaRadniProstor
         broj={broj}
         naslov={poglavlje.naslov}
