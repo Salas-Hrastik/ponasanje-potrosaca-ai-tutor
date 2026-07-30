@@ -2139,12 +2139,12 @@ code {
   background: var(--more-050);
 }
 
-/* Razgovaraj — jedan blok: interaktivni razgovor kao vježba, bez ocjenjivanja.
-   Usmena provjera s povratnom informacijom preselila je u „Provjeri". */
+/* Razgovaraj — dva bloka, oba kao vježba BEZ ocjenjivanja: usmeni interaktivni
+   razgovor (sa zamjenom uloga) lijevo i pismeni razgovor desno. Provjera s
+   povratnom informacijom i bodovima živi u „Provjeri". */
 .nacin-panel-razgovaraj {
   display: grid;
-  grid-template-columns: minmax(0, 900px);
-  justify-content: center;
+  grid-template-columns: 1fr 1fr;
   gap: 28px;
   align-items: stretch;
 }
@@ -2185,6 +2185,7 @@ code {
 /* Sadržaj unutar stupca ne nosi vlastiti okvir — panel je već okvir. */
 .nacin-panel-razgovaraj .usmena-vjezba,
 .nacin-panel-razgovaraj .ai-chat,
+.nacin-panel-razgovaraj .usmeni-razgovor,
 .nacin-panel-provjeri .usmena-vjezba,
 .nacin-panel-provjeri .kviz {
   border: none;
@@ -2266,42 +2267,149 @@ code {
   }
 }
 
-/* Prekidač uloga u razgovoru (student pita ↔ asistent ispituje). */
-.chat-uloge {
+/* --- Usmeni interaktivni razgovor (vježba bez ocjenjivanja) --------------- */
+.usmeni-razgovor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.usmeni-razgovor-aktivan {
+  padding: 0;
+}
+.usmeni-traka {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 10px 16px;
+  padding: 10px 18px;
   background: var(--more-050);
-  border-bottom: 1px solid var(--rub);
+  border-bottom: 1px solid var(--more-100);
 }
-.chat-uloga-oznaka {
-  font-size: 14.5px;
+.usmeni-uloga {
+  font-size: 15px;
   font-weight: 600;
   color: var(--more-700);
 }
-.chat-uloga-oznaka.ispituje {
+.usmeni-uloga.ispituje {
   color: var(--pijesak-600);
 }
-.chat-zamjena-uloga {
+.usmeni-zamjena {
   background: var(--ploha);
   border: 1px solid var(--rub-jaci);
   border-radius: 999px;
   padding: 6px 16px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 600;
   color: var(--more-800);
   cursor: pointer;
 }
-.chat-zamjena-uloga:hover:not(:disabled) {
+.usmeni-zamjena:hover:not(:disabled) {
   background: var(--more-100);
 }
-.chat-zamjena-uloga:disabled {
+.usmeni-zamjena:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+.usmeni-tijek {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 180px;
+  max-height: calc(100vh - 420px);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.usmeni-uputa {
+  margin: 0;
+  color: var(--tekst-blijedi);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.usmeni-replika {
+  border-radius: var(--radijus);
+  padding: 10px 14px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.usmeni-replika p {
+  margin: 4px 0 0;
+  white-space: pre-wrap;
+}
+.usmeni-autor {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.usmeni-student {
+  background: var(--more-900);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 88%;
+}
+.usmeni-student .usmeni-autor {
+  color: var(--pijesak-500);
+}
+.usmeni-asistent {
+  background: var(--more-050);
+  border: 1px solid var(--more-100);
+  color: var(--tekst);
+}
+.usmeni-asistent .usmeni-autor {
+  color: var(--more-700);
+}
+.usmeni-stanje {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tekst-blijedi);
+  font-style: italic;
+}
+
+.usmeni-upravljanje {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  border-top: 1px solid var(--rub);
+}
+.gumb-govori {
+  background: var(--more-900);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 13px 30px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 16px rgba(6, 51, 63, 0.2);
+}
+.gumb-govori:hover:not(:disabled) {
+  background: var(--more-800);
+}
+.gumb-govori:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+.gumb-govori-snima {
+  background: var(--crvena-600);
+  animation: puls-snimanja 1.2s ease-in-out infinite;
+}
+@keyframes puls-snimanja {
+  50% {
+    opacity: 0.75;
+  }
+}
+.usmeni-napomena {
+  font-size: 13.5px;
+  color: var(--tekst-blijedi);
 }
 
 /* Gledaj i slušaj */
@@ -2490,4 +2598,21 @@ code {
   .ciljevi-lista-kompaktna {
     grid-template-columns: 1fr;
   }
+}
+
+/* Odgovor asistenta u usmenom razgovoru dolazi u Markdownu (podebljanja,
+   nabrajanja) — prikazuje se oblikovano, a ne s doslovnim zvjezdicama. */
+.usmeni-tekst > :first-child {
+  margin-top: 4px;
+}
+.usmeni-tekst > :last-child {
+  margin-bottom: 0;
+}
+.usmeni-tekst p {
+  margin: 0 0 8px;
+}
+.usmeni-tekst ul,
+.usmeni-tekst ol {
+  margin: 6px 0;
+  padding-left: 22px;
 }

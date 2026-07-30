@@ -7,6 +7,7 @@ import AiChat from './AiChat';
 import QuizRunner from './QuizRunner';
 import SazetakModal from './SazetakModal';
 import OralPractice from './OralPractice';
+import UsmeniRazgovor from './UsmeniRazgovor';
 
 interface Odjeljak {
   id: string;
@@ -206,10 +207,14 @@ export default function CjelinaRadniProstor({
 
       {nacin === 'razgovaraj' && (
         <div className="nacin-panel nacin-panel-razgovaraj">
-          <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
+          <div className="razgovaraj-stupac razgovaraj-stupac-usmeni">
             <p className="razgovaraj-stupac-naslov">
-              💬 Razgovor o sadržaju poglavlja — vježba bez ocjenjivanja
+              🎙️ Usmeni razgovor — govorite i zamijenite uloge
             </p>
+            <UsmeniRazgovor poglavljeBroj={broj} naslovPoglavlja={naslov} />
+          </div>
+          <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
+            <p className="razgovaraj-stupac-naslov">⌨️ Pismeni razgovor — pitajte i čitajte odgovor</p>
             <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
           </div>
         </div>

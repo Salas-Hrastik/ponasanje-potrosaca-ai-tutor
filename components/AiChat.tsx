@@ -21,9 +21,6 @@ interface Poruka {
 
 const VIDLJIVIH_PRIJEDLOGA = 3;
 
-/** Tko postavlja pitanja: asistent odgovara studentu ili ga ispituje. */
-type Uloga = 'asistent' | 'ispitivac';
-
 /** Uklanja Markdown oznake da TTS ne čita zvjezdice i crtice naglas. */
 function zaCitanje(md: string): string {
   return md
@@ -57,7 +54,6 @@ export default function AiChat({
   const [snima, setSnima] = useState(false);
   const [transkribira, setTranskribira] = useState(false);
   const [glasovnaGreska, setGlasovnaGreska] = useState<string | null>(null);
-  const [uloga, setUloga] = useState<Uloga>('asistent');
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dijeloviRef = useRef<Blob[]>([]);
@@ -78,14 +74,10 @@ export default function AiChat({
   }, [poruke, ucitava]);
 
   // Red čekanja: iskorišteni prijedlog nestaje, a sljedeći neiskorišteni ulazi na njegovo mjesto.
-  // U ulozi ispitivača student odgovara, ne pita — prijedlozi bi zbunjivali.
-  const vidljiviPrijedlozi =
-    uloga === 'ispitivac'
-      ? []
-      : predlozenaPitanja
-          .map((tekst, i) => ({ tekst, i }))
-          .filter((p) => !iskoristena.has(p.i))
-          .slice(0, VIDLJIVIH_PRIJEDLOGA);
+  const vidljiviPrijedlozi = predlozenaPitanja
+    .map((tekst, i) => ({ tekst, i }))
+    .filter((p) => !iskoristena.has(p.i))
+    .slice(0, VIDLJIVIH_PRIJEDLOGA);
 
   async function pocniSnimanje() {
     setGlasovnaGreska(null);
@@ -134,7 +126,7 @@ export default function AiChat({
     }
   }
 
-  async function posaljiPitanje(pitanje: string, ulogaZaPoziv: Uloga = uloga) {
+  async function posaljiPitanje(pitanje: string) {
     if (!pitanje || ucitava) return;
     // Povijest se uzima PRIJE dodavanja nove poruke — model treba ono što je
     // rečeno dosad, a tekuću poruku dobiva zasebno.
@@ -150,7 +142,6 @@ export default function AiChat({
           poglavljeBroj,
           naslovPoglavlja,
           ukljuciDopunske: dopunski,
-          uloga: ulogaZaPoziv,
           povijest,
         }),
       });
@@ -197,17 +188,6 @@ export default function AiChat({
     void posaljiPitanje(tekst);
   }
 
-  /**
-   * Zamjena uloga: kad asistent preuzme ispitivanje, odmah traži prvo pitanje —
-   * inače bi student ostao pred praznim poljem bez naznake što se promijenilo.
-   */
-  function zamijeniUloge() {
-    const nova: Uloga = uloga === 'asistent' ? 'ispitivac' : 'asistent';
-    setUloga(nova);
-    if (nova === 'ispitivac') {
-      void posaljiPitanje('Preuzmi ulogu ispitivača i postavi mi prvo pitanje o ovoj cjelini.', 'ispitivac');
-    }
-  }
 
   return (
     <div className="ai-chat">
@@ -219,23 +199,12 @@ export default function AiChat({
       {/* Opći chat (izvan nastavne cjeline) uvijek nosi kratak disclaimer. */}
       {!poglavljeBroj && <p className="chat-disclaimer">Odgovaram samo prema udžbeniku.</p>}
 
-      <div className="chat-uloge">
-        <span className={`chat-uloga-oznaka ${uloga === 'ispitivac' ? 'ispituje' : ''}`}>
-          {uloga === 'asistent' ? '💬 Vi pitate, ja odgovaram' : '🎓 Ja pitam, vi odgovarate'}
-        </span>
-        <button type="button" className="chat-zamjena-uloga" onClick={zamijeniUloge} disabled={ucitava}>
-          {uloga === 'asistent' ? 'Zamijeni uloge' : 'Vrati uloge'}
-        </button>
-      </div>
-
       <div className="chat-poruke" ref={porukeRef}>
         {poruke.length === 0 && (
           <div className="chat-dobrodoslica">
             <p>
               Tema: <strong>{naslovPoglavlja ?? 'cijeli priručnik'}</strong>. Pitajte me bilo što —
-              odgovaram isključivo prema priručniku i uz svaki odgovor navodim stranicu. Želite li
-              vježbati izlaganje, kliknite <strong>Zamijeni uloge</strong> pa ću ja postavljati
-              pitanja — bez ocjenjivanja.
+              odgovaram isključivo prema priručniku i uz svaki odgovor navodim stranicu.
             </p>
           </div>
         )}
@@ -302,11 +271,9 @@ export default function AiChat({
           placeholder={
             transkribira
               ? 'Prepoznajem govor…'
-              : uloga === 'ispitivac'
-                ? 'Odgovorite na pitanje…'
-                : poglavljeBroj
-                  ? 'Postavite pitanje o ovoj cjelini…'
-                  : 'Postavite pitanje o gradivu…'
+              : poglavljeBroj
+                ? 'Postavite pitanje o ovoj cjelini…'
+                : 'Postavite pitanje o gradivu…'
           }
           disabled={ucitava || transkribira}
         />
