@@ -38,6 +38,15 @@ export const config = {
   claudeModel: process.env.CLAUDE_MODEL || 'claude-sonnet-5',
   claudeMaxTokens: int('CLAUDE_MAX_TOKENS', 3000),
 
+  /**
+   * Usmeni razgovor ima drukčiji proračun od pisanog: odgovor se SLUŠA, pa mora
+   * biti kratak, a čekanje se u razgovoru osjeti puno jače nego u chatu. Zato
+   * brži model i mali izlaz — mjereno, to skraćuje krug s ~20 s na nekoliko.
+   */
+  usmeniModel: process.env.USMENI_MODEL || 'claude-haiku-4-5-20251001',
+  usmeniMaxTokens: int('USMENI_MAX_TOKENS', 400),
+  usmeniTopK: int('USMENI_TOP_K', 6),
+
   embeddingProvider: (process.env.EMBEDDING_PROVIDER || 'openai') as 'openai' | 'voyage',
   embeddingModel: process.env.EMBEDDING_MODEL || 'text-embedding-3-small',
   embeddingDim: int('EMBEDDING_DIM', 1536),

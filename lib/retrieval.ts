@@ -35,6 +35,8 @@ export interface RetrieveOptions {
   odjeljakId?: string;
   topK?: number;
   ukljuciDopunske?: boolean;
+  /** Nadjačava config.ragRerank — usmeni razgovor preskače rerank zbog brzine. */
+  rerank?: boolean;
 }
 
 type RpcRow = {
@@ -74,8 +76,9 @@ export async function retrieve(
   options: RetrieveOptions = {},
 ): Promise<RetrievedChunk[]> {
   const topK = options.topK ?? config.ragTopK;
+  const rerankOn = options.rerank ?? config.ragRerank;
   const sb = supabaseAdmin();
-  const poolSize = config.ragRerank ? Math.max(topK * 3, 24) : topK;
+  const poolSize = rerankOn ? Math.max(topK * 3, 24) : topK;
 
   const params = {
     match_count: poolSize,
@@ -110,7 +113,9 @@ export async function retrieve(
     k++;
   }
 
-  const ordered = await rerankChunks(query, candidates, Math.min(candidates.length, config.ragRerankTopN + 2));
+  const ordered = rerankOn
+    ? await rerankChunks(query, candidates, Math.min(candidates.length, config.ragRerankTopN + 2))
+    : candidates;
 
   // Deduplikacija: najviše 2 isječka po odjeljku, ograničeno proračunom znakova.
   const poOdjeljku = new Map<string, number>();

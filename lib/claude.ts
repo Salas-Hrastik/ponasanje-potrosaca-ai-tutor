@@ -25,10 +25,11 @@ export async function askClaudeJson<T = unknown>(
   system: string,
   userMessage: string,
   maxTokens: number = config.claudeMaxTokens,
+  model: string = config.claudeModel,
 ): Promise<T> {
   const anthropic = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   const msg = await anthropic.messages.create({
-    model: config.claudeModel,
+    model,
     max_tokens: maxTokens,
     system,
     messages: [{ role: 'user', content: userMessage }],

@@ -104,6 +104,7 @@ export default function UsmeniRazgovor({
             naslovPoglavlja,
             uloga: ulogaZaPoziv,
             povijest,
+            usmeni: true,
           }),
         });
         const data = await res.json();

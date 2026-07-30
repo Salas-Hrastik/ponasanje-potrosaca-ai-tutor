@@ -4,9 +4,11 @@ import { retrieve, dovoljnoKonteksta, toCitations } from '@/lib/retrieval';
 import {
   buildChatSystemPrompt,
   buildChatUserPrompt,
+  buildUsmeniSystemPrompt,
   type Uloga,
   type PorukaPovijesti,
 } from '@/lib/prompt';
+import { config } from '@/lib/config';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
@@ -40,6 +42,9 @@ async function POSTImpl(request: NextRequest) {
   const poglavljeBroj: number | undefined = body?.poglavljeBroj || undefined;
   const ukljuciDopunske: boolean = body?.ukljuciDopunske === true;
   const uloga: Uloga = body?.uloga === 'ispitivac' ? 'ispitivac' : 'asistent';
+  // Usmeni razgovor se sluša, pa ide kraći odgovor i brži model — čekanje se u
+  // govoru osjeti puno jače nego u chatu.
+  const usmeni: boolean = body?.usmeni === true;
   // Povijest je ograničena: dovoljna za potpitanja i zamjenu uloga, a da ne
   // naraste proračun konteksta ni cijena poziva.
   const povijest: PorukaPovijesti[] = Array.isArray(body?.povijest)
@@ -67,7 +72,11 @@ async function POSTImpl(request: NextRequest) {
   const zadnjeModelovo = [...povijest].reverse().find((p) => p.autor === 'asistent')?.tekst ?? '';
   const upitZaDohvat =
     uloga === 'ispitivac' && zadnjeModelovo ? `${zadnjeModelovo.slice(0, 400)}\n${pitanje}` : pitanje;
-  const chunks = await retrieve(upitZaDohvat, { poglavljeId, ukljuciDopunske });
+  const chunks = await retrieve(upitZaDohvat, {
+    poglavljeId,
+    ukljuciDopunske,
+    ...(usmeni ? { topK: config.usmeniTopK, rerank: false } : {}),
+  });
   const imaKontekst = dovoljnoKonteksta(chunks);
 
   if (!imaKontekst) {
@@ -89,8 +98,10 @@ async function POSTImpl(request: NextRequest) {
 
   const nacin: 'cjelina' | 'opci' = poglavljeBroj ? 'cjelina' : 'opci';
   const odgovor = await askClaudeJson<Record<string, unknown>>(
-    buildChatSystemPrompt(nacin, uloga),
+    usmeni ? buildUsmeniSystemPrompt(uloga) : buildChatSystemPrompt(nacin, uloga),
     buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja, povijest, uloga),
+    usmeni ? config.usmeniMaxTokens : undefined,
+    usmeni ? config.usmeniModel : undefined,
   );
 
   // Citati su uvjet vjernosti izvoru: ako ih model izostavi, dopisuju se iz
