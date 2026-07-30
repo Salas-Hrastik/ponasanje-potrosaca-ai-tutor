@@ -51,7 +51,7 @@ export async function askClaudeJson<T = unknown>(
   });
 
   const alat = msg.content.find((b) => b.type === 'tool_use');
-  if (alat && alat.type === 'tool_use') return alat.input as T;
+  if (alat && alat.type === 'tool_use') return normalizirajPrijelome(alat.input) as T;
 
   // Rezervni put: model je ipak odgovorio tekstom (npr. starija verzija modela).
   const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('').trim();
@@ -76,4 +76,27 @@ export async function askClaudeJson<T = unknown>(
       'Odgovor modela nije bilo moguće protumačiti. Pokušajte ponovno ili preciznije postavite pitanje (npr. navedite poglavlje ili lekciju).',
     ) as T;
   }
+}
+
+/**
+ * Model povremeno dvostruko escapira prijelome, pa u tekstu odgovora završi
+ * doslovni niz „\n" umjesto novog retka — u chatu se to vidi kao smeće usred
+ * rečenice. Hrvatski tekst priručnika nikad ne sadrži obrnutu kosu crtu ispred
+ * n/t, pa je zamjena sigurna. Prolazi se kroz cijelu strukturu jer prijelomi
+ * mogu biti i u citatima, savjetima i idealnom odgovoru.
+ */
+function normalizirajPrijelome(vrijednost: unknown): unknown {
+  if (typeof vrijednost === 'string') {
+    return vrijednost.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+  }
+  if (Array.isArray(vrijednost)) return vrijednost.map(normalizirajPrijelome);
+  if (vrijednost && typeof vrijednost === 'object') {
+    return Object.fromEntries(
+      Object.entries(vrijednost as Record<string, unknown>).map(([k, v]) => [
+        k,
+        normalizirajPrijelome(v),
+      ]),
+    );
+  }
+  return vrijednost;
 }
