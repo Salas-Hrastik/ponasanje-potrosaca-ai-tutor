@@ -86,7 +86,7 @@ code {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 12px 24px;
+  padding: 8px 24px;
   background: var(--more-900);
   color: #fff;
   position: sticky;
@@ -112,9 +112,9 @@ code {
 .logo-oznaka {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
 }
 .logo-oznaka-slika {
   width: 100%;
@@ -134,14 +134,6 @@ code {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.podnaslov-app {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.72);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .zaglavlje-nav {
   display: flex;
   gap: 18px;

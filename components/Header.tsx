@@ -23,9 +23,6 @@ export default async function Header() {
           </span>
           <span className="logo-tekst">
             <span className="naslov-app">Baltazarov AI asistent za učenje</span>
-            <span className="podnaslov-app">
-              {config.kolegij} · {config.ustanova}
-            </span>
           </span>
         </Link>
       </div>
