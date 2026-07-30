@@ -120,7 +120,6 @@ export default function CjelinaRadniProstor({
         <div className="cjelina-hero">
           <div className="cjelina-hero-tekst">
             <p className="cjelina-hero-oznaka">{dio}</p>
-            <h1 className="cjelina-hero-naslov">{naslov}</h1>
             <p className="cjelina-hero-podnaslov">
               Odaberite način rada u nastavku. U svakom se trenutku možete vratiti na početak
               cjeline.
