@@ -15,9 +15,15 @@ import remarkGfm from 'remark-gfm';
  * u razgovoru ostaje isključivo prepoznati tekst.
  */
 
+interface Citat {
+  poglavlje: string;
+  stranice: string;
+}
+
 interface Poruka {
   autor: 'student' | 'asistent';
   tekst: string;
+  citati?: Citat[];
   /** Interna naredba (npr. preuzimanje uloge) — šalje se modelu, ne prikazuje se. */
   skriveno?: boolean;
 }
@@ -60,17 +66,41 @@ export default function UsmeniRazgovor({
     if (el) el.scrollTop = el.scrollHeight;
   }, [poruke, obradjuje]);
 
-  /** Pušta odgovor naglas; ako TTS zakaže, razgovor se nastavlja u tekstu. */
-  const izgovori = useCallback(async (tekst: string) => {
+  /**
+   * Red za izgovaranje: rečenice se sintetiziraju i puštaju redom, dok odgovor
+   * još pristiže. Sljedeća se dohvaća dok tekuća svira, pa nema tišine između.
+   */
+  const redRef = useRef<string[]>([]);
+  const sviraRef = useRef(false);
+  const prekinutoRef = useRef(false);
+
+  const dohvatiZvuk = useCallback(async (tekst: string): Promise<string | null> => {
     try {
-      setObradjuje('govorim');
       const res = await fetch('/api/govor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tekst: ocistiZaGovor(tekst) }),
       });
-      if (!res.ok) return;
-      const url = URL.createObjectURL(await res.blob());
+      if (!res.ok) return null;
+      return URL.createObjectURL(await res.blob());
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const pustiRed = useCallback(async () => {
+    if (sviraRef.current) return;
+    sviraRef.current = true;
+    setObradjuje('govorim');
+
+    // Sinteza sljedeće rečenice teče usporedo s reprodukcijom tekuće.
+    let sljedeci: Promise<string | null> | null = null;
+    while (redRef.current.length > 0 && !prekinutoRef.current) {
+      const tekst = redRef.current.shift()!;
+      const url = sljedeci ? await sljedeci : await dohvatiZvuk(tekst);
+      sljedeci = redRef.current.length > 0 ? dohvatiZvuk(redRef.current[0]) : null;
+      if (!url) continue;
+
       const audio = new Audio(url);
       audioRef.current = audio;
       await new Promise<void>((resolve) => {
@@ -81,21 +111,37 @@ export default function UsmeniRazgovor({
         audio.onerror = () => resolve();
         void audio.play().catch(() => resolve());
       });
-    } catch {
-      // tišina: tekst odgovora je već vidljiv u tijeku razgovora
-    } finally {
-      setObradjuje('');
     }
-  }, []);
 
-  /** Šalje poruku asistentu i pušta njegov odgovor naglas. */
+    sviraRef.current = false;
+    if (redRef.current.length === 0) setObradjuje('');
+  }, [dohvatiZvuk]);
+
+  /** Dodaje rečenicu u red i pokreće reprodukciju ako već ne svira. */
+  const izgovoriRecenicu = useCallback(
+    (recenica: string) => {
+      const t = recenica.trim();
+      if (!t) return;
+      redRef.current.push(t);
+      void pustiRed();
+    },
+    [pustiRed],
+  );
+
+  /**
+   * Šalje poruku i ČITA TOK odgovora: tekst se ispisuje dok pristiže, a svaka
+   * dovršena rečenica odmah ide na izgovaranje — ne čeka se cijeli odgovor.
+   */
   const posalji = useCallback(
     async (tekst: string, ulogaZaPoziv: Uloga, skriveno = false) => {
       const povijest = poruke.slice(-6).map(({ autor, tekst: t }) => ({ autor, tekst: t }));
+      prekinutoRef.current = false;
+      redRef.current = [];
       setPoruke((p) => [...p, { autor: 'student', tekst, skriveno }]);
       setObradjuje('razmisljam');
+
       try {
-        const res = await fetch('/api/chat', {
+        const res = await fetch('/api/usmeni', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -104,24 +150,90 @@ export default function UsmeniRazgovor({
             naslovPoglavlja,
             uloga: ulogaZaPoziv,
             povijest,
-            usmeni: true,
           }),
         });
-        const data = await res.json();
-        const odgovor: string =
-          data.odgovor || data.poruka || data.greska || 'Odgovor trenutačno nije dostupan.';
-        setPoruke((p) => [...p, { autor: 'asistent', tekst: odgovor }]);
-        await izgovori(odgovor);
+        if (!res.body) throw new Error('nema toka');
+
+        // Prazna replika asistenta u koju se tekst dopisuje kako pristiže.
+        setPoruke((p) => [...p, { autor: 'asistent', tekst: '' }]);
+
+        const citac = res.body.getReader();
+        const dekoder = new TextDecoder();
+        let ostatak = '';
+        let zaIzgovor = '';
+        let prvaStigla = false;
+
+        while (true) {
+          const { done, value } = await citac.read();
+          if (done) break;
+          ostatak += dekoder.decode(value, { stream: true });
+
+          const redci = ostatak.split('\n');
+          ostatak = redci.pop() ?? '';
+
+          for (const r of redci) {
+            if (!r.trim()) continue;
+            let dog: { t: string; v?: unknown };
+            try {
+              dog = JSON.parse(r);
+            } catch {
+              continue;
+            }
+
+            if (dog.t === 'tekst' && typeof dog.v === 'string') {
+              if (!prvaStigla) {
+                prvaStigla = true;
+                setObradjuje('govorim');
+              }
+              const komad = dog.v;
+              setPoruke((p) => {
+                const kopija = [...p];
+                const zadnja = kopija[kopija.length - 1];
+                if (zadnja?.autor === 'asistent') {
+                  kopija[kopija.length - 1] = { ...zadnja, tekst: zadnja.tekst + komad };
+                }
+                return kopija;
+              });
+
+              // Rečenica je gotova kad dođe .!? — tada odmah ide na izgovaranje.
+              zaIzgovor += komad;
+              const granica = /[.!?…]["»)\]]?\s/;
+              let m: RegExpMatchArray | null;
+              while ((m = zaIzgovor.match(granica)) && m.index !== undefined) {
+                const kraj = m.index + m[0].length;
+                izgovoriRecenicu(zaIzgovor.slice(0, kraj));
+                zaIzgovor = zaIzgovor.slice(kraj);
+              }
+            } else if (dog.t === 'citati') {
+              const citati = dog.v as Citat[];
+              setPoruke((p) => {
+                const kopija = [...p];
+                const zadnja = kopija[kopija.length - 1];
+                if (zadnja?.autor === 'asistent') {
+                  kopija[kopija.length - 1] = { ...zadnja, citati };
+                }
+                return kopija;
+              });
+            }
+          }
+        }
+
+        // Zadnja rečenica često nema završni razmak.
+        if (zaIzgovor.trim()) izgovoriRecenicu(zaIzgovor);
+        if (redRef.current.length === 0 && !sviraRef.current) setObradjuje('');
       } catch {
         setGreska('Odgovor nije stigao. Pokušajte ponovno.');
         setObradjuje('');
       }
     },
-    [poruke, poglavljeBroj, naslovPoglavlja, izgovori],
+    [poruke, poglavljeBroj, naslovPoglavlja, izgovoriRecenicu],
   );
 
   async function pocniSnimanje() {
     setGreska(null);
+    // Student je počeo govoriti — prekini izgovaranje i isprazni red.
+    prekinutoRef.current = true;
+    redRef.current = [];
     audioRef.current?.pause();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -226,9 +338,20 @@ export default function UsmeniRazgovor({
             <div key={i} className={`usmeni-replika usmeni-${p.autor}`}>
               <span className="usmeni-autor">{p.autor === 'student' ? 'Vi' : 'Asistent'}</span>
               {p.autor === 'asistent' ? (
-                <div className="usmeni-tekst">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{p.tekst}</ReactMarkdown>
-                </div>
+                <>
+                  <div className="usmeni-tekst">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{p.tekst}</ReactMarkdown>
+                  </div>
+                  {!!p.citati?.length && (
+                    <ul className="usmeni-citati">
+                      {p.citati.map((c, j) => (
+                        <li key={j}>
+                          {c.poglavlje}, str. {c.stranice}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
               ) : (
                 <p>{p.tekst}</p>
               )}

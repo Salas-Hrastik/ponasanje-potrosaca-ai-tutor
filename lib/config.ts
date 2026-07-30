@@ -39,11 +39,15 @@ export const config = {
   claudeMaxTokens: int('CLAUDE_MAX_TOKENS', 3000),
 
   /**
-   * Usmeni razgovor ima drukčiji proračun od pisanog: odgovor se SLUŠA, pa mora
-   * biti kratak, a čekanje se u razgovoru osjeti puno jače nego u chatu. Zato
-   * brži model i mali izlaz — mjereno, to skraćuje krug s ~20 s na nekoliko.
+   * Usmeni razgovor: odgovor se SLUŠA, pa mora biti kratak, a odgovor se struji
+   * pa se prva rečenica izgovara prije nego što je cjelina gotova.
+   *
+   * Model je Sonnet, ne Haiku: Haiku je bio ~1 s brži do prve rečenice, ali je
+   * u hrvatskom griješio ("neizvješan", "nešto pošli po zlu", "Krećemo s
+   * Poglavlja 1") i ignorirao zabranu Markdowna. Za alat koji studentima čita
+   * naglas ta je razlika skuplja od sekunde.
    */
-  usmeniModel: process.env.USMENI_MODEL || 'claude-haiku-4-5-20251001',
+  usmeniModel: process.env.USMENI_MODEL || 'claude-sonnet-5',
   usmeniMaxTokens: int('USMENI_MAX_TOKENS', 400),
   usmeniTopK: int('USMENI_TOP_K', 6),
 

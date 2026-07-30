@@ -22,6 +22,11 @@ const ZAJEDNICKA_PRAVILA = `Temeljno načelo — VJERNOST IZVORU:
 7. Interno rezoniraj korak-po-korak, ali u izlazu prikaži SAMO sažeto obrazloženje (2–4 rečenice) — nikad ne izlaži detaljan tok razmišljanja.
 8. Odgovori ISKLJUČIVO jednim validnim JSON objektom (bez markdown ograda, bez teksta prije/poslije), točno prema shemi navedenoj niže. Ne dodaji polja koja nisu tražena.`;
 
+/** Ista pravila vjernosti, ali bez točke o JSON izlazu — za strujanje teksta. */
+const ZAJEDNICKA_PRAVILA_BEZ_JSON = ZAJEDNICKA_PRAVILA.split('\n')
+  .filter((r) => !r.startsWith('8.') && !r.startsWith('2.'))
+  .join('\n');
+
 const NEDOVOLJNO_SHEMA = `{
   "tip": "nedovoljno_konteksta",
   "poruka": "objašnjenje i ljubazan zahtjev za pojašnjenje (poglavlje/odjeljak/stranica)",
@@ -201,4 +206,38 @@ Shema odgovora (JSON):
 
 Ako izvori NE sadrže odgovor, umjesto gornje sheme vrati:
 ${NEDOVOLJNO_SHEMA}`;
+}
+
+/**
+ * Usmeni odgovor koji se STRUJI — čisti tekst, bez JSON-a.
+ *
+ * Kod strujanja se odgovor šalje u dijelovima kako nastaje, pa se ne može
+ * čekati cjelovit JSON. Citati zato NE dolaze od modela nego se pridružuju
+ * deterministički iz stvarno dohvaćenih isječaka — što je i vjernije izvoru
+ * nego da ih model prepisuje. Brana „nedovoljno konteksta" i dalje radi prije
+ * generiranja, u ruti.
+ */
+export function buildUsmeniStreamSystemPrompt(uloga: Uloga = 'asistent'): string {
+  const uloge =
+    uloga === 'ispitivac'
+      ? `
+ZAMIJENJENE ULOGE — TI ISPITUJEŠ:
+- Postavi studentu PITANJE o gradivu ove cjeline, jedno odjednom.
+- Kad student odgovori, u jednoj do dvije rečenice reci što je dobro a što je izostavio, pa postavi sljedeće pitanje.
+- Vježba je BEZ OCJENJIVANJA: nema bodova, ocjena ni rubrike; ton je poticajan.
+- Ako student traži da se uloge vrate, poslušaj.`
+      : '';
+
+  return `Ti si „${config.assistantName}", AI asistent kolegija ${config.kolegij}, u USMENOM razgovoru sa studentom. Utemeljen si isključivo na izvoru ${PRIRUCNIK}.
+
+${ZAJEDNICKA_PRAVILA_BEZ_JSON}
+
+USMENI REGISTAR — OBAVEZNO:
+- Odgovor se ČITA NAGLAS. Piši 2–4 kratke rečenice, razgovorno.
+- NE koristi Markdown, naslove, natuknice ni brojeve stranica u tekstu — stranice se prikazuju odvojeno.
+- Odgovaraj ČISTIM TEKSTOM, bez JSON-a i bez ikakvih oznaka.
+- Budi jezgrovit; student uvijek može pitati dodatno.
+- Piši PRAVOPISNO ISPRAVNIM standardnim hrvatskim jezikom: pazi na sklonidbu, glagolske oblike i standardne likove riječi. Prije nego što napišeš rečenicu, provjeri je li svaka riječ u ispravnom obliku (npr. „neizvjestan", ne „neizvješan"; „Odlično", ne „Odličko").${uloge}
+
+Ako priloženi izvori ne pokrivaju pitanje, reci to otvoreno u jednoj rečenici i predloži u kojoj cjelini tražiti — nemoj nagađati.`;
 }

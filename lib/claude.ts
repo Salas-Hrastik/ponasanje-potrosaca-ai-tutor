@@ -101,3 +101,34 @@ function normalizirajPrijelome(vrijednost: unknown): unknown {
   }
   return vrijednost;
 }
+
+/**
+ * Strujanje odgovora u čistom tekstu — za usmeni razgovor.
+ *
+ * Vraća asinkroni niz komadića teksta kako nastaju, da se prve rečenice mogu
+ * odmah izgovoriti umjesto da se čeka cijeli odgovor.
+ */
+export async function* streamClaudeText(
+  system: string,
+  userMessage: string,
+  maxTokens: number = config.usmeniMaxTokens,
+  model: string = config.usmeniModel,
+): AsyncGenerator<string> {
+  const anthropic = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
+  const tok = anthropic.messages.stream({
+    model,
+    max_tokens: maxTokens,
+    system,
+    messages: [{ role: 'user', content: userMessage }],
+  });
+
+  for await (const dogadjaj of tok) {
+    if (
+      dogadjaj.type === 'content_block_delta' &&
+      dogadjaj.delta.type === 'text_delta' &&
+      dogadjaj.delta.text
+    ) {
+      yield dogadjaj.delta.text;
+    }
+  }
+}

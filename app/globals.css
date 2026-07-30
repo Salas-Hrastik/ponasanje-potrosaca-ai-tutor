@@ -2616,3 +2616,19 @@ code {
   margin: 6px 0;
   padding-left: 22px;
 }
+
+/* Citati uz izgovoreni odgovor — dolaze iz stvarno dohvaćenih isječaka. */
+.usmeni-citati {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px dashed var(--rub);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13.5px;
+  color: var(--more-700);
+}
+.usmeni-citati li::before {
+  content: '📖 ';
+}
