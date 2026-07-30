@@ -19,14 +19,25 @@ export function odgovorNaGresku(e: unknown, opcenitaPoruka: string): NextRespons
   const poruka = e instanceof Error ? e.message : String(e);
   const konfiguracijska = poruka.startsWith('Nedostaje');
 
-  console.error('[api] greška:', poruka);
+  console.error('[api] greška:', e);
 
   return NextResponse.json(
     {
       greska: konfiguracijska
         ? `Poslužitelj nije potpuno konfiguriran: ${poruka} Postavite varijablu u Vercel → Settings → Environment Variables i ponovno deployajte.`
         : opcenitaPoruka,
+      // Vercel logovi nisu uvijek pri ruci, a prazan 500 ne govori ništa. Zato
+      // ide i kratak tehnički trag — bez stacka i s redigiranim tajnama.
+      detalj: redigiraj(`${e instanceof Error ? e.name : 'Greška'}: ${poruka}`),
     },
     { status: 500 },
   );
+}
+
+/** Uklanja sve što izgleda kao API ključ ili token iz teksta greške. */
+function redigiraj(tekst: string): string {
+  return tekst
+    .replace(/\b(sk|pk|rk)-[A-Za-z0-9_-]{8,}/g, '$1-***')
+    .replace(/\beyJ[A-Za-z0-9_.-]{20,}/g, 'eyJ***')
+    .slice(0, 300);
 }
