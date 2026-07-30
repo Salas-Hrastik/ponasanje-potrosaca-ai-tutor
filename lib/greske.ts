@@ -17,7 +17,8 @@ export function odgovorNaGresku(e: unknown, opcenitaPoruka: string): NextRespons
   }
 
   const poruka = e instanceof Error ? e.message : String(e);
-  const konfiguracijska = poruka.startsWith('Nedostaje');
+  const konfiguracijska =
+    poruka.startsWith('Nedostaje') || poruka.startsWith('Vrijednost varijable');
 
   console.error('[api] greška:', e);
 
@@ -26,9 +27,11 @@ export function odgovorNaGresku(e: unknown, opcenitaPoruka: string): NextRespons
       greska: konfiguracijska
         ? `Poslužitelj nije potpuno konfiguriran: ${poruka} Postavite varijablu u Vercel → Settings → Environment Variables i ponovno deployajte.`
         : opcenitaPoruka,
-      // Vercel logovi nisu uvijek pri ruci, a prazan 500 ne govori ništa. Zato
-      // ide i kratak tehnički trag — bez stacka i s redigiranim tajnama.
-      detalj: redigiraj(`${e instanceof Error ? e.name : 'Greška'}: ${poruka}`),
+      // Tehnički trag ne ide studentima u ruke; uključuje se samo kad se
+      // dijagnosticira kvar (ENV DIAGNOSTIKA=1 u Vercelu), i to redigiran.
+      ...(process.env.DIAGNOSTIKA === '1'
+        ? { detalj: redigiraj(`${e instanceof Error ? e.name : 'Greška'}: ${poruka}`) }
+        : {}),
     },
     { status: 500 },
   );
