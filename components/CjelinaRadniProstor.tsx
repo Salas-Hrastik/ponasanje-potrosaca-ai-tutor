@@ -39,11 +39,11 @@ interface Medij {
 type Nacin = 'razgovaraj' | 'prouci' | 'gledaj' | 'vjezbaj' | 'provjeri';
 
 const NACINI: { id: Nacin; naslov: string; opis: string }[] = [
-  { id: 'razgovaraj', naslov: 'Razgovaraj', opis: 'Pitajte AI asistenta o sadržaju cjeline' },
+  { id: 'razgovaraj', naslov: 'Razgovaraj', opis: 'Vježba bez ocjenjivanja — pitajte ili zamijenite uloge' },
   { id: 'prouci', naslov: 'Prouči', opis: 'Ciljevi i sadržaj cjeline, korak po korak' },
   { id: 'gledaj', naslov: 'Gledaj i slušaj', opis: 'Video, audio i prezentacija' },
   { id: 'vjezbaj', naslov: 'Vježbaj', opis: 'Kartice za aktivno prisjećanje pojmova' },
-  { id: 'provjeri', naslov: 'Provjeri', opis: 'Kviz cjeline, jedno pitanje po ekranu' },
+  { id: 'provjeri', naslov: 'Provjeri', opis: 'Usmena provjera i kviz cjeline' },
 ];
 
 /** Pretvara cilj učenja („objasniti X") u pitanje za AI asistenta. */
@@ -206,12 +206,10 @@ export default function CjelinaRadniProstor({
 
       {nacin === 'razgovaraj' && (
         <div className="nacin-panel nacin-panel-razgovaraj">
-          <div className="razgovaraj-stupac razgovaraj-stupac-usmeni">
-            <p className="razgovaraj-stupac-naslov">🎙️ Usmeni razgovor o tekstu priručnika</p>
-            <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
-          </div>
           <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
-            <p className="razgovaraj-stupac-naslov">⌨️ Pismeni razgovor o tekstu priručnika</p>
+            <p className="razgovaraj-stupac-naslov">
+              💬 Razgovor o sadržaju poglavlja — vježba bez ocjenjivanja
+            </p>
             <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
           </div>
         </div>
@@ -248,11 +246,18 @@ export default function CjelinaRadniProstor({
 
       {nacin === 'provjeri' && (
         <div className="nacin-panel nacin-panel-provjeri">
-          {brojPitanja > 0 ? (
-            <QuizRunner poglavljeBroj={broj} />
-          ) : (
-            <p className="prazno-stanje">Kviz za ovu cjelinu još nije pripremljen.</p>
-          )}
+          <div className="provjeri-stupac provjeri-stupac-usmena">
+            <p className="provjeri-stupac-naslov">🎙️ Usmena provjera — pitanje i povratna informacija</p>
+            <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
+          </div>
+          <div className="provjeri-stupac provjeri-stupac-kviz">
+            <p className="provjeri-stupac-naslov">📝 Kviz cjeline — jedno pitanje po ekranu</p>
+            {brojPitanja > 0 ? (
+              <QuizRunner poglavljeBroj={broj} />
+            ) : (
+              <p className="prazno-stanje">Kviz za ovu cjelinu još nije pripremljen.</p>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { zahtijevajKorisnika } from '@/lib/auth';
 import { retrieve, dovoljnoKonteksta, toCitations } from '@/lib/retrieval';
-import { buildChatSystemPrompt, buildChatUserPrompt } from '@/lib/prompt';
+import {
+  buildChatSystemPrompt,
+  buildChatUserPrompt,
+  type Uloga,
+  type PorukaPovijesti,
+} from '@/lib/prompt';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
@@ -34,6 +39,19 @@ async function POSTImpl(request: NextRequest) {
   const pitanje: string = (body?.pitanje || '').trim();
   const poglavljeBroj: number | undefined = body?.poglavljeBroj || undefined;
   const ukljuciDopunske: boolean = body?.ukljuciDopunske === true;
+  const uloga: Uloga = body?.uloga === 'ispitivac' ? 'ispitivac' : 'asistent';
+  // Povijest je ograničena: dovoljna za potpitanja i zamjenu uloga, a da ne
+  // naraste proračun konteksta ni cijena poziva.
+  const povijest: PorukaPovijesti[] = Array.isArray(body?.povijest)
+    ? body.povijest
+        .filter(
+          (p: unknown): p is PorukaPovijesti =>
+            !!p &&
+            typeof (p as PorukaPovijesti).tekst === 'string' &&
+            ['student', 'asistent'].includes((p as PorukaPovijesti).autor),
+        )
+        .slice(-6)
+    : [];
   if (!pitanje) return NextResponse.json({ greska: 'Nedostaje pitanje.' }, { status: 400 });
 
   const admin = supabaseAdmin();
@@ -44,7 +62,12 @@ async function POSTImpl(request: NextRequest) {
   }
 
   const kraj = mjeri();
-  const chunks = await retrieve(pitanje, { poglavljeId, ukljuciDopunske });
+  // U ulozi ispitivača studentov odgovor sam po sebi loše dohvaća gradivo, pa
+  // dohvat vodi pitanje koje je model maloprije postavio.
+  const zadnjeModelovo = [...povijest].reverse().find((p) => p.autor === 'asistent')?.tekst ?? '';
+  const upitZaDohvat =
+    uloga === 'ispitivac' && zadnjeModelovo ? `${zadnjeModelovo.slice(0, 400)}\n${pitanje}` : pitanje;
+  const chunks = await retrieve(upitZaDohvat, { poglavljeId, ukljuciDopunske });
   const imaKontekst = dovoljnoKonteksta(chunks);
 
   if (!imaKontekst) {
@@ -66,8 +89,8 @@ async function POSTImpl(request: NextRequest) {
 
   const nacin: 'cjelina' | 'opci' = poglavljeBroj ? 'cjelina' : 'opci';
   const odgovor = await askClaudeJson<Record<string, unknown>>(
-    buildChatSystemPrompt(nacin),
-    buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja),
+    buildChatSystemPrompt(nacin, uloga),
+    buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja, povijest, uloga),
   );
 
   // Citati su uvjet vjernosti izvoru: ako ih model izostavi, dopisuju se iz

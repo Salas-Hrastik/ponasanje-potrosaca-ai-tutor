@@ -32,7 +32,28 @@ export async function askClaudeJson<T = unknown>(
     max_tokens: maxTokens,
     system,
     messages: [{ role: 'user', content: userMessage }],
+    /**
+     * JSON se traži kroz alat, a ne kao običan tekst. Kad je model pisao JSON
+     * slobodno, citati iz priručnika koji sadrže navodnike znali su ubaciti
+     * neescapiran " usred stringa i razbiti cijeli odgovor. Preko alata JSON
+     * gradi SDK, pa je valjanost zajamčena bez obzira na sadržaj citata.
+     * Shema ostaje opisana u sistemskom promptu (razlikuje se po vrsti upita).
+     */
+    tools: [
+      {
+        name: 'odgovori',
+        description:
+          'Vrati odgovor točno prema JSON shemi navedenoj u sistemskom promptu. Uvijek koristi ovaj alat.',
+        input_schema: { type: 'object' as const, additionalProperties: true },
+      },
+    ],
+    tool_choice: { type: 'tool', name: 'odgovori' },
   });
+
+  const alat = msg.content.find((b) => b.type === 'tool_use');
+  if (alat && alat.type === 'tool_use') return alat.input as T;
+
+  // Rezervni put: model je ipak odgovorio tekstom (npr. starija verzija modela).
   const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('').trim();
 
   try {
@@ -47,7 +68,10 @@ export async function askClaudeJson<T = unknown>(
         // padni na sigurnu vrijednost niže
       }
     }
-    console.error('[claude] neparsabilan odgovor:', text.slice(0, 500));
+    console.error(
+      `[claude] neparsabilan odgovor (stop_reason=${msg.stop_reason}, znakova=${text.length}):`,
+      text.slice(-400),
+    );
     return nedovoljnoKonteksta(
       'Odgovor modela nije bilo moguće protumačiti. Pokušajte ponovno ili preciznije postavite pitanje (npr. navedite poglavlje ili lekciju).',
     ) as T;

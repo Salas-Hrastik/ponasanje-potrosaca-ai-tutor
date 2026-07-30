@@ -29,15 +29,28 @@ const NEDOVOLJNO_SHEMA = `{
   "trazeni_metapodaci": ["poglavlje", "stranica"]
 }`;
 
-export function buildChatSystemPrompt(mode: 'cjelina' | 'opci'): string {
+/** Tko vodi razgovor: asistent odgovara na pitanja ili ispituje studenta. */
+export type Uloga = 'asistent' | 'ispitivac';
+
+const ULOGA_ISPITIVAC = `
+ZAMIJENJENE ULOGE — TI POSTAVLJAŠ PITANJA:
+- Student je zatražio da ti preuzmeš ulogu ispitivača. U polje "odgovor" stavljaš PITANJE studentu o gradivu ove cjeline, a ne objašnjenje.
+- Kad student odgovori, prvo kratko i prijateljski komentiraj njegov odgovor (što je dobro pogodio, što je izostavio ili pobrkao), pa postavi sljedeće pitanje. Sve u polju "odgovor".
+- Ovo je VJEŽBA BEZ OCJENJIVANJA: nema bodova, ocjena ni rubrike. Ton je poticajan i razgovoran, kao priprema, ne kao ispit.
+- Postavljaj jedno pitanje odjednom i drži se onoga što stvarno piše u priloženim izvorima.
+- Ako student zatraži da se uloge vrate (npr. „vrati uloge", „sad ja pitam"), poslušaj i nastavi kao asistent koji odgovara.`;
+
+export function buildChatSystemPrompt(mode: 'cjelina' | 'opci', uloga: Uloga = 'asistent'): string {
   const napomena =
     mode === 'opci'
       ? '\n\nOvo je OPĆI chat (izvan nastavne cjeline) — polje "kratko_objasnjenje" MORA započeti napomenom: "Odgovaram samo prema udžbeniku."'
       : '\n\nOvo je chat UNUTAR NASTAVNE CJELINE (poglavlja) — odgovor kontekstualiziraj na tu cjelinu, sažeto i bez općeg disclaimera.';
 
+  const uloge = uloga === 'ispitivac' ? `\n${ULOGA_ISPITIVAC}` : '';
+
   return `Ti si „${config.assistantName}", AI asistent kolegija ${config.kolegij} (${config.studij}, ${config.ustanova}), utemeljen isključivo na izvoru ${PRIRUCNIK}.
 
-${ZAJEDNICKA_PRAVILA}${napomena}
+${ZAJEDNICKA_PRAVILA}${napomena}${uloge}
 
 Shema odgovora (JSON):
 {
@@ -53,16 +66,35 @@ Ako izvori NE sadrže odgovor, umjesto gornje sheme vrati:
 ${NEDOVOLJNO_SHEMA}`;
 }
 
+export interface PorukaPovijesti {
+  autor: 'student' | 'asistent';
+  tekst: string;
+}
+
 export function buildChatUserPrompt(
   pitanje: string,
   chunks: RetrievedChunk[],
   poglavljeBroj?: number,
   naslovPoglavlja?: string,
+  povijest: PorukaPovijesti[] = [],
+  uloga: Uloga = 'asistent',
 ): string {
   const zaglavlje = poglavljeBroj
     ? `Trenutačna nastavna cjelina: Pogl. ${poglavljeBroj}. ${naslovPoglavlja ?? ''}\n\n`
     : '';
-  return `${zaglavlje}<izvori>\n${formatIzvori(chunks)}\n</izvori>\n\nPitanje studenta: ${pitanje}`;
+
+  // Bez povijesti model ne razumije potpitanja („objasni to detaljnije"), a u
+  // ulozi ispitivača ne zna na koje je pitanje student upravo odgovorio.
+  const razgovor = povijest.length
+    ? `<razgovor_dosad>\n${povijest
+        .map((p) => `${p.autor === 'student' ? 'STUDENT' : 'TI'}: ${p.tekst.slice(0, 700)}`)
+        .join('\n')}\n</razgovor_dosad>\n\n`
+    : '';
+
+  const zadnja =
+    uloga === 'ispitivac' ? `Odgovor studenta: ${pitanje}` : `Pitanje studenta: ${pitanje}`;
+
+  return `${zaglavlje}${razgovor}<izvori>\n${formatIzvori(chunks)}\n</izvori>\n\n${zadnja}`;
 }
 
 export function buildOralSystemPrompt(): string {
