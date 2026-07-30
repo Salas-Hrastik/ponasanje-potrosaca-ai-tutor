@@ -23,6 +23,10 @@
   --crvena-100: #fbe3e3;
   --jantar-600: #96650f;
   --jantar-100: #fdf0d4;
+  --ljubicasta-600: #6d5a9e;
+  --ljubicasta-100: #ece4f7;
+  --koralj-600: #b0524a;
+  --koralj-100: #fbe6e1;
 
   --tekst: #16262b;
   --tekst-blijedi: #5b7076;
@@ -1797,7 +1801,6 @@ code {
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 .nacin-gumb:hover {
-  border-color: var(--more-500);
   transform: translateY(-2px);
 }
 .nacin-gumb-naslov {
@@ -1808,6 +1811,63 @@ code {
 .nacin-gumb-opis {
   font-size: 12.5px;
   color: var(--tekst-blijedi);
+}
+
+/* Svaki način rada nosi svoju nježnu, ali međusobno usklađenu nijansu —
+   ista boja prati gumb i u početnom izborniku i u traci nakon odabira. */
+.nacin-gumb-razgovaraj {
+  background: var(--more-050);
+  border-color: var(--more-100);
+}
+.nacin-gumb-razgovaraj:hover {
+  border-color: var(--more-500);
+}
+.nacin-gumb-razgovaraj .nacin-gumb-naslov {
+  color: var(--more-700);
+}
+
+.nacin-gumb-prouci {
+  background: var(--pijesak-100);
+  border-color: #f0dcb3;
+}
+.nacin-gumb-prouci:hover {
+  border-color: var(--pijesak-500);
+}
+.nacin-gumb-prouci .nacin-gumb-naslov {
+  color: var(--pijesak-600);
+}
+
+.nacin-gumb-gledaj {
+  background: var(--zelena-100);
+  border-color: #c3e6d2;
+}
+.nacin-gumb-gledaj:hover {
+  border-color: var(--zelena-600);
+}
+.nacin-gumb-gledaj .nacin-gumb-naslov {
+  color: var(--zelena-600);
+}
+
+.nacin-gumb-vjezbaj {
+  background: var(--ljubicasta-100);
+  border-color: #d8caed;
+}
+.nacin-gumb-vjezbaj:hover {
+  border-color: var(--ljubicasta-600);
+}
+.nacin-gumb-vjezbaj .nacin-gumb-naslov {
+  color: var(--ljubicasta-600);
+}
+
+.nacin-gumb-provjeri {
+  background: var(--koralj-100);
+  border-color: #f0c8bf;
+}
+.nacin-gumb-provjeri:hover {
+  border-color: var(--koralj-600);
+}
+.nacin-gumb-provjeri .nacin-gumb-naslov {
+  color: var(--koralj-600);
 }
 
 /* Traka s aktivnim načinom rada (nakon odabira) */
@@ -1836,6 +1896,60 @@ code {
   background: var(--more-050);
   border-color: var(--more-500);
   color: var(--more-900);
+}
+
+/* Nježna, usklađena boja svakog gumba prati istu iz početnog izbornika —
+   blaga podloga uvijek vidljiva, jača verzija kad je način rada aktivan. */
+.nacin-traka-gumb-razgovaraj {
+  background: var(--more-050);
+  border-color: var(--more-100);
+  color: var(--more-700);
+}
+.nacin-traka-gumb-prouci {
+  background: var(--pijesak-100);
+  border-color: #f0dcb3;
+  color: var(--pijesak-600);
+}
+.nacin-traka-gumb-gledaj {
+  background: var(--zelena-100);
+  border-color: #c3e6d2;
+  color: var(--zelena-600);
+}
+.nacin-traka-gumb-vjezbaj {
+  background: var(--ljubicasta-100);
+  border-color: #d8caed;
+  color: var(--ljubicasta-600);
+}
+.nacin-traka-gumb-provjeri {
+  background: var(--koralj-100);
+  border-color: #f0c8bf;
+  color: var(--koralj-600);
+}
+
+.nacin-traka-gumb-razgovaraj.aktivan {
+  background: var(--more-050);
+  border-color: var(--more-500);
+  color: var(--more-700);
+}
+.nacin-traka-gumb-prouci.aktivan {
+  background: var(--pijesak-100);
+  border-color: var(--pijesak-500);
+  color: var(--pijesak-600);
+}
+.nacin-traka-gumb-gledaj.aktivan {
+  background: var(--zelena-100);
+  border-color: var(--zelena-600);
+  color: var(--zelena-600);
+}
+.nacin-traka-gumb-vjezbaj.aktivan {
+  background: var(--ljubicasta-100);
+  border-color: var(--ljubicasta-600);
+  color: var(--ljubicasta-600);
+}
+.nacin-traka-gumb-provjeri.aktivan {
+  background: var(--koralj-100);
+  border-color: var(--koralj-600);
+  color: var(--koralj-600);
 }
 
 .nacin-podzaglavlje {
@@ -1967,13 +2081,27 @@ code {
   background: var(--more-050);
 }
 
-/* Razgovaraj */
+/* Razgovaraj — dva stupca: usmeni razgovor (lijevo) i pismeni razgovor (desno) */
 .nacin-panel-razgovaraj {
-  max-width: 720px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.razgovaraj-stupac-naslov {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--more-700);
 }
 .nacin-panel-razgovaraj .ai-chat {
   max-height: none;
+}
+@media (max-width: 980px) {
+  .nacin-panel-razgovaraj {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Gledaj i slušaj */

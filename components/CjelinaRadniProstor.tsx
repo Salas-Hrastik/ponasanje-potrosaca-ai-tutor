@@ -157,7 +157,11 @@ export default function CjelinaRadniProstor({
           <p className="nacin-odabir-naslov">Odaberite način rada</p>
           <div className="nacin-mreza">
             {NACINI.map((n) => (
-              <button key={n.id} className="nacin-gumb" onClick={() => setNacin(n.id)}>
+              <button
+                key={n.id}
+                className={`nacin-gumb nacin-gumb-${n.id}`}
+                onClick={() => setNacin(n.id)}
+              >
                 <span className="nacin-gumb-naslov">{n.naslov}</span>
                 <span className="nacin-gumb-opis">{n.opis}</span>
               </button>
@@ -176,7 +180,7 @@ export default function CjelinaRadniProstor({
         {NACINI.map((n) => (
           <button
             key={n.id}
-            className={`nacin-traka-gumb ${n.id === nacin ? 'aktivan' : ''}`}
+            className={`nacin-traka-gumb nacin-traka-gumb-${n.id} ${n.id === nacin ? 'aktivan' : ''}`}
             onClick={() => setNacin(n.id)}
           >
             {n.naslov}
@@ -202,8 +206,14 @@ export default function CjelinaRadniProstor({
 
       {nacin === 'razgovaraj' && (
         <div className="nacin-panel nacin-panel-razgovaraj">
-          <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
-          <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
+          <div className="razgovaraj-stupac razgovaraj-stupac-usmeni">
+            <p className="razgovaraj-stupac-naslov">🎙️ Usmeni razgovor o tekstu priručnika</p>
+            <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
+          </div>
+          <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
+            <p className="razgovaraj-stupac-naslov">⌨️ Pismeni razgovor o tekstu priručnika</p>
+            <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
+          </div>
         </div>
       )}
 
