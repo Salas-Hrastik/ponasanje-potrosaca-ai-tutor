@@ -6,6 +6,10 @@ import { buildOralSystemPrompt, buildOralUserPrompt } from '@/lib/prompt';
 import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
 
+/** Dohvat + ocjenjivanje odgovora premašuje Vercelovu zadanu granicu od 10 s. */
+export const runtime = 'nodejs';
+export const maxDuration = 60;
+
 interface Rubrika {
   tocnost?: number;
   pokrivenost?: number;

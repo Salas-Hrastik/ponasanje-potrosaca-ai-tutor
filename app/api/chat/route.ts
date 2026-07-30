@@ -7,6 +7,14 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
 
 /**
+ * Dohvat (embedding + vektorska i leksička pretraga + reranking) pa generiranje
+ * odgovora traje i preko 30 s — znatno više od Vercelove zadane granice od 10 s,
+ * uz koju se funkcija u produkciji prekida prije nego što odgovor stigne.
+ */
+export const runtime = 'nodejs';
+export const maxDuration = 60;
+
+/**
  * POST /api/chat — { pitanje, poglavljeBroj?, naslovPoglavlja?, ukljuciDopunske? }
  *
  * Dva načina rada:
