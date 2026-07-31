@@ -26,6 +26,12 @@ export async function askClaudeJson<T = unknown>(
   userMessage: string,
   maxTokens: number = config.claudeMaxTokens,
   model: string = config.claudeModel,
+  /**
+   * JSON shema izlaza. Bez nje model sam bira oblik i zna zamotati rezultat
+   * drukčije nego što prompt traži (npr. objekt umjesto niza), pa pozivatelj
+   * koji očekuje točnu strukturu treba je zadati.
+   */
+  schema: Record<string, unknown> = { type: 'object', additionalProperties: true },
 ): Promise<T> {
   const anthropic = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   const msg = await anthropic.messages.create({
@@ -45,7 +51,7 @@ export async function askClaudeJson<T = unknown>(
         name: 'odgovori',
         description:
           'Vrati odgovor točno prema JSON shemi navedenoj u sistemskom promptu. Uvijek koristi ovaj alat.',
-        input_schema: { type: 'object' as const, additionalProperties: true },
+        input_schema: schema as { type: 'object' },
       },
     ],
     tool_choice: { type: 'tool', name: 'odgovori' },

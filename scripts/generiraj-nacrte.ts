@@ -34,7 +34,111 @@ const KARTICA_PO_CJELINI = 10;
 /** Sažetak cjeline zna biti dug; modelu ide početak, a ostatak stiže kroz isječke. */
 const SAZETAK_LIMIT = 12000;
 
-const OGRADA = `Radiš isključivo iz priloženog sažetka cjeline i isječaka izvora ${PRIRUCNIK}. Ne dodaješ pojmove, primjere ni brojke kojih u priloženom tekstu nema. Odgovaraš na hrvatskom, terminologijom priručnika, i ISKLJUČIVO validnim JSON-om bez markdown ograda.`;
+const OGRADA = `Radiš isključivo iz priloženog sažetka cjeline i isječaka izvora ${PRIRUCNIK}. Ne dodaješ pojmove, primjere ni brojke kojih u priloženom tekstu nema. Odgovaraš na hrvatskom, terminologijom priručnika, i ISKLJUČIVO validnim JSON-om bez markdown ograda.
+
+VAŽNO ZA OBLIK: nizovi moraju biti pravi JSON nizovi, nikad tekst koji izgleda kao niz. U vrijednostima NE koristi navodnike (ni " ni „ "), jer razbijaju JSON — istakni pojam bez njih ili ga stavi u zagradu.`;
+
+/**
+ * Sheme izlaza. Prompt sam nije dovoljan: bez zadane sheme model zna vratiti
+ * objekt ondje gdje se očekuje niz, pa unos pukne na `.filter is not a function`.
+ */
+const SHEMA_CILJEVI = {
+  type: 'object',
+  properties: {
+    ciljevi: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          tekst: { type: 'string' },
+          kognitivna_razina: { type: 'string' },
+          stranica: { type: 'integer' },
+        },
+        required: ['tekst'],
+      },
+    },
+  },
+  required: ['ciljevi'],
+};
+
+const SHEMA_KARTICE = {
+  type: 'object',
+  properties: {
+    kartice: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          pojam: { type: 'string' },
+          definicija: { type: 'string' },
+          stranica_ref: { type: 'string' },
+        },
+        required: ['pojam', 'definicija'],
+      },
+    },
+  },
+  required: ['kartice'],
+};
+
+const SHEMA_KVIZ = {
+  type: 'object',
+  properties: {
+    pitanja: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          pitanje: { type: 'string' },
+          odgovori: { type: 'array', items: { type: 'string' } },
+          tocan_index: { type: 'integer' },
+          objasnjenje: { type: 'string' },
+          stranica_ref: { type: 'string' },
+          odjeljak: { type: 'string' },
+        },
+        required: ['pitanje', 'odgovori', 'tocan_index'],
+      },
+    },
+  },
+  required: ['pitanja'],
+};
+
+/**
+ * Model unatoč shemi povremeno vrati objekt (npr. {"1": {...}, "2": {...}})
+ * ondje gdje se očekuje niz, pa se izlaz normalizira umjesto da unos pukne.
+ */
+function uNiz<T>(vrijednost: unknown, oznaka: string): T[] {
+  if (Array.isArray(vrijednost)) return vrijednost as T[];
+
+  // Najčešći promašaj: niz je serijaliziran u string umjesto da ostane niz.
+  if (typeof vrijednost === 'string') {
+    try {
+      const raspakiran = JSON.parse(vrijednost);
+      console.warn(`[nacrti] ${oznaka}: sadržaj je stigao kao JSON string — raspakiran.`);
+      return uNiz<T>(raspakiran, oznaka);
+    } catch {
+      // nije valjan JSON — pada niže
+    }
+  }
+
+  if (vrijednost && typeof vrijednost === 'object') {
+    const vrijednosti = Object.values(vrijednost as Record<string, unknown>);
+    if (vrijednosti.every((v) => v && typeof v === 'object' && !Array.isArray(v))) {
+      console.warn(`[nacrti] ${oznaka}: model je vratio objekt umjesto niza — pretvoreno.`);
+      return vrijednosti as T[];
+    }
+    const ugnijezden = vrijednosti.find((v) => Array.isArray(v));
+    if (ugnijezden) {
+      console.warn(`[nacrti] ${oznaka}: niz je bio ugniježđen — izvučen.`);
+      return ugnijezden as T[];
+    }
+  }
+  console.warn(
+    `[nacrti] ${oznaka}: neprepoznat oblik (${typeof vrijednost}, duljina ${
+      typeof vrijednost === 'string' ? vrijednost.length : '—'
+    }).`,
+  );
+  return [];
+}
 
 interface Cjelina {
   id: string;
@@ -111,9 +215,9 @@ Vrati 4–6 ciljeva koji zajedno pokrivaju cijelu cjelinu:
 
   const rez = await askClaudeJson<{
     ciljevi?: { tekst: string; kognitivna_razina?: string; stranica?: number }[];
-  }>(system, kontekst, 2000);
+  }>(system, kontekst, 2000, undefined, SHEMA_CILJEVI);
 
-  const stavke = (rez.ciljevi ?? []).filter((x) => x.tekst?.trim());
+  const stavke = uNiz<{ tekst: string; kognitivna_razina?: string; stranica?: number }>(rez.ciljevi, `ciljevi cj.${c.broj}`).filter((x) => x.tekst?.trim());
   if (stavke.length === 0) {
     console.warn(`[nacrti] Cjelina ${c.broj} — model nije vratio ciljeve.`);
     return;
@@ -151,9 +255,9 @@ Vrati do ${KARTICA_PO_CJELINI} kartica, poredanih onako kako se pojmovi pojavlju
 
   const rez = await askClaudeJson<{
     kartice?: { pojam: string; definicija: string; stranica_ref?: string }[];
-  }>(system, kontekst, 3000);
+  }>(system, kontekst, 6000, undefined, SHEMA_KARTICE);
 
-  const stavke = (rez.kartice ?? []).filter((x) => x.pojam?.trim() && x.definicija?.trim());
+  const stavke = uNiz<{ pojam: string; definicija: string; stranica_ref?: string }>(rez.kartice, `kartice cj.${c.broj}`).filter((x) => x.pojam?.trim() && x.definicija?.trim());
   if (stavke.length === 0) {
     console.warn(`[nacrti] Cjelina ${c.broj} — model nije vratio kartice.`);
     return;
@@ -199,9 +303,16 @@ Vrati ${PITANJA_PO_CJELINI} pitanja:
       stranica_ref?: string;
       odjeljak?: string;
     }[];
-  }>(system, kontekst, 4000);
+  }>(system, kontekst, 8000, undefined, SHEMA_KVIZ);
 
-  const valjana = (rez.pitanja ?? []).filter(
+  const valjana = uNiz<{
+    pitanje: string;
+    odgovori: string[];
+    tocan_index: number;
+    objasnjenje?: string;
+    stranica_ref?: string;
+    odjeljak?: string;
+  }>(rez.pitanja, `kviz cj.${c.broj}`).filter(
     (p) =>
       p.pitanje?.trim() &&
       Array.isArray(p.odgovori) &&
