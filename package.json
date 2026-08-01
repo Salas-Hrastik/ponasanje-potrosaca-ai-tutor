@@ -15,7 +15,8 @@
     "nacrti": "tsx --env-file=.env.local scripts/generiraj-nacrte.ts",
     "kviz:uvezi": "tsx --env-file=.env.local scripts/uvezi-kviz.ts",
     "rag:debug": "tsx --env-file=.env.local scripts/rag-debug.ts",
-    "mediji": "tsx --env-file=.env.local scripts/uvezi-medije.ts"
+    "mediji": "tsx --env-file=.env.local scripts/uvezi-medije.ts",
+    "slajdovi": "tsx --env-file=.env.local scripts/tumaci-slajdove.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

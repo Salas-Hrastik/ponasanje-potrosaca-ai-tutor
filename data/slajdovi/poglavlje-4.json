@@ -1,0 +1,81 @@
+{
+  "poglavlje": 4,
+  "prezentacija": "Modern Travel Decisions",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Proces donošenja odluke o putovanju",
+      "tumacenje": "Ovo je naslovni slajd kojim se otvara nastavna cjelina o procesu donošenja odluke o putovanju. Podnaslov najavljuje da će se tema obraditi kroz razvoj od klasičnih modela odlučivanja do suvremenog digitalnog ekosustava vođenog umjetnom inteligencijom. Slajd je uvodni i dekorativan, bez konkretnog sadržaja o fazama ili razinama odlučivanja koje slijede u nastavku cjeline."
+    },
+    {
+      "broj": 2,
+      "naslov": "Tradicionalni model od pet faza ostaje temeljni psihološki okvir",
+      "tumacenje": "Slajd prikazuje pet uzastopnih faza klasičnog modela procesa donošenja odluke o putovanju: potreba, informacije, vrednovanje, odluka i nakon kupnje. Iako digitalno okruženje narušava strogu linearnost tog slijeda, model i dalje predstavlja nezamjenjiv okvir za razumijevanje kognitivnih faza kroz koje prolazi svaki potrošač. Ovaj slajd uvodi temeljnu strukturu na kojoj se dalje razrađuju makro i mikro odluke te specifičnosti svake pojedine faze."
+    },
+    {
+      "broj": 3,
+      "naslov": "Arhitektura izbora dijeli se na makro okvire i mikro doživljaje",
+      "tumacenje": "Slajd vizualno prikazuje odnos makro i mikro odluka u putovanju kao veći okvir (makro odluke) unutar kojeg se nalazi manji skup mikro odluka. Makro odluke određuju strukturu putovanja, zahtijevaju najveći dio proračuna i nose viši percipirani rizik, a donose se pažljivo prije polaska (gdje, kako, koliko dugo). Mikro odluke su brojne, donose se tijekom putovanja uz niži pojedinačni ulog (izleti, restorani, raspored) i presudno oblikuju doživljaj i zadovoljstvo na licu mjesta. Slika naglašava da makro odluke unaprijed sužavaju skup mogućih mikro odluka, čime se pokazuje hijerarhijska povezanost dviju razina odlučivanja."
+    },
+    {
+      "broj": 4,
+      "naslov": "Dinamika odlučivanja dramatično se razlikuje po razinama",
+      "tumacenje": "Slajd tablično uspoređuje makro i mikro odluke prema pet obilježja: trenutku donošenja, ulogu i riziku, vremenskom okviru, glavnom izvoru informacija te učinku pogreške. Makro odluke donose se prije putovanja, planski, uz visok financijski i emocionalni rizik te teško popravljivu grešku, dok su mikro odluke spontane, brojne odluke tijekom putovanja s niskim pojedinačnim ulogom i lako popravljivom greškom. Prikaz jasno pokazuje da mikro odluke oslanjaju na mobilne karte i lokalne preporuke, dok makro odluke počivaju na pretraživanju i online usporedbama, što je ključno za razumijevanje razlika u ponašanju potrošača na tim dvjema razinama."
+    },
+    {
+      "broj": 5,
+      "naslov": "Umjetna inteligencija seli težište odlučivanja iz faze planiranja u fazu doživljavanja",
+      "tumacenje": "Slajd prikazuje kako algoritmi i AI-asistenti djeluju kao svojevrsni \"filter\" koji preoblikuje putnikove odluke na putu od faze planiranja (kod kuće) do faze doživljavanja (na odredištu). Okvir \"AI u fokusu\" ističe da mobilne aplikacije i AI-asistenti u stvarnom vremenu predlažu restorane, prilagođavaju planove vremenskoj prognozi i omogućuju trenutne rezervacije, čime se mnoge mikro odluke donose spontano, ali uz algoritamsku potporu. Poruka pri dnu naglašava da makro odluke ostaju uglavnom predmet online istraživanja prije puta, dok se mikro odluke sve više oblikuju izravno na odredištu uz pomoć umjetne inteligencije."
+    },
+    {
+      "broj": 6,
+      "naslov": "Prepoznavanje potrebe nastaje spajanjem unutarnjih želja i vanjskih okidača",
+      "tumacenje": "Slajd prikazuje četiri vrste okidača koji dovode do prepoznavanja potrebe za putovanjem: unutarnje (fiziološki i psihološki poticaji poput umora ili stresa), društvene (FOMO, tuđa iskustva, objave prijatelja), komercijalne (personalizirani oglasi, last-minute ponude) i situacijske (godišnji odmori, životne faze, loše vrijeme). Svi okidači vode prema potrošaču (prikazanom kao silueta glave), čime se ilustrira spajanje unutarnjih želja i vanjskih poticaja iz kojeg nastaje potreba. Istaknuta poruka pri dnu naglašava kako u digitalnom okruženju personalizirani algoritmi mogu potaknuti latentnu potrebu i prije nego što je potrošač svjesno artikulira, što je ključno za razumijevanje suvremenog procesa donošenja odluke o putovanju."
+    },
+    {
+      "broj": 7,
+      "naslov": "Traženje informacija je krivulja koja raste od pasivnosti do aktivne namjere",
+      "tumacenje": "Slajd grafički prikazuje tri faze informiranja iz Slike 4.3 – pasivnost, senzibilitet i aktivno traženje – kao krivulju koja postupno raste, pokazujući kako se intenzitet traženja informacija povećava dok potrošač ne razvije konkretnu namjeru putovanja. Uz to su istaknuti podaci da je mobitel postao primarni uređaj za inspiraciju te da putnik prosječno posjeti 7 i više dodirnih točaka tijekom planiranja, čime se naglašava rastuća uloga digitalnih i mobilnih izvora u ovom procesu. Slajd tako povezuje teorijski model faza informiranja s konkretnim ponašanjem suvremenog putnika u traženju informacija."
+    },
+    {
+      "broj": 8,
+      "naslov": "Umjetna inteligencija postaje nužni filtar za suvišak informacija",
+      "tumacenje": "Slajd prikazuje kako se veliki suvišak informacija (podaci, recenzije, opcije, vijesti, članci) koji izaziva paralizu izbora obrađuje pomoću AI i algoritama kao svojevrsnog filtra. Rezultat tog filtriranja je evocirani skup manjeg opsega koji uključuje sažeti prikaz, rangirane opcije i prilagođene prijedloge. Poruka slajda je da generativni AI preuzima kognitivni teret potrošača tako što sažima brojne recenzije, rangira opcije i nudi usko prilagođene prijedloge, čime se skraćuje put do odluke. Ovo je važno za razumijevanje procesa donošenja odluke jer pokazuje kako digitalizacija mijenja fazu traženja i vrednovanja informacija u klasičnom modelu odlučivanja."
+    },
+    {
+      "broj": 9,
+      "naslov": "Vrednovanje alternativa događa se u visoko optimiziranom digitalnom okruženju",
+      "tumacenje": "Slajd prikazuje fazu vrednovanja alternativa iz klasičnog modela odlučivanja, ali naglašava kako se u digitalnom okruženju ona odvija pod utjecajem elemenata sučelja rezervacijskih platformi. Prikazani su algoritamsko rangiranje koje stvara pristranost prvog dojma, težina ocjena i broja recenzija koja brzo eliminira opcije, signali povjerenja poput bedževa \"preporučeno\", te bihevioralni poticaji temeljeni na porukama o oskudici i hitnosti. Ovi elementi pokazuju kako digitalni dizajn sučelja aktivno oblikuje i ubrzava proces usporedbe alternativa, često na način koji ide u prilog određenim opcijama, a ne nužno objektivno najboljima."
+    },
+    {
+      "broj": 10,
+      "naslov": "Konačna odluka zahtijeva prevladavanje percipiranog rizika",
+      "tumacenje": "Slajd prikazuje vagu na kojoj se percipirani rizik (financijski, funkcionalni, psihološki/društveni) suprotstavlja strategijama smanjenja rizika (poznate marke, recenzije, besplatno otkazivanje, transparentne cijene, pouzdani kanali plaćanja). Poruka je da potrošač prije donošenja konačne odluke o putovanju mora prevladati doživljeni rizik, a to postiže oslanjanjem na navedene strategije koje pružatelji usluga mogu ponuditi. Zaključna rečenica ističe da proaktivno ugrađivanje elemenata za smanjenje rizika u ponudu značajno povećava vjerojatnost dovršene kupnje, čime se povezuje s fazom \"Odluka\" iz klasičnog modela procesa odlučivanja."
+    },
+    {
+      "broj": 11,
+      "naslov": "Dinamičko određivanje cijena stvara novu vrstu oportunističkog putnika",
+      "tumacenje": "Slajd uspoređuje dva profila putnika u kontekstu odlučivanja: „tradicionalnog planera\", koji odlučuje plански, uz visoku uključenost, temeljitu usporedbu i nisku toleranciju na rizik, birajući prvo destinaciju, te „last-minute oportunista\", koji donosi brzu, emotivnu odluku vođenu prvenstveno popustom (cjenovna osjetljivost), a ne destinacijom, uz veću toleranciju na percipirani rizik zbog manje izvjesnosti. Time se pokazuje kako dinamičko formiranje cijena mijenja klasični proces donošenja odluke, potičući drukčiji obrazac ponašanja od uobičajenog planskog pristupa. Upozorenje na dnu ističe da algoritmi dinamičkih cijena, iako pomažu upravljanju popunjenošću, nose rizik da gosti svjesno odgađaju odluku čekajući sniženje."
+    },
+    {
+      "broj": 12,
+      "naslov": "Ponašanje nakon putovanja presudno je za dugoročni uspjeh destinacije",
+      "tumacenje": "Slajd uspoređuje dva oblika ponašanja potrošača vezana uz stvaranje sadržaja o putovanju: dijeljenje \"u stvarnom vremenu\" tijekom putovanja (spontane priče, fotografije i videa vođeni trenutačnim emocijama) i \"nakon povratka\" (uređene objave, vlogovi i strukturirane recenzije, motivirane željom za pomaganjem drugima ili ventiliranjem frustracije). Time se ilustrira faza \"nakon kupnje\" iz klasičnog modela procesa odlučivanja, koja obuhvaća doživljaj, ocjenu i preporuku. Istaknuti podatak da oko 80% putnika prije rezervacije konzultira online recenzije ili sadržaj drugih korisnika pokazuje zašto je ovakvo ponašanje nakon putovanja ključno – ono postaje vanjski izvor informacija budućim putnicima i izravno utječe na njihove buduće makro odluke."
+    },
+    {
+      "broj": 13,
+      "naslov": "Elektronička usmena predaja pretvara linearni lijevak u beskonačnu petlju",
+      "tumacenje": "Slajd prikazuje klasičnih pet faza procesa odlučivanja (potreba, informacije, vrednovanje, odluka, nakon kupnje) posloženih u kružnicu umjesto u linearni slijed. Strelica označena kao eWOM (elektronička usmena predaja) povezuje fazu „nakon kupnje\" natrag s početkom sljedećeg ciklusa („1. odluka\"), čime se naglašava da faza nakon kupnje jednog putnika postaje izvor informacija za odluke stotina drugih. Time se ističe da svaka objava, fotografija ili recenzija djeluje kao društveni dokaz koji oblikuje očekivanja i okidače budućih putnika, što u digitalnom okruženju mijenja tradicionalni linearni model iz klasičnog prikaza pet faza u kontinuiranu, beskonačnu petlju."
+    },
+    {
+      "broj": 14,
+      "naslov": "Generativna umjetna inteligencija komprimira pet faza u jedan digitalni razgovor",
+      "tumacenje": "Slajd prikazuje klasični linearni model od pet faza odlučivanja (potreba, informacije, vrednovanje, odluka, nakon kupnje) raspoređenih oko središnjeg pojma generativne UI, čime se naglašava da UI ne ukida te faze, nego ih ubrzava i preslaguje. Uz to je istaknuto da potrošač sve više „delegira\" prikupljanje, sažimanje i vrednovanje informacija digitalnom asistentu, spajajući faze istraživanja i usporedbe u jedan interaktivni trenutak. Za razumijevanje cjeline ovo je važno jer pokazuje kako digitalizacija mijenja tradicionalni proces donošenja odluke o putovanju, posebice ubrzavajući faze traženja informacija i vrednovanja alternativa."
+    },
+    {
+      "broj": 15,
+      "naslov": "Strateški imperativi za moderni digitalni turistički ekosustav",
+      "tumacenje": "Slajd sažima tri strateška smjernice za turističke pružatelje usluga u digitalnom okruženju. Prva povezuje makro odluke (osvajane putem SEO-a i recenzija tjednima unaprijed) i mikro odluke (osvajane mobilnom prisutnošću na licu mjesta), čime se izravno nadovezuje na razliku između te dvije razine odlučivanja obrađenu u cjelini. Druga i treća točka naglašavaju kako signali povjerenja (recenzije, bedževi, transparentnost) smanjuju percipirani rizik te kako iskustvo trenutnog gosta putem dijeljenja sadržaja djeluje kao snažan poticaj za buduće potrošače."
+    }
+  ]
+}

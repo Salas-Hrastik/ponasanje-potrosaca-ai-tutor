@@ -1,0 +1,36 @@
+{
+  "poglavlje": 1,
+  "prezentacija": "Tourism Decision Architecture",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Arhitektura turističke odluke",
+      "tumacenje": "Ovo je naslovni slajd nastavne cjeline koji najavlja temu: zašto se prodaja putovanja bitno razlikuje od prodaje svakodnevnih proizvoda. Podnaslov \"anatomija visoke uključenosti\" upućuje na to da će se u nastavku obrađivati koncept visoke uključenosti i percipiranog rizika kao ključnih obilježja turističke odluke. Time se studenta uvodi u temeljnu ideju cjeline da turistički proizvod, zbog svoje neopipljivosti i kompleksnosti, zahtijeva promišljenije odlučivanje potrošača nego rutinska kupnja."
+    },
+    {
+      "broj": 2,
+      "naslov": "Ponašanje potrošača je kontinuirani proces, a ne izolirani čin",
+      "tumacenje": "Slajd prikazuje ciklički proces ponašanja potrošača kroz pet faza: traženje, kupnja, korištenje, vrednovanje i odbacivanje, koje se nadovezuju jedna na drugu i zatvaraju krug. Ističe se da svaki pojedinac poduzima specifičan skup aktivnosti za proizvode i usluge od kojih očekuje zadovoljenje svojih potreba, što odgovara temeljnoj definiciji ponašanja potrošača iz priručnika. Posebno je naglašeno da ovi koraci čine univerzalni temelj, ali da u turizmu postaju eksponencijalno složeniji, što najavljuje daljnju razradu specifičnosti turističkog proizvoda i odlučivanja."
+    },
+    {
+      "broj": 3,
+      "naslov": "Turist donosi niz međusobno povezanih odluka",
+      "tumacenje": "Slajd grafički prikazuje turista kao središte mreže povezanih odluka poput hoće li putovati, kamo, kada, na koliko dugo, s kim, kojim prijevozom, gdje će boraviti i kako će provesti vrijeme u destinaciji. Time se naglašava da predmet izučavanja ponašanja potrošača u turizmu nije samo odabir destinacije, već čitav sustav međusobno ovisnih varijabli. Poruka na dnu slajda upozorava da se nijedna od tih odluka ne donosi izolirano, već promjena u jednoj točki mijenja cjelokupnu arhitekturu putovanja, što je ključno za razumijevanje kompleksnosti turističkog odlučivanja."
+    },
+    {
+      "broj": 4,
+      "naslov": "Anatomija \"visoke uključenosti\"",
+      "tumacenje": "Slajd tablično uspoređuje svakodnevnu kupnju i turističku odluku prema četiri kriterija: financijski izdatak, vrijeme planiranja, emocionalno značenje i percipirani rizik. Dok je svakodnevna kupnja obično rutinska, s minimalnim izdatkom i rizikom, turistička odluka nosi znatno veći izdatak, dugotrajno planiranje, duboko emocionalno značenje i razmjerno visok percipirani rizik. Zbroj tih čimbenika, kako je istaknuto na dnu slajda, čini stanje koje nazivamo visoka uključenost pri kupnji, ključno za razumijevanje zašto se turističke odluke bitno razlikuju od svakodnevnih."
+    },
+    {
+      "broj": 5,
+      "naslov": "Od neopipljivosti do interdisciplinarnosti",
+      "tumacenje": "Slajd prikazuje uzročno-posljedični lanac koji objašnjava zašto je proučavanje ponašanja turista zahtjevno i interdisciplinarno. Polazi se od neopipljivosti turističkog proizvoda (ne može se isprobati prije kupnje), što vodi do percipiranog rizika jer potrošač ulaže novac i vrijeme u nepoznato. Visok rizik zahtijeva visoku uključenost potrošača sa specifičnim tipovima ponašanja pri traženju i kupnji, a to nužno traži interdisciplinarnost, odnosno proučavanje ponašanja potrošača kroz više znanstvenih disciplina. Time slajd povezuje ključne pojmove cjeline (neopipljivost usluge, percipirani rizik, visoka uključenost) u logičan slijed koji objašnjava specifičnosti turističkog proizvoda."
+    },
+    {
+      "broj": 6,
+      "naslov": "Vrijednost razumijevanja",
+      "tumacenje": "Slajd naglašava da je razumijevanje motiva, percepcija i procesa odlučivanja u turizmu izuzetno zahtjevno, ali istovremeno i vrijedno. To se konkretizira kroz tri elementa: dekodiranje motiva (zašto ljudi putuju baš tamo gdje putuju), upravljanje percepcijom (smanjenje percipiranog rizika prije kupnje) te oblikovanje iskustva (pretvaranje složenog procesa odlučivanja u besprijekoran doživljaj). Ovi elementi izravno se nadovezuju na specifičnosti turističkog proizvoda i visoku uključenost potrošača, koje čine turističku odluku posebno kompleksnom u odnosu na svakodnevnu kupnju."
+    }
+  ]
+}

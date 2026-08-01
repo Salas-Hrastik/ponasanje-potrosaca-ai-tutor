@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { supabaseAdmin } from './supabase';
 
 export interface Odjeljak {
@@ -96,8 +98,31 @@ export async function getCjelina(broj: number) {
     ciljevi: ciljevi ?? [],
     kartice: kartice ?? [],
     mediji: mediji ?? [],
+    slajdovi: ucitajSlajdove(broj),
     brojPitanja: count ?? 0,
   };
+}
+
+export interface Slajd {
+  broj: number;
+  naslov: string;
+  tumacenje: string;
+}
+
+/**
+ * Tumačenja slajdova stoje kao podatak u repozitoriju (kao data/sadrzaj.json),
+ * a ne u bazi — vežu se uz konkretnu datoteku prezentacije, pa ih je korisno
+ * verzionirati zajedno s kodom. Pripremaju se skriptom `npm run slajdovi`.
+ */
+function ucitajSlajdove(broj: number): Slajd[] {
+  try {
+    const put = path.join(process.cwd(), 'data', 'slajdovi', `poglavlje-${broj}.json`);
+    if (!fs.existsSync(put)) return [];
+    const json = JSON.parse(fs.readFileSync(put, 'utf8')) as { slajdovi?: Slajd[] };
+    return json.slajdovi ?? [];
+  } catch {
+    return [];
+  }
 }
 
 export async function getNapredakMap(userId: string): Promise<Map<string, NapredakStanje>> {

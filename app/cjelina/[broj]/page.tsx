@@ -33,7 +33,7 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
 
   const [detalji, sveCjeline] = await Promise.all([getCjelina(broj), getPoglavlja()]);
   if (!detalji) return notFound();
-  const { poglavlje, odjeljci, ciljevi, kartice, mediji, brojPitanja } = detalji;
+  const { poglavlje, odjeljci, ciljevi, kartice, mediji, slajdovi, brojPitanja } = detalji;
 
   const indeks = sveCjeline.findIndex((p) => p.broj === broj);
   const prethodna = indeks > 0 ? sveCjeline[indeks - 1] : null;
@@ -52,6 +52,7 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
         ciljevi={ciljevi}
         kartice={kartice}
         mediji={mediji}
+        slajdovi={slajdovi}
         brojPitanja={brojPitanja}
       />
 

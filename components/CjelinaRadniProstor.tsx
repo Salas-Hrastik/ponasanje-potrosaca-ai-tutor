@@ -8,6 +8,7 @@ import QuizRunner from './QuizRunner';
 import SazetakModal from './SazetakModal';
 import OralPractice from './OralPractice';
 import UsmeniRazgovor from './UsmeniRazgovor';
+import MedijModal from './MedijModal';
 
 interface Odjeljak {
   id: string;
@@ -28,6 +29,11 @@ interface KarticaT {
   pojam: string;
   definicija: string;
   stranica_ref: string;
+}
+interface Slajd {
+  broj: number;
+  naslov: string;
+  tumacenje: string;
 }
 interface Medij {
   id: string;
@@ -96,6 +102,7 @@ export default function CjelinaRadniProstor({
   ciljevi,
   kartice,
   mediji,
+  slajdovi,
   brojPitanja,
 }: {
   broj: number;
@@ -108,6 +115,7 @@ export default function CjelinaRadniProstor({
   ciljevi: Cilj[];
   kartice: KarticaT[];
   mediji: Medij[];
+  slajdovi: Slajd[];
   brojPitanja: number;
 }) {
   const [nacin, setNacin] = useState<Nacin | null>(null);
@@ -245,7 +253,7 @@ export default function CjelinaRadniProstor({
         </div>
       )}
 
-      {nacin === 'gledaj' && <GledajISlusaj mediji={mediji} />}
+      {nacin === 'gledaj' && <GledajISlusaj mediji={mediji} slajdovi={slajdovi} />}
 
       {nacin === 'vjezbaj' && <Vjezbaj kartice={kartice} />}
 
@@ -269,8 +277,9 @@ export default function CjelinaRadniProstor({
   );
 }
 
-function GledajISlusaj({ mediji }: { mediji: Medij[] }) {
+function GledajISlusaj({ mediji, slajdovi }: { mediji: Medij[]; slajdovi: Slajd[] }) {
   const [odabraniId, setOdabraniId] = useState(mediji[0]?.id ?? null);
+  const [uModalu, setUModalu] = useState<Medij | null>(null);
   const odabrani = mediji.find((m) => m.id === odabraniId) ?? null;
 
   if (mediji.length === 0) {
@@ -307,32 +316,54 @@ function GledajISlusaj({ mediji }: { mediji: Medij[] }) {
           <>
             <p className="gledaj-detalj-oznaka">{MEDIJ_OZNAKE[odabrani.tip]}</p>
             <h3>{odabrani.naslov || MEDIJ_OZNAKE[odabrani.tip]}</h3>
-            {odabrani.tip === 'video' && (
-              <video src={odabrani.url} controls className="medij-player" />
-            )}
-            {odabrani.tip === 'audio' && (
+
+            {odabrani.tip === 'audio' ? (
               <audio src={odabrani.url} controls className="medij-player" />
+            ) : (
+              /* Video i prezentacija su u ugrađenom okviru pretijesni za čitanje,
+                 pa se otvaraju preko gotovo cijelog zaslona. */
+              <button className="medij-otvori" onClick={() => setUModalu(odabrani)}>
+                <span className="medij-otvori-znak" aria-hidden="true">
+                  {odabrani.tip === 'video' ? '▶' : '⛶'}
+                </span>
+                <span className="medij-otvori-tekst">
+                  <strong>
+                    {odabrani.tip === 'video' ? 'Pokreni video' : 'Otvori prezentaciju'}
+                  </strong>
+                  <small>
+                    {odabrani.tip === 'video'
+                      ? 'Prikaz preko cijelog zaslona'
+                      : slajdovi.length > 0
+                        ? `Veliki prikaz uz tumačenje ${slajdovi.length} slajdova`
+                        : 'Veliki prikaz'}
+                  </small>
+                </span>
+              </button>
             )}
-            {odabrani.tip === 'prezentacija' && (
-              <>
-                <iframe
-                  className="prezentacija-okvir"
-                  src={
-                    odabrani.url.endsWith('.pdf')
-                      ? odabrani.url
-                      : `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(odabrani.url)}`
-                  }
-                  title={odabrani.naslov || 'Prezentacija'}
-                  allowFullScreen
-                />
-                <a className="prezentacija-fallback" href={odabrani.url} target="_blank" rel="noreferrer">
-                  Otvori u novoj kartici →
-                </a>
-              </>
+
+            {odabrani.tip === 'prezentacija' && slajdovi.length > 0 && (
+              <div className="gledaj-tumacenja-sazetak">
+                <p className="gledaj-tumacenja-naslov">Što prezentacija obrađuje</p>
+                <ol className="gledaj-tumacenja-kratko">
+                  {slajdovi.map((s) => (
+                    <li key={s.broj}>{s.naslov}</li>
+                  ))}
+                </ol>
+              </div>
             )}
           </>
         )}
       </div>
+
+      {uModalu && (
+        <MedijModal
+          tip={uModalu.tip}
+          naslov={uModalu.naslov || MEDIJ_OZNAKE[uModalu.tip]}
+          url={uModalu.url}
+          slajdovi={uModalu.tip === 'prezentacija' ? slajdovi : []}
+          onZatvori={() => setUModalu(null)}
+        />
+      )}
     </div>
   );
 }
