@@ -84,6 +84,16 @@ const MEDIJ_OZNAKE: Record<Medij['tip'], string> = {
 };
 
 /**
+ * U tekstu priručnika istaknute oznake („PRIMJER IZ PRAKSE · …", „KLJUČNI
+ * POJMOVI POGLAVLJA · …") stoje kao običan tekst na početku odlomka, pa se
+ * odlomci stapaju u zid teksta. Podebljavanjem se dobiva uporište za oko;
+ * riječi se ne mijenjaju, samo se označava ono što je već napisano kao naslov.
+ */
+function istakniOznake(md: string): string {
+  return md.replace(/^([A-ZČĆŠĐŽ][A-ZČĆŠĐŽ0-9 ,()\/-]{7,70}) · /gm, '**$1** · ');
+}
+
+/**
  * Sažetak cjeline (## oznaka naslov po odjeljku) dijeli se natrag na odjeljke,
  * istim redoslijedom kojim su odjeljci ingestirani — tako „Prouči" prikazuje
  * doslovni tekst priručnika korak po korak, bez ikakvog novog sadržaja.
@@ -299,7 +309,7 @@ export default function CjelinaRadniProstor({
               </h3>
               {sadrzaj ? (
                 <div className="korak-sadrzaj">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{sadrzaj}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{istakniOznake(sadrzaj)}</ReactMarkdown>
                 </div>
               ) : (
                 <p className="prazno-stanje">Tekst ovog odjeljka učitava se iz priručnika.</p>

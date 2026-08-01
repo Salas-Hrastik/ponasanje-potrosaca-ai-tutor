@@ -46,6 +46,8 @@
   --sirina: 1180px;
   /* Visina ljepljivog zaglavlja — izbornik načina rada lijepi se točno ispod. */
   --zaglavlje-visina: 61px;
+  /* Visina izbornika načina rada — podzaglavlje cjeline lijepi se točno ispod njega. */
+  --traka-visina: 56px;
 }
 
 * {
@@ -2078,14 +2080,15 @@ code {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  margin-bottom: 10px;
   /* Izbornik ostaje vidljiv dok se sadržaj pomiče — u „Prouči" je tekst
-     cjeline dugačak nekoliko zaslona, pa bi inače odmah nestao. */
+     cjeline dugačak nekoliko zaslona, pa bi inače odmah nestao. Razmak ispod
+     nosi padding, a ne margina, da kroz njega ne proviruje tekst u prolazu. */
   position: sticky;
   top: var(--zaglavlje-visina);
   z-index: 15;
   background: var(--radna-pozadina);
-  padding: 4px 0 6px;
+  padding: 4px 0 10px;
+  margin-bottom: 0;
 }
 .nacin-traka-gumb {
   background: var(--ploha);
@@ -2170,8 +2173,15 @@ code {
   border: 1px solid var(--rub);
   border-radius: var(--radijus);
   padding: 9px 18px;
-  margin-bottom: 10px;
   box-shadow: var(--sjena);
+  /* Naslov cjeline i navigacija ostaju na mjestu zajedno s izbornikom; pomiče
+     se samo tijelo teksta ispod njih. Podloga seže do ruba (outline umjesto
+     margine) da kroz razmak ne proviruje tekst u prolazu. */
+  position: sticky;
+  top: calc(var(--zaglavlje-visina) + var(--traka-visina));
+  z-index: 14;
+  margin-bottom: 12px;
+  outline: 10px solid var(--radna-pozadina);
 }
 .gumb-pocetak-cjeline {
   flex-shrink: 0;
@@ -2263,11 +2273,17 @@ code {
   flex-direction: column;
   gap: 16px;
 }
+/* Tekst priručnika je dugo štivo, pa se čita u stupcu ograničene širine:
+   preko cijele širine zaslona redak nosi 150+ znakova i oko gubi početak
+   sljedećeg retka. Ovdje je oko 85 znakova. */
 .korak-kartica {
+  width: 100%;
+  max-width: 810px;
+  margin: 0 auto;
   background: var(--ploha);
   border: 1px solid var(--rub);
   border-radius: var(--radijus);
-  padding: 20px 22px;
+  padding: 22px 28px 26px;
   box-shadow: var(--sjena);
 }
 .korak-oznaka {
@@ -2285,28 +2301,57 @@ code {
 }
 .korak-sadrzaj {
   font-size: 18.5px;
-  line-height: 1.65;
+  line-height: 1.72;
+  /* Preglednik uravnotežuje prijelome i ne ostavlja jednu riječ u zadnjem retku. */
+  text-wrap: pretty;
+}
+.korak-sadrzaj p {
+  margin: 0 0 0.95em;
+}
+.korak-sadrzaj p:last-child {
+  margin-bottom: 0;
 }
 .korak-sadrzaj :is(h1, h2, h3, h4) {
   font-size: 19px;
-  margin: 14px 0 6px;
+  margin: 22px 0 8px;
   color: var(--more-800);
 }
+.korak-sadrzaj :is(ul, ol) {
+  margin: 0 0 0.95em;
+  padding-left: 1.35em;
+}
+.korak-sadrzaj li {
+  margin-bottom: 0.4em;
+}
+.korak-sadrzaj li::marker {
+  color: var(--more-600);
+}
+.korak-sadrzaj strong {
+  color: var(--more-900);
+}
+/* Široka tablica se pomiče unutar svojeg okvira umjesto da razvuče karticu. */
 .korak-sadrzaj table {
   width: 100%;
   border-collapse: collapse;
-  margin: 12px 0;
-  font-size: 17.5px;
+  margin: 14px 0;
+  font-size: 17px;
+  display: block;
+  overflow-x: auto;
 }
 .korak-sadrzaj th,
 .korak-sadrzaj td {
   border: 1px solid var(--rub);
-  padding: 8px 10px;
+  padding: 9px 12px;
   text-align: left;
   vertical-align: top;
+  line-height: 1.5;
 }
 .korak-sadrzaj th {
   background: var(--more-050);
+  color: var(--more-900);
+}
+.korak-sadrzaj tbody tr:nth-child(even) td {
+  background: #fafcfd;
 }
 
 /* Razgovaraj — dva bloka, oba kao vježba BEZ ocjenjivanja: usmeni interaktivni
