@@ -40,6 +40,8 @@
   --sjena: 0 1px 2px rgba(6, 51, 63, 0.06), 0 4px 16px rgba(6, 51, 63, 0.06);
   --sjena-jaka: 0 12px 40px rgba(6, 51, 63, 0.22);
   --sirina: 1180px;
+  /* Visina ljepljivog zaglavlja — izbornik načina rada lijepi se točno ispod. */
+  --zaglavlje-visina: 61px;
 }
 
 * {
@@ -1934,6 +1936,13 @@ code {
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
   margin-bottom: 10px;
+  /* Izbornik ostaje vidljiv dok se sadržaj pomiče — u „Prouči" je tekst
+     cjeline dugačak nekoliko zaslona, pa bi inače odmah nestao. */
+  position: sticky;
+  top: var(--zaglavlje-visina);
+  z-index: 15;
+  background: var(--pozadina);
+  padding: 8px 0;
 }
 .nacin-traka-gumb {
   background: var(--ploha);
