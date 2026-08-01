@@ -1172,6 +1172,18 @@ code {
 .chat-modal-zatvori:hover {
   background: rgba(255, 255, 255, 0.28);
 }
+/* Dok razgovor još nije počeo prozor se skuplja na sadržaj — inače bi iznad
+   polja za upit zjapio prazan prostor visok pola zaslona. */
+.chat-modal-prazan {
+  height: auto;
+  max-height: min(92vh, 900px);
+}
+.chat-modal-prazan .chat-poruke {
+  flex: 0 0 auto;
+  min-height: 0;
+  padding: 0;
+}
+
 /* Unutar prozora chat ispunjava raspoloživu visinu i nosi vlastito pomicanje. */
 .chat-modal .ai-chat {
   flex: 1;

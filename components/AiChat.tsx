@@ -52,10 +52,14 @@ export default function AiChat({
   // duži odgovor jedva čita. Zatvaranjem se vraća ugrađeni prikaz, sa
   // sačuvanim razgovorom — mijenja se samo okvir oko istog sučelja.
   const [prosireno, setProsireno] = useState(false);
+  // Kad student sam zatvori prozor, prikaz mu se više ne nameće — inače bi se
+  // vratio već pri sljedećem kliku u polje za upit. Tada se nudi gumb za povratak.
+  const [zatvorenoRucno, setZatvorenoRucno] = useState(false);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dijeloviRef = useRef<Blob[]>([]);
   const porukeRef = useRef<HTMLDivElement | null>(null);
+  const unosRef = useRef<HTMLInputElement | null>(null);
 
   // Mikrofon se otpušta i kad korisnik napusti stranicu usred snimanja.
   useEffect(
@@ -71,11 +75,27 @@ export default function AiChat({
     if (el) el.scrollTop = el.scrollHeight;
   }, [poruke, ucitava, prosireno]);
 
+  /** Prošireni prikaz čim student krene sastavljati pitanje — tipkanjem ili glasom. */
+  function otvoriUzUnos() {
+    if (!prosireno && !zatvorenoRucno) setProsireno(true);
+  }
+
+  function zatvoriProsireno() {
+    setZatvorenoRucno(true);
+    setProsireno(false);
+  }
+
+  // Polje za upit seli u prozor, pa fokus mora za njim — inače bi student
+  // nastavio tipkati u polje koje više nije na zaslonu.
+  useEffect(() => {
+    if (prosireno) unosRef.current?.focus();
+  }, [prosireno]);
+
   // Escape zatvara prozor, a pozadina se ne pomiče dok je otvoren.
   useEffect(() => {
     if (!prosireno) return;
     const naTipku = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setProsireno(false);
+      if (e.key === 'Escape') zatvoriProsireno();
     };
     document.addEventListener('keydown', naTipku);
     const prijasnji = document.body.style.overflow;
@@ -94,6 +114,7 @@ export default function AiChat({
 
   async function pocniSnimanje() {
     setGlasovnaGreska(null);
+    otvoriUzUnos();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const rec = new MediaRecorder(stream);
@@ -144,9 +165,9 @@ export default function AiChat({
     // Povijest se uzima PRIJE dodavanja nove poruke — model treba ono što je
     // rečeno dosad, a tekuću poruku dobiva zasebno.
     const povijest = poruke.slice(-6).map((p) => ({ autor: p.autor, tekst: p.tekst }));
-    // Prvo pitanje otvara veliki prozor; poslije se prikaz ne nameće, nego ga
-    // student otvara i zatvara sam.
-    if (poruke.length === 0) setProsireno(true);
+    // Prijedlog se klikne bez dodirivanja polja za upit, pa se prikaz otvara i
+    // ovdje. Nakon što ga student jednom zatvori, više se ne nameće.
+    otvoriUzUnos();
     setPoruke((p) => [...p, { autor: 'student', tekst: pitanje }]);
     setUcitava(true);
     setCekaPrvi(true);
@@ -321,8 +342,10 @@ export default function AiChat({
           {snima ? '⏹' : '🎤'}
         </button>
         <input
+          ref={unosRef}
           value={upit}
           onChange={(e) => setUpit(e.target.value)}
+          onFocus={otvoriUzUnos}
           placeholder={
             transkribira
               ? 'Prepoznajem govor…'
@@ -346,9 +369,9 @@ export default function AiChat({
 
   if (prosireno) {
     return (
-      <div className="chat-preklop" onClick={() => setProsireno(false)} role="presentation">
+      <div className="chat-preklop" onClick={zatvoriProsireno} role="presentation">
         <div
-          className="chat-modal"
+          className={`chat-modal ${poruke.length === 0 ? 'chat-modal-prazan' : ''}`}
           onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
@@ -358,7 +381,7 @@ export default function AiChat({
             <h3>⌨️ Pismeni razgovor{naslovPoglavlja ? ` — ${naslovPoglavlja}` : ''}</h3>
             <button
               className="chat-modal-zatvori"
-              onClick={() => setProsireno(false)}
+              onClick={zatvoriProsireno}
               aria-label="Zatvori prošireni prikaz"
               title="Zatvori (Esc)"
             >
@@ -375,9 +398,16 @@ export default function AiChat({
     <>
       {/* Nakon zatvaranja prozora razgovor se nastavlja u stupcu; gumb ga vraća
           u veliki prikaz kad god zatreba. */}
-      {poruke.length > 0 && (
+      {(poruke.length > 0 || zatvorenoRucno) && (
         <div className="chat-alati">
-          <button type="button" className="chat-prosiri" onClick={() => setProsireno(true)}>
+          <button
+            type="button"
+            className="chat-prosiri"
+            onClick={() => {
+              setZatvorenoRucno(false);
+              setProsireno(true);
+            }}
+          >
             ⛶ Prošireni prikaz
           </button>
         </div>
