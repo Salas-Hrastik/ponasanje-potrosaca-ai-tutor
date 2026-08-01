@@ -176,7 +176,9 @@ code {
 
 /* --- Okvir stranice ------------------------------------------------------ */
 .glavni-sadrzaj {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 133px);
+  display: flex;
+  flex-direction: column;
 }
 
 .page {
@@ -188,13 +190,13 @@ code {
 .podnozje {
   max-width: var(--sirina);
   margin: 0 auto;
-  padding: 20px 24px 32px;
+  padding: 10px 24px 12px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
+  gap: 4px 24px;
   justify-content: space-between;
   color: var(--tekst-blijedi);
-  font-size: 16px;
+  font-size: 14.5px;
   border-top: 1px solid var(--rub);
 }
 
@@ -502,7 +504,12 @@ code {
 .page-cjelina-okvir {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 14px 24px 32px;
+  /* Uski gornji razmak: izbornik načina rada treba biti odmah pod zaglavljem
+     da radna površina stane na zaslon bez pomicanja. */
+  padding: 4px 24px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .odjeljci-niz {
@@ -771,12 +778,6 @@ code {
   flex-wrap: wrap;
   margin-top: 20px;
 }
-.cjelina-navigacija-desno {
-  display: flex;
-  gap: 10px;
-}
-.gumb-prethodna,
-.gumb-sljedeca,
 .gumb-pregledano {
   padding: 9px 14px;
   border-radius: var(--radijus-mali);
@@ -1128,21 +1129,21 @@ code {
   margin-top: 0;
 }
 .kviz-napredak {
-  margin: 8px 0 20px;
-  font-size: 16px;
+  margin: 6px 0 12px;
+  font-size: 15.5px;
   color: var(--tekst-blijedi);
 }
 .kviz-pitanje {
-  font-size: 23px;
-  margin-bottom: 20px;
+  font-size: 21.5px;
+  margin-bottom: 12px;
 }
 .kviz-odgovori {
   list-style: none;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 .kviz-odgovor-gumb {
   display: flex;
@@ -1153,9 +1154,9 @@ code {
   background: var(--ploha);
   border: 1.5px solid var(--rub);
   border-radius: var(--radijus-mali);
-  padding: 12px 14px;
+  padding: 10px 14px;
   font-family: inherit;
-  font-size: 19px;
+  font-size: 18px;
   cursor: pointer;
 }
 .kviz-odgovor-gumb:hover:not(:disabled) {
@@ -1775,7 +1776,22 @@ code {
 
 /* --- Radni prostor cjeline: 5 načina rada (Razgovaraj/Prouči/Gledaj/Vježbaj/Provjeri) --- */
 .radni-prostor {
-  margin-top: 4px;
+  margin-top: 0;
+}
+/* Na početnoj stranici cjeline navigacija se spušta na dno slobodnog
+   prostora umjesto da za sobom ostavi praznu bjelinu. */
+.radni-prostor-pocetak {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+/* Izbornik načina rada i navigacija spuštaju se pri dno zaslona; ciljevi
+   učenja ostaju gore. Tako nema bjeline u sredini stranice. */
+.radni-prostor-pocetak .nacin-odabir {
+  margin-top: auto;
+}
+.radni-prostor-pocetak .cjelina-navigacija {
+  margin-top: 18px;
 }
 
 .cjelina-hero {
@@ -1942,7 +1958,7 @@ code {
   top: var(--zaglavlje-visina);
   z-index: 15;
   background: var(--pozadina);
-  padding: 8px 0;
+  padding: 4px 0 6px;
 }
 .nacin-traka-gumb {
   background: var(--ploha);
@@ -2021,13 +2037,13 @@ code {
 
 .nacin-podzaglavlje {
   display: flex;
-  align-items: flex-start;
-  gap: 18px;
+  align-items: center;
+  gap: 16px;
   background: var(--ploha);
   border: 1px solid var(--rub);
   border-radius: var(--radijus);
-  padding: 12px 20px;
-  margin-bottom: 12px;
+  padding: 9px 18px;
+  margin-bottom: 10px;
   box-shadow: var(--sjena);
 }
 .gumb-pocetak-cjeline {
@@ -2050,21 +2066,39 @@ code {
   flex: 1;
 }
 .nacin-oznaka {
-  margin: 0 0 4px;
-  font-size: 14.5px;
+  margin: 0 0 2px;
+  font-size: 13.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--more-600);
   font-weight: 700;
 }
 .nacin-podzaglavlje-tekst h2 {
-  margin: 0 0 4px;
-  font-size: 22.5px;
-}
-.nacin-opis {
   margin: 0;
-  font-size: 17.5px;
-  color: var(--tekst-blijedi);
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+/* Prijelaz na susjednu cjelinu, u istom retku s povratkom na početak. */
+.podzaglavlje-navigacija {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+.gumb-susjedna {
+  padding: 8px 13px;
+  border-radius: var(--radijus-mali);
+  border: 1px solid var(--rub-jaci);
+  background: var(--pozadina);
+  color: var(--more-800);
+  font-size: 15.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.gumb-susjedna:hover {
+  text-decoration: none;
+  border-color: var(--more-500);
+  background: var(--more-050);
 }
 .gumb-sazetak-kompaktni {
   flex-shrink: 0;
@@ -2154,12 +2188,16 @@ code {
 .nacin-panel-razgovaraj {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: minmax(0, 1fr);
   gap: 28px;
   align-items: stretch;
 }
 .razgovaraj-stupac {
   display: flex;
   flex-direction: column;
+  /* Bez ovoga stupac ne bi smio pasti ispod visine svog sadržaja, pa
+     ograničenje visine panela ne bi imalo učinka. */
+  min-height: 0;
   background: var(--ploha);
   border: 1px solid var(--rub);
   border-radius: var(--radijus);
@@ -2168,8 +2206,8 @@ code {
 }
 .razgovaraj-stupac-naslov {
   margin: 0;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 10px 18px;
+  font-size: 15.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   border-bottom: 1px solid var(--rub);
@@ -2215,15 +2253,30 @@ code {
   padding-bottom: 12px;
   border-bottom: 1px dashed var(--rub);
 }
-.nacin-panel-razgovaraj .ai-chat {
-  max-height: calc(100vh - 300px);
+/* Radna površina ne prelazi visinu zaslona: panel je ograničen na ono što
+   preostane ispod zaglavlja, izbornika i podzaglavlja, a dulji sadržaj (npr.
+   objašnjenje uz kviz) pomiče se unutar svojeg stupca. */
+.nacin-panel-provjeri,
+.nacin-panel-razgovaraj {
+  height: calc(100vh - 270px);
+}
+.provjeri-stupac > :not(.provjeri-stupac-naslov),
+.razgovaraj-stupac > :not(.razgovaraj-stupac-naslov) {
+  min-height: 0;
+  overflow-y: auto;
 }
 @media (max-width: 980px) {
   .nacin-panel-razgovaraj {
     grid-template-columns: 1fr;
   }
-  .nacin-panel-razgovaraj .ai-chat {
-    max-height: none;
+  .nacin-panel-provjeri,
+  .nacin-panel-razgovaraj {
+    height: auto;
+    grid-template-rows: auto;
+  }
+  .provjeri-stupac > :not(.provjeri-stupac-naslov),
+  .razgovaraj-stupac > :not(.razgovaraj-stupac-naslov) {
+    overflow-y: visible;
   }
 }
 
@@ -2231,12 +2284,18 @@ code {
 .nacin-panel-provjeri {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr) drži redak unutar zadane visine panela; s podrazumijevanim
+     „auto" redak bi narastao do visine sadržaja i stranica bi se pomicala. */
+  grid-template-rows: minmax(0, 1fr);
   gap: 28px;
   align-items: stretch;
 }
 .provjeri-stupac {
   display: flex;
   flex-direction: column;
+  /* Bez ovoga stupac ne bi smio pasti ispod visine svog sadržaja, pa
+     ograničenje visine panela ne bi imalo učinka. */
+  min-height: 0;
   background: var(--ploha);
   border: 1px solid var(--rub);
   border-radius: var(--radijus);
@@ -2245,8 +2304,8 @@ code {
 }
 .provjeri-stupac-naslov {
   margin: 0;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 10px 18px;
+  font-size: 15.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   border-bottom: 1px solid var(--rub);
@@ -2268,7 +2327,7 @@ code {
   border-bottom-color: #f0c8bf;
 }
 .provjeri-stupac > :not(.provjeri-stupac-naslov) {
-  padding: 18px 20px;
+  padding: 12px 18px;
 }
 @media (max-width: 980px) {
   .nacin-panel-provjeri {

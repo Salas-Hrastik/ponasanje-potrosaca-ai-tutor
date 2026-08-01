@@ -1,9 +1,11 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import AiChat from './AiChat';
+import NapredakOznaka from './NapredakOznaka';
 import QuizRunner from './QuizRunner';
 import SazetakModal from './SazetakModal';
 import OralPractice from './OralPractice';
@@ -41,6 +43,10 @@ interface Medij {
   naslov: string;
   url: string;
   trajanje_s: number | null;
+}
+interface Susjedna {
+  broj: number;
+  naslov: string;
 }
 
 type Nacin = 'razgovaraj' | 'prouci' | 'gledaj' | 'vjezbaj' | 'provjeri';
@@ -104,6 +110,8 @@ export default function CjelinaRadniProstor({
   mediji,
   slajdovi,
   brojPitanja,
+  prethodna,
+  sljedeca,
 }: {
   broj: number;
   naslov: string;
@@ -117,15 +125,50 @@ export default function CjelinaRadniProstor({
   mediji: Medij[];
   slajdovi: Slajd[];
   brojPitanja: number;
+  prethodna: Susjedna | null;
+  sljedeca: Susjedna | null;
 }) {
   const [nacin, setNacin] = useState<Nacin | null>(null);
   const koraci = useMemo(() => koraciPoOdjeljcima(sazetakMd, odjeljci), [sazetakMd, odjeljci]);
   const predlozenaPitanja = useMemo(() => ciljevi.map((c) => ciljKaoPitanje(c.tekst)), [ciljevi]);
   const stranice = `${stranicaOd}–${stranicaDo}`;
 
+  /**
+   * Prijelaz na susjednu cjelinu stoji u istom retku s povratkom na početak
+   * cjeline. Prije je bio u zasebnom retku pri dnu, zbog čega je radna
+   * površina prelazila visinu zaslona. Naslov susjedne cjeline ostaje u
+   * opisu gumba jer bi u gornjem retku zauzeo previše prostora.
+   */
+  const navigacijaCjelina = (
+    <div className="podzaglavlje-navigacija">
+      {prethodna ? (
+        <Link
+          href={`/cjelina/${prethodna.broj}`}
+          className="gumb-susjedna"
+          title={`${prethodna.broj}. ${prethodna.naslov}`}
+        >
+          ← {prethodna.broj}. cjelina
+        </Link>
+      ) : (
+        <span className="gumb-susjedna gumb-onemogucen">← Prethodna</span>
+      )}
+      {sljedeca ? (
+        <Link
+          href={`/cjelina/${sljedeca.broj}`}
+          className="gumb-susjedna"
+          title={`${sljedeca.broj}. ${sljedeca.naslov}`}
+        >
+          {sljedeca.broj}. cjelina →
+        </Link>
+      ) : (
+        <span className="gumb-susjedna gumb-onemogucen">Sljedeća →</span>
+      )}
+    </div>
+  );
+
   if (nacin === null) {
     return (
-      <div className="radni-prostor">
+      <div className="radni-prostor radni-prostor-pocetak">
         <div className="cjelina-hero">
           <div className="cjelina-hero-tekst">
             <p className="cjelina-hero-oznaka">{dio}</p>
@@ -177,6 +220,11 @@ export default function CjelinaRadniProstor({
             ))}
           </div>
         </div>
+
+        <div className="cjelina-navigacija">
+          <NapredakOznaka poglavljeBroj={broj} />
+          {navigacijaCjelina}
+        </div>
       </div>
     );
   }
@@ -201,13 +249,15 @@ export default function CjelinaRadniProstor({
         <button className="gumb-pocetak-cjeline" onClick={() => setNacin(null)}>
           ← Početak cjeline
         </button>
+        {/* Opis načina rada stoji na početnoj stranici cjeline; ovdje bi samo
+            ponovio ono što već piše u naslovima blokova ispod. */}
         <div className="nacin-podzaglavlje-tekst">
           <p className="nacin-oznaka">
             CJELINA {broj} · {aktivni.naslov.toUpperCase()}
           </p>
           <h2>{naslov}</h2>
-          <p className="nacin-opis">{aktivni.opis}</p>
         </div>
+        {navigacijaCjelina}
         {sazetakMd && (
           <SazetakModal naslov={`${broj}. ${naslov}`} sazetakMd={sazetakMd} stranice={stranice} kompaktno />
         )}
@@ -261,7 +311,8 @@ export default function CjelinaRadniProstor({
         <div className="nacin-panel nacin-panel-provjeri">
           <div className="provjeri-stupac provjeri-stupac-usmena">
             <p className="provjeri-stupac-naslov">🎙️ Usmena provjera — pitanje i povratna informacija</p>
-            <OralPractice poglavljeBroj={broj} naslovOpsega={naslov} />
+            {/* Naslov cjeline već stoji u zaglavlju, pa se opseg ne ponavlja. */}
+            <OralPractice poglavljeBroj={broj} />
           </div>
           <div className="provjeri-stupac provjeri-stupac-kviz">
             <p className="provjeri-stupac-naslov">📝 Kviz cjeline — jedno pitanje po ekranu</p>

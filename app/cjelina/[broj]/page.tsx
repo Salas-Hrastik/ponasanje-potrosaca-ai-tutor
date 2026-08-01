@@ -1,9 +1,7 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { getCjelina, getPoglavlja } from '@/lib/content';
 import { supabaseAdmin } from '@/lib/supabase';
 import CjelinaRadniProstor from '@/components/CjelinaRadniProstor';
-import NapredakOznaka from '@/components/NapredakOznaka';
 
 /**
  * Nastavna cjelina = poglavlje. Stranica je STATIČKA ruta: sadržaj (ciljevi,
@@ -54,27 +52,9 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
         mediji={mediji}
         slajdovi={slajdovi}
         brojPitanja={brojPitanja}
+        prethodna={prethodna}
+        sljedeca={sljedeca}
       />
-
-      <div className="cjelina-navigacija">
-        <NapredakOznaka poglavljeBroj={broj} />
-        <div className="cjelina-navigacija-desno">
-          {prethodna ? (
-            <Link href={`/cjelina/${prethodna.broj}`} className="gumb-prethodna">
-              ← {prethodna.broj}. {prethodna.naslov}
-            </Link>
-          ) : (
-            <span className="gumb-prethodna gumb-onemogucen">← Prethodna</span>
-          )}
-          {sljedeca ? (
-            <Link href={`/cjelina/${sljedeca.broj}`} className="gumb-sljedeca">
-              {sljedeca.broj}. {sljedeca.naslov} →
-            </Link>
-          ) : (
-            <span className="gumb-sljedeca gumb-onemogucen">Sljedeća →</span>
-          )}
-        </div>
-      </div>
     </div>
   );
 }
