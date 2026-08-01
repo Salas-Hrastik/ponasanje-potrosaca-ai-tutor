@@ -34,6 +34,9 @@
   --rub-jaci: #b9ced3;
   --pozadina: #f5f9fa;
   --ploha: #ffffff;
+  /* Podloga radne površine cjeline — nijansa istog tirkiza kao zaglavlje
+     cjeline, da se bijele kartice i njihov tekst jasnije odvoje. */
+  --radna-pozadina: #e4f1f5;
 
   --radijus: 12px;
   --radijus-mali: 8px;
@@ -502,11 +505,12 @@ code {
 
 /* --- Stranica cjeline ---------------------------------------------------- */
 .page-cjelina-okvir {
-  max-width: 1400px;
-  margin: 0 auto;
+  /* Podloga ide preko cijele širine, a sadržaj se centrira unutar nje
+     (.radni-prostor), da traka boje ne završi kao pruga u sredini zaslona. */
+  background: var(--radna-pozadina);
   /* Uski gornji razmak: izbornik načina rada treba biti odmah pod zaglavljem
      da radna površina stane na zaslon bez pomicanja. */
-  padding: 4px 24px 16px;
+  padding: 4px 0 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1776,7 +1780,10 @@ code {
 
 /* --- Radni prostor cjeline: 5 načina rada (Razgovaraj/Prouči/Gledaj/Vježbaj/Provjeri) --- */
 .radni-prostor {
-  margin-top: 0;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 /* Na početnoj stranici cjeline navigacija se spušta na dno slobodnog
    prostora umjesto da za sobom ostavi praznu bjelinu. */
@@ -1957,7 +1964,7 @@ code {
   position: sticky;
   top: var(--zaglavlje-visina);
   z-index: 15;
-  background: var(--pozadina);
+  background: var(--radna-pozadina);
   padding: 4px 0 6px;
 }
 .nacin-traka-gumb {
@@ -2048,7 +2055,7 @@ code {
 }
 .gumb-pocetak-cjeline {
   flex-shrink: 0;
-  background: var(--pozadina);
+  background: var(--radna-pozadina);
   border: 1px solid var(--rub);
   border-radius: var(--radijus-mali);
   padding: 8px 12px;
@@ -2089,7 +2096,7 @@ code {
   padding: 8px 13px;
   border-radius: var(--radijus-mali);
   border: 1px solid var(--rub-jaci);
-  background: var(--pozadina);
+  background: var(--radna-pozadina);
   color: var(--more-800);
   font-size: 15.5px;
   font-weight: 600;
@@ -2639,9 +2646,15 @@ code {
     overflow-x: auto;
     padding-bottom: 2px;
   }
-  .page,
-  .page-cjelina-okvir {
+  .page {
     padding: 20px 16px 40px;
+  }
+  /* Podloga radne površine ide do ruba, a razmak nosi sadržaj unutar nje. */
+  .page-cjelina-okvir {
+    padding: 12px 0 32px;
+  }
+  .radni-prostor {
+    padding: 0 16px;
   }
   .cjelina-hero {
     flex-direction: column;
