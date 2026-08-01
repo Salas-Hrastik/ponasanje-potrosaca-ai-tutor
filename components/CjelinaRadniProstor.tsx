@@ -51,10 +51,16 @@ interface Susjedna {
 
 type Nacin = 'razgovaraj' | 'prouci' | 'gledaj' | 'vjezbaj' | 'provjeri';
 
+/**
+ * Redoslijed prati tijek učenja: prvo gradivo, pa mediji, pa razgovor o
+ * pročitanom, pa uvježbavanje pojmova i na kraju provjera. Ovaj popis određuje
+ * i stalni izbornik i izbor načina rada na početnoj stranici cjeline, da se
+ * njihov redoslijed ne razilazi.
+ */
 const NACINI: { id: Nacin; naslov: string; opis: string }[] = [
-  { id: 'razgovaraj', naslov: 'Razgovaraj', opis: 'Vježba bez ocjenjivanja — pitajte ili zamijenite uloge' },
   { id: 'prouci', naslov: 'Prouči', opis: 'Ciljevi i sadržaj cjeline, korak po korak' },
   { id: 'gledaj', naslov: 'Gledaj i slušaj', opis: 'Video, audio i prezentacija' },
+  { id: 'razgovaraj', naslov: 'Razgovaraj', opis: 'Vježba bez ocjenjivanja — pitajte ili zamijenite uloge' },
   { id: 'vjezbaj', naslov: 'Vježbaj', opis: 'Kartice za aktivno prisjećanje pojmova' },
   { id: 'provjeri', naslov: 'Provjeri', opis: 'Usmena provjera i kviz cjeline' },
 ];
