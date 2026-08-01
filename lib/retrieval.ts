@@ -145,6 +145,19 @@ export function dovoljnoKonteksta(chunks: RetrievedChunk[]): boolean {
   return najbolji >= config.ragMinScore;
 }
 
+/**
+ * Pokriće pitanja u priručniku, izvedeno iz STVARNOG dohvata umjesto iz
+ * samoprocjene modela. Pragovi su vezani uz `ragMinScore` (branu dohvata), pa
+ * prate njezino podešavanje: izmjerene najbolje ocjene za dobro pokrivena
+ * pitanja kreću se oko 0,36–0,75, a brana je 0,18.
+ */
+export function sigurnostKonteksta(chunks: RetrievedChunk[]): 'visoka' | 'srednja' | 'niska' {
+  const najbolji = chunks.length > 0 ? Math.max(...chunks.map((c) => c.score)) : 0;
+  if (najbolji >= config.ragMinScore * 3) return 'visoka';
+  if (najbolji >= config.ragMinScore * 1.8) return 'srednja';
+  return 'niska';
+}
+
 function lexicalQuery(query: string): string {
   const words = query
     .split(/\s+/)

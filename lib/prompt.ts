@@ -71,6 +71,31 @@ Ako izvori NE sadrže odgovor, umjesto gornje sheme vrati:
 ${NEDOVOLJNO_SHEMA}`;
 }
 
+/**
+ * Pismeni chat sa STRUJANJEM: model piše odgovor kao običan Markdown tekst, bez
+ * JSON omota, da se rečenice mogu prikazivati kako nastaju. Citate ne daje
+ * model nego se sastavljaju iz stvarno dohvaćenih isječaka, pa vjernost izvoru
+ * ne ovisi o tome hoće ih model navesti.
+ */
+export function buildChatStreamSystemPrompt(mode: 'cjelina' | 'opci'): string {
+  const napomena =
+    mode === 'opci'
+      ? '\n\nOvo je OPĆI chat (izvan nastavne cjeline) — započni odgovor rečenicom: „Odgovaram samo prema udžbeniku."'
+      : '\n\nOvo je chat UNUTAR NASTAVNE CJELINE (poglavlja) — odgovor kontekstualiziraj na tu cjelinu, sažeto i bez općeg disclaimera.';
+
+  return `Ti si „${config.assistantName}", AI asistent kolegija ${config.kolegij} (${config.studij}, ${config.ustanova}), utemeljen isključivo na izvoru ${PRIRUCNIK}.
+
+${ZAJEDNICKA_PRAVILA_BEZ_JSON}${napomena}
+
+OBLIK ODGOVORA — OBAVEZNO:
+- Odgovaraj ČISTIM TEKSTOM u Markdownu (podebljanje, natuknice, kratke tablice po potrebi). Bez JSON-a i bez ikakvih omota.
+- Drži se 3–6 rečenica ili kratkog popisa natuknica; student uvijek može pitati dodatno.
+- NE nabrajaj brojeve stranica u tekstu — izvori se prikazuju odvojeno ispod odgovora.
+- Piši PRAVOPISNO ISPRAVNIM standardnim hrvatskim jezikom; pazi na sklonidbu i standardne likove riječi.
+
+Ako priloženi izvori ne pokrivaju pitanje, reci to otvoreno u jednoj rečenici i predloži u kojoj cjelini tražiti — nemoj nagađati.`;
+}
+
 export interface PorukaPovijesti {
   autor: 'student' | 'asistent';
   tekst: string;

@@ -40,6 +40,9 @@ export default function AiChat({
   const [poruke, setPoruke] = useState<Poruka[]>([]);
   const [upit, setUpit] = useState('');
   const [ucitava, setUcitava] = useState(false);
+  // Mjehurići stoje samo dok se čeka PRVI komad odgovora; nakon toga odgovor
+  // se ispisuje sam od sebe i indikator bi mu smetao.
+  const [cekaPrvi, setCekaPrvi] = useState(false);
   const [dopunski, setDopunski] = useState(false);
   const [iskoristena, setIskoristena] = useState<Set<number>>(new Set());
   const [snima, setSnima] = useState(false);
@@ -124,6 +127,7 @@ export default function AiChat({
     const povijest = poruke.slice(-6).map((p) => ({ autor: p.autor, tekst: p.tekst }));
     setPoruke((p) => [...p, { autor: 'student', tekst: pitanje }]);
     setUcitava(true);
+    setCekaPrvi(true);
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -136,25 +140,69 @@ export default function AiChat({
           povijest,
         }),
       });
-      const data = await res.json();
-
-      if (data.tip === 'nedovoljno_konteksta') {
-        const prijedlozi = data.predlozene_cjeline?.length
-          ? `\n\n**Možda tražite u:** ${data.predlozene_cjeline.join(' · ')}`
-          : '';
-        setPoruke((p) => [...p, { autor: 'asistent', tekst: `${data.poruka}${prijedlozi}` }]);
-      } else if (data.greska) {
-        setPoruke((p) => [...p, { autor: 'asistent', tekst: data.greska }]);
-      } else {
+      // Greška prije početka strujanja (npr. istekla prijava) stiže kao JSON.
+      if (!res.body || !res.headers.get('content-type')?.includes('ndjson')) {
+        const data = await res.json().catch(() => ({}));
         setPoruke((p) => [
           ...p,
-          {
-            autor: 'asistent',
-            tekst: data.odgovor + (data.kratko_objasnjenje ? `\n\n_${data.kratko_objasnjenje}_` : ''),
-            citati: data.citati,
-            sigurnost: data.sigurnost_konteksta,
-          },
+          { autor: 'asistent', tekst: data.greska ?? 'Odgovor nije stigao. Pokušajte ponovno.' },
         ]);
+        return;
+      }
+
+      const citac = res.body.getReader();
+      const dekoder = new TextDecoder();
+      let ostatak = '';
+      let zapoceta = false;
+
+      /** Otvara asistentovu repliku pri prvom sadržaju, potom je dopunjuje. */
+      const dopuni = (izmjena: (zadnja: Poruka) => Poruka) => {
+        if (!zapoceta) {
+          zapoceta = true;
+          setCekaPrvi(false);
+          setPoruke((p) => [...p, izmjena({ autor: 'asistent', tekst: '' })]);
+          return;
+        }
+        setPoruke((p) => {
+          const kopija = [...p];
+          const zadnja = kopija[kopija.length - 1];
+          if (zadnja?.autor === 'asistent') kopija[kopija.length - 1] = izmjena(zadnja);
+          return kopija;
+        });
+      };
+
+      while (true) {
+        const { done, value } = await citac.read();
+        if (done) break;
+        ostatak += dekoder.decode(value, { stream: true });
+
+        const redci = ostatak.split('\n');
+        ostatak = redci.pop() ?? '';
+
+        for (const r of redci) {
+          if (!r.trim()) continue;
+          let dog: { t: string; v?: unknown };
+          try {
+            dog = JSON.parse(r);
+          } catch {
+            continue;
+          }
+
+          if (dog.t === 'tekst' && typeof dog.v === 'string') {
+            const komad = dog.v;
+            dopuni((z) => ({ ...z, tekst: z.tekst + komad }));
+          } else if (dog.t === 'citati') {
+            dopuni((z) => ({ ...z, citati: dog.v as Citat[] }));
+          } else if (dog.t === 'sigurnost' && typeof dog.v === 'string') {
+            dopuni((z) => ({ ...z, sigurnost: dog.v as string }));
+          } else if (dog.t === 'nedovoljno') {
+            const v = dog.v as { poruka: string; predlozene_cjeline?: string[] };
+            const prijedlozi = v.predlozene_cjeline?.length
+              ? `\n\n**Možda tražite u:** ${v.predlozene_cjeline.join(' · ')}`
+              : '';
+            dopuni((z) => ({ ...z, tekst: `${v.poruka}${prijedlozi}` }));
+          }
+        }
       }
     } catch {
       setPoruke((p) => [
@@ -163,6 +211,7 @@ export default function AiChat({
       ]);
     } finally {
       setUcitava(false);
+      setCekaPrvi(false);
     }
   }
 
@@ -211,7 +260,7 @@ export default function AiChat({
             )}
           </div>
         ))}
-        {ucitava && (
+        {cekaPrvi && (
           <div className="chat-poruka chat-asistent chat-ucitava" aria-label="Asistent priprema odgovor">
             <span className="chat-mjehuric" />
             <span className="chat-mjehuric" />

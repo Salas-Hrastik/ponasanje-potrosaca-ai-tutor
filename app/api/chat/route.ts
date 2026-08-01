@@ -1,15 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { zahtijevajKorisnika } from '@/lib/auth';
-import { retrieve, dovoljnoKonteksta, toCitations } from '@/lib/retrieval';
-import {
-  buildChatSystemPrompt,
-  buildChatUserPrompt,
-  buildUsmeniSystemPrompt,
-  type Uloga,
-  type PorukaPovijesti,
-} from '@/lib/prompt';
+import { retrieve, dovoljnoKonteksta, toCitations, sigurnostKonteksta } from '@/lib/retrieval';
+import { buildChatStreamSystemPrompt, buildChatUserPrompt, type PorukaPovijesti } from '@/lib/prompt';
+import { streamClaudeText } from '@/lib/claude';
 import { config } from '@/lib/config';
-import { askClaudeJson, nedovoljnoKonteksta } from '@/lib/claude';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mjeri, zabiljezi } from '@/lib/telemetrija';
 import { odgovorNaGresku } from '@/lib/greske';
@@ -23,15 +17,22 @@ export const runtime = 'nodejs';
 export const maxDuration = 60;
 
 /**
- * POST /api/chat — { pitanje, poglavljeBroj?, naslovPoglavlja?, ukljuciDopunske? }
+ * POST /api/chat — pismeni razgovor sa STRUJANJEM odgovora.
  *
- * Dva načina rada:
- *   - chat u cjelini (poglavljeBroj zadan): dohvat unutar te cjeline, bez disclaimera;
- *   - opći chat: dohvat po cijelom priručniku, uz napomenu „Odgovaram samo prema udžbeniku.".
+ * Vraća niz redaka u NDJSON obliku:
+ *   {"t":"tekst","v":"komadić"}      — dijelovi odgovora kako nastaju
+ *   {"t":"citati","v":[...]}         — izvori iz stvarno dohvaćenih isječaka
+ *   {"t":"sigurnost","v":"visoka"}   — pokriće pitanja u priručniku
+ *   {"t":"nedovoljno","v":{...}}     — dohvat nema pokrića, model se ne poziva
+ *   {"t":"kraj"}
  *
- * Ako dohvat nema dovoljno pokrića, odgovor se odbija PRIJE poziva generativnom
- * modelu — jeftinije je i pouzdanije nego se osloniti na to da model sam prizna
- * neznanje.
+ * Zašto strujanje: odgovor se ispisuje rečenicu po rečenicu kako nastaje,
+ * umjesto da student gleda u prazno desetak sekundi pa dobije cijeli tekst
+ * odjednom.
+ *
+ * VJERNOST IZVORU je nepromijenjena, čak i pojačana: brana „dovoljno konteksta"
+ * radi PRIJE generiranja, a citati i procjena pokrića ne dolaze od modela nego
+ * iz stvarno dohvaćenih isječaka.
  */
 async function POSTImpl(request: NextRequest) {
   const auth = await zahtijevajKorisnika();
@@ -41,12 +42,8 @@ async function POSTImpl(request: NextRequest) {
   const pitanje: string = (body?.pitanje || '').trim();
   const poglavljeBroj: number | undefined = body?.poglavljeBroj || undefined;
   const ukljuciDopunske: boolean = body?.ukljuciDopunske === true;
-  const uloga: Uloga = body?.uloga === 'ispitivac' ? 'ispitivac' : 'asistent';
-  // Usmeni razgovor se sluša, pa ide kraći odgovor i brži model — čekanje se u
-  // govoru osjeti puno jače nego u chatu.
-  const usmeni: boolean = body?.usmeni === true;
-  // Povijest je ograničena: dovoljna za potpitanja i zamjenu uloga, a da ne
-  // naraste proračun konteksta ni cijena poziva.
+  // Povijest je ograničena: dovoljna za potpitanja („objasni to detaljnije"), a
+  // da ne naraste proračun konteksta ni cijena poziva.
   const povijest: PorukaPovijesti[] = Array.isArray(body?.povijest)
     ? body.povijest
         .filter(
@@ -67,19 +64,13 @@ async function POSTImpl(request: NextRequest) {
   }
 
   const kraj = mjeri();
-  // U ulozi ispitivača studentov odgovor sam po sebi loše dohvaća gradivo, pa
-  // dohvat vodi pitanje koje je model maloprije postavio.
-  const zadnjeModelovo = [...povijest].reverse().find((p) => p.autor === 'asistent')?.tekst ?? '';
-  const upitZaDohvat =
-    uloga === 'ispitivac' && zadnjeModelovo ? `${zadnjeModelovo.slice(0, 400)}\n${pitanje}` : pitanje;
-  const chunks = await retrieve(upitZaDohvat, {
-    poglavljeId,
-    ukljuciDopunske,
-    ...(usmeni ? { topK: config.usmeniTopK, rerank: false } : {}),
-  });
-  const imaKontekst = dovoljnoKonteksta(chunks);
+  const chunks = await retrieve(pitanje, { poglavljeId, ukljuciDopunske });
 
-  if (!imaKontekst) {
+  const kodirnik = new TextEncoder();
+  const redak = (o: unknown) => kodirnik.encode(`${JSON.stringify(o)}\n`);
+
+  // Brana ostaje deterministička: bez dovoljnog pokrića model se ne poziva.
+  if (!dovoljnoKonteksta(chunks)) {
     await zabiljezi({
       vrsta: 'chat',
       poglavljeId,
@@ -88,40 +79,75 @@ async function POSTImpl(request: NextRequest) {
       najboljiScore: chunks[0]?.score ?? null,
       trajanjeMs: kraj(),
     });
-    return NextResponse.json(
-      nedovoljnoKonteksta(
-        'U priručniku nisam pronašao dovoljno podloge za pouzdan odgovor na to pitanje. Možete li ga preciznije postaviti — ili navesti poglavlje, odjeljak ili stranicu na koju se odnosi?',
-        await predlozeneCjeline(pitanje),
-      ),
+    const prijedlozi = await predlozeneCjeline(pitanje);
+    return new NextResponse(
+      new ReadableStream({
+        start(c) {
+          c.enqueue(
+            redak({
+              t: 'nedovoljno',
+              v: {
+                poruka:
+                  'U priručniku nisam pronašao dovoljno podloge za pouzdan odgovor na to pitanje. Možete li ga preciznije postaviti — ili navesti poglavlje, odjeljak ili stranicu na koju se odnosi?',
+                predlozene_cjeline: prijedlozi,
+              },
+            }),
+          );
+          c.enqueue(redak({ t: 'kraj' }));
+          c.close();
+        },
+      }),
+      { headers: NDJSON_ZAGLAVLJA },
     );
   }
 
   const nacin: 'cjelina' | 'opci' = poglavljeBroj ? 'cjelina' : 'opci';
-  const odgovor = await askClaudeJson<Record<string, unknown>>(
-    usmeni ? buildUsmeniSystemPrompt(uloga) : buildChatSystemPrompt(nacin, uloga),
-    buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja, povijest, uloga),
-    usmeni ? config.usmeniMaxTokens : undefined,
-    usmeni ? config.usmeniModel : undefined,
-  );
 
-  // Citati su uvjet vjernosti izvoru: ako ih model izostavi, dopisuju se iz
-  // stvarno dohvaćenih isječaka, da odgovor nikad ne ostane bez traga do izvora.
-  if (odgovor.tip === 'chat_odgovor') {
-    const citati = odgovor.citati as unknown[] | undefined;
-    if (!citati || citati.length === 0) odgovor.citati = toCitations(chunks);
-  }
-
-  await zabiljezi({
-    vrsta: 'chat',
-    poglavljeId,
-    imaKontekst: true,
-    brojIsjecaka: chunks.length,
-    najboljiScore: chunks[0]?.score ?? null,
-    trajanjeMs: kraj(),
+  const tok = new ReadableStream({
+    async start(c) {
+      try {
+        // Zadane vrijednosti u streamClaudeText su za USMENI odgovor (kratak,
+        // 400 tokena); pismeni odgovor smije biti dulji.
+        for await (const dio of streamClaudeText(
+          buildChatStreamSystemPrompt(nacin),
+          buildChatUserPrompt(pitanje, chunks, poglavljeBroj, body?.naslovPoglavlja, povijest),
+          config.claudeMaxTokens,
+          config.claudeModel,
+        )) {
+          c.enqueue(redak({ t: 'tekst', v: dio }));
+        }
+        // Dohvat vrati do desetak isječaka; u stupcu razgovora popis svih
+        // izvora zauzme više prostora od samog odgovora, pa se prikazuju
+        // četiri najbolje rangirana (isječci su već poredani po ocjeni).
+        c.enqueue(redak({ t: 'citati', v: toCitations(chunks).slice(0, 4) }));
+        c.enqueue(redak({ t: 'sigurnost', v: sigurnostKonteksta(chunks) }));
+      } catch (e) {
+        console.error('[chat] greška pri strujanju:', e);
+        c.enqueue(redak({ t: 'tekst', v: '\n\nDošlo je do prekida. Pokušajte ponovno.' }));
+      } finally {
+        c.enqueue(redak({ t: 'kraj' }));
+        c.close();
+        await zabiljezi({
+          vrsta: 'chat',
+          poglavljeId,
+          imaKontekst: true,
+          brojIsjecaka: chunks.length,
+          najboljiScore: chunks[0]?.score ?? null,
+          trajanjeMs: kraj(),
+        });
+      }
+    },
   });
 
-  return NextResponse.json(odgovor);
+  return new NextResponse(tok, { headers: NDJSON_ZAGLAVLJA });
 }
+
+const NDJSON_ZAGLAVLJA = {
+  'Content-Type': 'application/x-ndjson; charset=utf-8',
+  'Cache-Control': 'no-store',
+  // Bez ovoga posrednici znaju puferirati odgovor i strujanje izgubi smisao.
+  'X-Accel-Buffering': 'no',
+};
 
 /** Odjeljci s najboljim leksičkim poklapanjem — prijedlog kad dohvat zakaže. */
 async function predlozeneCjeline(pitanje: string): Promise<string[]> {
