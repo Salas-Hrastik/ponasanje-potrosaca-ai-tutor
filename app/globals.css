@@ -2720,65 +2720,110 @@ code {
   background: #fff;
 }
 
-/* Tumačenja slajdova uz prezentaciju — Office preglednik ne javlja koji je
-   slajd otvoren, pa popis prati redoslijed umjesto da se sinkronizira. */
-.medij-modal-sa-tumacenjima .medij-modal-prikaz {
-  flex: 2.1;
+/* Preglednik slajdova: slika slajda i njegovo tumačenje jedno uz drugo. */
+.medij-modal-brojac {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
 }
-.medij-tumacenja {
+.slajd-prikaz {
   flex: 1;
-  min-width: 320px;
-  max-width: 460px;
+  min-height: 0;
+  display: flex;
+}
+.slajd-slika-okvir {
+  position: relative;
+  flex: 2.15;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1b20;
+  padding: 10px;
+}
+.slajd-slika {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.slajd-strelica {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+.slajd-strelica:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.34);
+}
+.slajd-strelica:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+.slajd-strelica-lijevo {
+  left: 14px;
+}
+.slajd-strelica-desno {
+  right: 14px;
+}
+
+.slajd-tumacenje-okvir {
+  flex: 1;
+  min-width: 330px;
+  max-width: 470px;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
-  padding: 16px 20px 24px;
+  padding: 20px 22px;
   border-left: 1px solid var(--rub);
   background: var(--pozadina);
 }
-.medij-tumacenja-naslov {
-  margin: 0 0 2px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--more-800);
-}
-.medij-tumacenja-napomena {
-  margin: 0 0 14px;
-  font-size: 13.5px;
-  color: var(--tekst-blijedi);
-}
-.medij-tumacenja-popis {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.medij-tumacenja-popis li {
-  background: var(--ploha);
-  border: 1px solid var(--rub);
-  border-radius: var(--radijus-mali);
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.slajd-broj {
-  font-size: 11.5px;
+.slajd-tumacenje-oznaka {
+  margin: 0 0 6px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--pijesak-600);
 }
-.slajd-naslov {
-  font-size: 15.5px;
-  font-weight: 700;
+.slajd-tumacenje-okvir h4 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.3;
   color: var(--more-900);
-  line-height: 1.35;
 }
-.slajd-tumacenje {
-  font-size: 14.5px;
-  line-height: 1.55;
+.slajd-tumacenje-tekst {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--tekst);
+}
+.slajd-trake {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+.slajd-tracka {
+  width: 26px;
+  height: 6px;
+  border: none;
+  border-radius: 3px;
+  background: var(--rub-jaci);
+  cursor: pointer;
+  padding: 0;
+}
+.slajd-tracka.aktivna {
+  background: var(--more-600);
 }
 
 /* Gumb koji otvara veliki prikaz umjesto ugrađenog okvira. */
@@ -2854,7 +2899,15 @@ code {
     border-left: none;
     border-top: 1px solid var(--rub);
   }
-  .medij-modal-sa-tumacenjima .medij-modal-prikaz {
-    flex: 0 0 46%;
+  .slajd-prikaz {
+    flex-direction: column;
+  }
+  .slajd-slika-okvir {
+    flex: 0 0 52%;
+  }
+  .slajd-tumacenje-okvir {
+    max-width: none;
+    border-left: none;
+    border-top: 1px solid var(--rub);
   }
 }

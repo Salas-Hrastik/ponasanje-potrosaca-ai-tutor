@@ -30,6 +30,8 @@ interface Slajd {
   broj: number;
   naslov: string;
   tumacenje: string;
+  /** Javni URL slike slajda — tumačenje se prikazuje uz sam slajd. */
+  slika: string;
 }
 
 /** Slajdovi u ispravnom redoslijedu, sa slikom svakog slajda. */
@@ -123,6 +125,14 @@ Pravila:
 
   const slajdovi: Slajd[] = [];
   for (const s of slike) {
+    // Slika slajda ide u Storage da se u aplikaciji može prikazati uz tumačenje.
+    const putanja = `${POGLAVLJE} cjelina/slajdovi/slajd-${String(s.broj).padStart(2, '0')}.${s.tip.split('/')[1]}`;
+    const { error: greskaUpload } = await sb.storage
+      .from('mediji')
+      .upload(putanja, s.slika, { contentType: s.tip, upsert: true });
+    if (greskaUpload) throw new Error(`Upload slajda ${s.broj}: ${greskaUpload.message}`);
+    const slikaUrl = sb.storage.from('mediji').getPublicUrl(putanja).data.publicUrl;
+
     const msg = await anthropic.messages.create({
       model: config.claudeModel,
       max_tokens: 700,
@@ -152,7 +162,7 @@ Pravila:
       continue;
     }
     const { naslov, tumacenje } = alat.input as { naslov: string; tumacenje: string };
-    slajdovi.push({ broj: s.broj, naslov: naslov.trim(), tumacenje: tumacenje.trim() });
+    slajdovi.push({ broj: s.broj, naslov: naslov.trim(), tumacenje: tumacenje.trim(), slika: slikaUrl });
     console.log(`  ${String(s.broj).padStart(2)}. ${naslov}`);
   }
 
