@@ -20,6 +20,8 @@ interface Poruka {
 }
 
 const VIDLJIVIH_PRIJEDLOGA = 3;
+/** Kad razgovor krene, prostor pripada odgovoru — prijedlozi se povlače. */
+const VIDLJIVIH_PRIJEDLOGA_U_RAZGOVORU = 1;
 
 /** Uklanja Markdown oznake da TTS ne čita zvjezdice i crtice naglas. */
 function zaCitanje(md: string): string {
@@ -77,7 +79,7 @@ export default function AiChat({
   const vidljiviPrijedlozi = predlozenaPitanja
     .map((tekst, i) => ({ tekst, i }))
     .filter((p) => !iskoristena.has(p.i))
-    .slice(0, VIDLJIVIH_PRIJEDLOGA);
+    .slice(0, poruke.length === 0 ? VIDLJIVIH_PRIJEDLOGA : VIDLJIVIH_PRIJEDLOGA_U_RAZGOVORU);
 
   async function pocniSnimanje() {
     setGlasovnaGreska(null);
@@ -199,15 +201,10 @@ export default function AiChat({
       {/* Opći chat (izvan nastavne cjeline) uvijek nosi kratak disclaimer. */}
       {!poglavljeBroj && <p className="chat-disclaimer">Odgovaram samo prema udžbeniku.</p>}
 
+      {/* Bez pozdravnog bloka: temu nosi zaglavlje cjeline, a napomenu o
+          priručniku podnožje stranice — ovdje bi ih samo ponovio i oduzeo
+          prostor polju za upit. */}
       <div className="chat-poruke" ref={porukeRef}>
-        {poruke.length === 0 && (
-          <div className="chat-dobrodoslica">
-            <p>
-              Tema: <strong>{naslovPoglavlja ?? 'cijeli priručnik'}</strong>. Pitajte me bilo što —
-              odgovaram isključivo prema priručniku i uz svaki odgovor navodim stranicu.
-            </p>
-          </div>
-        )}
         {poruke.map((p, i) => (
           <div key={i} className={`chat-poruka chat-${p.autor}`}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{p.tekst}</ReactMarkdown>
