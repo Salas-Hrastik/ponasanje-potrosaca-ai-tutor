@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import VideoPlayer from './VideoPlayer';
 
 /**
  * Skočni prikaz videa i prezentacije.
@@ -94,25 +95,50 @@ export default function MedijModal({
 
         {kaoSlajdovi ? (
           <div className="slajd-prikaz">
-            <div className="slajd-slika-okvir">
-              <button
-                className="slajd-strelica slajd-strelica-lijevo"
-                onClick={() => idi(-1)}
-                disabled={indeks === 0}
-                aria-label="Prethodni slajd"
-              >
-                ‹
-              </button>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={tekuci.slika} alt={`Slajd ${tekuci.broj}: ${tekuci.naslov}`} className="slajd-slika" />
-              <button
-                className="slajd-strelica slajd-strelica-desno"
-                onClick={() => idi(1)}
-                disabled={indeks === slike.length - 1}
-                aria-label="Sljedeći slajd"
-              >
-                ›
-              </button>
+            <div className="slajd-lijevo">
+              <div className="slajd-slika-okvir">
+                <button
+                  className="slajd-strelica slajd-strelica-lijevo"
+                  onClick={() => idi(-1)}
+                  disabled={indeks === 0}
+                  aria-label="Prethodni slajd"
+                >
+                  ‹
+                </button>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={tekuci.slika} alt={`Slajd ${tekuci.broj}: ${tekuci.naslov}`} className="slajd-slika" />
+                <button
+                  className="slajd-strelica slajd-strelica-desno"
+                  onClick={() => idi(1)}
+                  disabled={indeks === slike.length - 1}
+                  aria-label="Sljedeći slajd"
+                >
+                  ›
+                </button>
+              </div>
+
+              {/* Glavna navigacija stoji ISPOD slajda jer je ondje student traži. */}
+              <div className="slajd-navigacija">
+                <button
+                  className="slajd-nav-gumb"
+                  onClick={() => idi(-1)}
+                  disabled={indeks === 0}
+                  title="Prethodni slajd (strelica lijevo)"
+                >
+                  <span className="slajd-nav-znak">‹</span> Prethodni slajd
+                </button>
+                <span className="slajd-nav-brojac">
+                  Slajd <strong>{tekuci.broj}</strong> od {slike.length}
+                </span>
+                <button
+                  className="slajd-nav-gumb slajd-nav-gumb-naprijed"
+                  onClick={() => idi(1)}
+                  disabled={indeks === slike.length - 1}
+                  title="Sljedeći slajd (strelica desno)"
+                >
+                  Sljedeći slajd <span className="slajd-nav-znak">›</span>
+                </button>
+              </div>
             </div>
 
             <div className="slajd-tumacenje-okvir">
@@ -135,7 +161,7 @@ export default function MedijModal({
           </div>
         ) : (
           <div className="medij-modal-prikaz">
-            {tip === 'video' && <video src={url} controls autoPlay className="medij-modal-video" />}
+            {tip === 'video' && <VideoPlayer url={url} naslov={naslov} />}
             {tip === 'audio' && <audio src={url} controls autoPlay className="medij-modal-audio" />}
             {tip === 'prezentacija' && (
               <iframe

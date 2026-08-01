@@ -2709,15 +2709,13 @@ code {
 .medij-modal-prikaz {
   flex: 1;
   min-width: 0;
+  /* Bez ovoga vlastita visina videa razvuče okvir i upravljačka traka
+     ispadne izvan skočnog prozora. */
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #0b1b20;
-}
-.medij-modal-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 }
 .medij-modal-audio {
   width: min(680px, 90%);
@@ -2727,6 +2725,153 @@ code {
   height: 100%;
   border: 0;
   background: #fff;
+}
+
+/* --- Video s uvijek vidljivom vremenskom trakom ---------------------------- */
+.video-player {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.video-okvir {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1b20;
+}
+.video-slika {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+.video-traka {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--more-900);
+  color: #fff;
+}
+.video-gumb {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+.video-gumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.video-gumb-skok {
+  width: auto;
+  flex: 0 0 auto;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.video-gumb-glavni {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  background: var(--pijesak-500);
+  color: var(--more-900);
+  font-size: 18px;
+  letter-spacing: -1px;
+}
+.video-gumb-glavni:hover {
+  background: var(--pijesak-600);
+}
+.video-vrijeme {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.92);
+}
+.video-vrijeme-ukupno {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Klizna skala: ispunjeni dio pokazuje dokle je reprodukcija stigla. */
+.video-skala {
+  flex: 1;
+  min-width: 0;
+  height: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    var(--pijesak-500) 0%,
+    var(--pijesak-500) var(--napredak, 0%),
+    rgba(255, 255, 255, 0.24) var(--napredak, 0%),
+    rgba(255, 255, 255, 0.24) 100%
+  );
+  cursor: pointer;
+}
+.video-skala:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.video-skala::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--pijesak-500);
+  cursor: pointer;
+}
+.video-skala::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--pijesak-500);
+  cursor: pointer;
+}
+.video-glasnoca {
+  flex: 0 0 96px;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.24);
+  cursor: pointer;
+}
+.video-glasnoca::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+.video-glasnoca::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
 }
 
 /* Preglednik slajdova: slika slajda i njegovo tumačenje jedno uz drugo. */
@@ -2740,10 +2885,17 @@ code {
   min-height: 0;
   display: flex;
 }
-.slajd-slika-okvir {
-  position: relative;
+.slajd-lijevo {
   flex: 2.15;
   min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.slajd-slika-okvir {
+  position: relative;
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2782,6 +2934,64 @@ code {
 }
 .slajd-strelica-desno {
   right: 14px;
+}
+
+/* Istaknuta navigacija ispod slajda — glavni način listanja prezentacije. */
+.slajd-navigacija {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  background: var(--more-050);
+  border-top: 2px solid var(--more-100);
+}
+.slajd-nav-gumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  min-width: 200px;
+  justify-content: center;
+  border: 2px solid var(--more-600);
+  border-radius: 999px;
+  background: var(--more-600);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(6, 51, 63, 0.18);
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
+}
+.slajd-nav-gumb:hover:not(:disabled) {
+  background: var(--more-900);
+  border-color: var(--more-900);
+}
+.slajd-nav-gumb:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.slajd-nav-gumb:disabled {
+  background: transparent;
+  color: var(--tekst-blijedi);
+  border-color: var(--rub-jaci);
+  box-shadow: none;
+  cursor: default;
+}
+.slajd-nav-znak {
+  font-size: 24px;
+  line-height: 1;
+}
+.slajd-nav-brojac {
+  font-size: 16px;
+  color: var(--more-900);
+  white-space: nowrap;
+}
+.slajd-nav-brojac strong {
+  font-size: 20px;
 }
 
 .slajd-tumacenje-okvir {
@@ -2911,8 +3121,17 @@ code {
   .slajd-prikaz {
     flex-direction: column;
   }
-  .slajd-slika-okvir {
-    flex: 0 0 52%;
+  .slajd-lijevo {
+    flex: 0 0 58%;
+  }
+  .slajd-nav-gumb {
+    min-width: 0;
+    flex: 1;
+    padding: 11px 12px;
+    font-size: 15px;
+  }
+  .video-glasnoca {
+    display: none;
   }
   .slajd-tumacenje-okvir {
     max-width: none;
