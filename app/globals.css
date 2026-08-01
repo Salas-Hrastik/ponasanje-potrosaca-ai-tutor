@@ -35,8 +35,9 @@
   --pozadina: #f5f9fa;
   --ploha: #ffffff;
   /* Podloga radne površine cjeline — nijansa istog tirkiza kao zaglavlje
-     cjeline, da se bijele kartice i njihov tekst jasnije odvoje. */
-  --radna-pozadina: #e4f1f5;
+     cjeline, dovoljno zasićena da se bijele kartice i njihov tekst jasno
+     odvoje od podloge. */
+  --radna-pozadina: #a9d1e0;
 
   --radijus: 12px;
   --radijus-mali: 8px;
@@ -2055,7 +2056,7 @@ code {
 }
 .gumb-pocetak-cjeline {
   flex-shrink: 0;
-  background: var(--radna-pozadina);
+  background: var(--more-050);
   border: 1px solid var(--rub);
   border-radius: var(--radijus-mali);
   padding: 8px 12px;
@@ -2096,7 +2097,7 @@ code {
   padding: 8px 13px;
   border-radius: var(--radijus-mali);
   border: 1px solid var(--rub-jaci);
-  background: var(--radna-pozadina);
+  background: var(--more-050);
   color: var(--more-800);
   font-size: 15.5px;
   font-weight: 600;
