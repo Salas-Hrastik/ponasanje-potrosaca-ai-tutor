@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import TtsGumb from './TtsGumb';
 
 interface Citat {
   poglavlje: string;
@@ -19,19 +18,9 @@ interface Poruka {
   sigurnost?: string;
 }
 
-const VIDLJIVIH_PRIJEDLOGA = 3;
+const VIDLJIVIH_PRIJEDLOGA = 2;
 /** Kad razgovor krene, prostor pripada odgovoru — prijedlozi se povlače. */
 const VIDLJIVIH_PRIJEDLOGA_U_RAZGOVORU = 1;
-
-/** Uklanja Markdown oznake da TTS ne čita zvjezdice i crtice naglas. */
-function zaCitanje(md: string): string {
-  return md
-    .replace(/^#+\s*/gm, '')
-    .replace(/[*_`>]/g, '')
-    .replace(/\n{2,}/g, '. ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
 
 const SIGURNOST_OZNAKA: Record<string, string> = {
   visoka: 'Pokriće u priručniku: visoko',
@@ -220,12 +209,15 @@ export default function AiChat({
             {p.sigurnost && SIGURNOST_OZNAKA[p.sigurnost] && (
               <p className={`chat-sigurnost sigurnost-${p.sigurnost}`}>{SIGURNOST_OZNAKA[p.sigurnost]}</p>
             )}
-            {p.autor === 'asistent' && (
-              <TtsGumb tekst={zaCitanje(p.tekst).slice(0, 1800)} oznaka="Preslušaj odgovor" />
-            )}
           </div>
         ))}
-        {ucitava && <div className="chat-poruka chat-asistent chat-ucitava">…</div>}
+        {ucitava && (
+          <div className="chat-poruka chat-asistent chat-ucitava" aria-label="Asistent priprema odgovor">
+            <span className="chat-mjehuric" />
+            <span className="chat-mjehuric" />
+            <span className="chat-mjehuric" />
+          </div>
+        )}
       </div>
 
       {vidljiviPrijedlozi.length > 0 && (
@@ -245,11 +237,6 @@ export default function AiChat({
       )}
 
       {glasovnaGreska && <p className="chat-glasovna-greska">{glasovnaGreska}</p>}
-
-      <label className="chat-dopunski">
-        <input type="checkbox" checked={dopunski} onChange={(e) => setDopunski(e.target.checked)} />
-        Uključi dopunske izvore (uz priručnik)
-      </label>
 
       <form className="chat-forma" onSubmit={posalji}>
         <button
@@ -278,7 +265,11 @@ export default function AiChat({
           ➤
         </button>
       </form>
-      <p className="chat-glasovna-napomena">Snimka glasa se ne pohranjuje — čuva se samo prepoznati tekst.</p>
+
+      <label className="chat-dopunski">
+        <input type="checkbox" checked={dopunski} onChange={(e) => setDopunski(e.target.checked)} />
+        Uključi dopunske izvore (uz priručnik)
+      </label>
     </div>
   );
 }
