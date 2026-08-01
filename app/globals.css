@@ -1122,6 +1122,91 @@ code {
   color: var(--crvena-600);
 }
 
+/* --- Prošireni prikaz pismenog razgovora --------------------------------- */
+/* Nakon prvog pitanja razgovor se seli u veliki prozor: u uskom stupcu se duži
+   odgovor jedva čita. Zatvaranjem se vraća ugrađeni prikaz. */
+.chat-preklop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(6, 51, 63, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.chat-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(1100px, 94vw);
+  height: min(92vh, 900px);
+  background: var(--ploha);
+  border-radius: var(--radijus);
+  box-shadow: var(--sjena-jaka);
+  overflow: hidden;
+}
+.chat-modal-traka {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  background: var(--more-900);
+  color: #fff;
+}
+.chat-modal-traka h3 {
+  margin: 0;
+  font-size: 19px;
+}
+.chat-modal-zatvori {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.chat-modal-zatvori:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+/* Unutar prozora chat ispunjava raspoloživu visinu i nosi vlastito pomicanje. */
+.chat-modal .ai-chat {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+.chat-modal .chat-prijedlozi {
+  max-height: none;
+}
+
+/* Povratak u veliki prikaz nakon zatvaranja prozora. */
+.chat-alati {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 16px 0;
+}
+.chat-prosiri {
+  background: transparent;
+  border: 1px solid var(--rub-jaci);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--more-800);
+  cursor: pointer;
+}
+.chat-prosiri:hover {
+  border-color: var(--more-500);
+  background: var(--more-050);
+}
+
 /* --- Kviz ---------------------------------------------------------------- */
 .page-kviz {
   max-width: 800px;
