@@ -1180,7 +1180,6 @@ code {
 .modal-sadrzaj.modal-usmena {
   width: min(880px, 100%);
 }
-/* U prozoru kviz nosi vlastito pomicanje kroz tijelo modala. */
 .modal-kviz .kviz-runner,
 .modal-usmena .usmena-vjezba {
   border: none;
@@ -1188,6 +1187,64 @@ code {
   box-shadow: none;
   padding: 0;
   margin-bottom: 0;
+}
+
+/* U prozoru kviz zadržava tri zone kao i u stupcu: napredak gore, gumb dolje,
+   a pomiče se samo pitanje s odgovorima — inače „Sljedeće pitanje" otplovi
+   ispod ruba čim se pojavi obrazloženje. */
+.modal-kviz .modal-tijelo {
+  display: flex;
+  overflow: hidden;
+}
+/* Vrijedi i za tijek kviza i za završni rezultat, koji dolazi umjesto njega. */
+.modal-kviz .modal-tijelo > * {
+  flex: 1;
+  min-height: 0;
+}
+.modal-kviz .kviz-tijelo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.modal-kviz .kviz-akcija {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rub);
+}
+
+/* Uže mjere u prozoru: na nižim zaslonima time stane cijelo pitanje. */
+.modal-kviz .kviz-napredak {
+  margin: 5px 0 10px;
+}
+.modal-kviz .kviz-pitanje {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.modal-kviz .kviz-odgovori {
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.modal-kviz .kviz-odgovor-gumb {
+  padding: 9px 13px;
+  font-size: 17px;
+}
+.modal-kviz .kviz-objasnjenje {
+  font-size: 16.5px;
+  padding: 9px 12px;
+  margin-bottom: 0;
+}
+/* Dugi naslov cjeline inače pojede dva retka zaglavlja. */
+.modal-kviz .modal-naslov,
+.modal-usmena .modal-naslov {
+  font-size: 20px;
+}
+.modal-kviz .modal-zaglavlje,
+.modal-usmena .modal-zaglavlje {
+  padding: 14px 22px 10px;
+}
+.modal-kviz .modal-tijelo,
+.modal-usmena .modal-tijelo {
+  padding: 14px 22px 18px;
 }
 /* Skriveni prozor ostaje u stablu da se rad ne izgubi. Selektor mora biti jači
    od `.modal-pozadina { display: grid }`, koji je deklariran niže u datoteci. */
@@ -2588,20 +2645,8 @@ code {
 .razgovaraj-stupac > .usmena-vjezba {
   overflow-y: auto;
 }
-/* Kviz zadržava napredak i gumb na mjestu, a pomiče pitanje s odgovorima —
-   inače bi „Sljedeće pitanje" ispalo iz stupca čim se pojavi objašnjenje. */
-.provjeri-stupac > .kviz-runner {
-  overflow: hidden;
-}
-.provjeri-stupac .kviz-tijelo {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-.provjeri-stupac .kviz-akcija {
-  padding-top: 14px;
-  border-top: 1px solid var(--rub);
-}
+/* Kviz se od uvođenja skočnog prozora više ne prikazuje izravno u stupcu —
+   ondje stoji samo uvodna kartica, pa su njegove mjere u prozoru (.modal-kviz). */
 /* Chat i usmeni razgovor imaju vlastito područje za pomicanje (poruke), pa
    im polje za upit odnosno gumb za govor ostaju prikvačeni pri dnu stupca. */
 .razgovaraj-stupac > .ai-chat,
