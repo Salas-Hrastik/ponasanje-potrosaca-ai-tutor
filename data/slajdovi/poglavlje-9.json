@@ -1,0 +1,66 @@
+{
+  "poglavlje": 9,
+  "prezentacija": "Modern Tourism Analytics",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Od iskazanog do otkrivenog: Evolucija turističke analitike",
+      "tumacenje": "Ovo je naslovni slajd nastavne cjeline koji najavljuje temu prelaska s iskazanih podataka (ono što turist kaže da radi) na otkrivene podatke (ono što turist stvarno radi), a prikazuje ih vizualno mrežom povezanih točaka na karti Hrvatske koja simbolizira digitalne tragove i podatkovnu povezanost. Podnaslov najavljuje da će cjelina obraditi kako digitalni tragovi, veliki podaci i umjetna inteligencija mijenjaju istraživanje ponašanja turista u Hrvatskoj. Slajd je uvodni i dekorativan, bez konkretnih sadržajnih informacija o metodama ili spoznajama.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-01.png"
+    },
+    {
+      "broj": 2,
+      "naslov": "Paradigma se mijenja: Što turisti kažu vs. Što turisti rade",
+      "tumacenje": "Slajd prikazuje suprotstavljanje iskazanih podataka (ono što potrošač kaže da radi, prikupljeno anketama, intervjuima i fokus grupama, s naglaskom na dubinu i motive) i otkrivenih podataka (ono što potrošač stvarno radi, vidljivo iz zabilježenog ponašanja, digitalnih tragova i transakcija, s naglaskom na mjerljivost i stvarne obrasce). Vizualna vaga naginje prema otkrivenim podacima, čime se ilustrira ključni uvid da je pomak težišta prema njima obilježio digitalnu revoluciju u istraživanju ponašanja turista. Poruka slajda je da empirijsko istraživanje ipak zahtijeva sintezu oba pristupa, jer svaki nudi drugačiji, komplementaran uvid u ponašanje potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-02.png"
+    },
+    {
+      "broj": 3,
+      "naslov": "Temeljni instrumentarij: Vrijednosti i ograničenja klasičnih metoda",
+      "tumacenje": "Slajd u tabličnom obliku prikazuje šest klasičnih metoda istraživanja ponašanja potrošača u turizmu - anketu, dubinski intervju, fokus grupu, promatranje, eksperiment i putnički panel - te za svaku navodi primarni uvid koji ona daje i njezino ograničenje. Time se ilustrira temeljna spoznaja iz uvodnog dijela cjeline da svaka metoda nosi svoju \"slijepu pjegu\": ankete i intervjui oslanjaju se na iskazane podatke i podložni su pristranosti sjećanja, dok promatranje daje otkrivene podatke o stvarnom ponašanju, ali ne objašnjava motive. Ovaj pregled je važan jer čini polaznu točku za razumijevanje zašto se istraživanje ponašanja turista postupno pomicalo prema digitalnim metodama koje bilježe stvarno, a ne samo iskazano ponašanje.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-03.png"
+    },
+    {
+      "broj": 4,
+      "naslov": "Evolucija težišta: Od „Tko putuje“ do „Što radi sada“",
+      "tumacenje": "Slajd prikazuje stepenastu shemu kroz koju se vidi kako se fokus istraživanja ponašanja turista mijenjao kroz vrijeme: od demografije (tko putuje – dob, dohodak, podrijetlo), preko psihografije (zašto putuje – motivi, stavovi, životni stil) i doživljaja (kako doživljava i sukreira iskustvo destinacije), do stvarnog vremena (što radi sada – digitalni i AI tragovi, trenutna lokacija, mikro-akcije). Vizualno je naznačen i prijelaz s iskazanih podataka (Stated Data/Tomas) na otkrivene podatke (Revealed Data/eVisitor), čime se ilustrira digitalna revolucija u istraživanju. Sinteza u okviru naglašava da ova evolucija ne znači napuštanje starijih pristupa – demografija i psihografija ostaju temelj segmentacije, ali se danas obogaćuju slojem ponašajnih podataka prikupljenih u stvarnom vremenu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-04.png"
+    },
+    {
+      "broj": 5,
+      "naslov": "Digitalni otisak: Mjerenje stvarnog ponašanja na mreži",
+      "tumacenje": "Slajd prikazuje četiri suvremene digitalne metode istraživanja koje bilježe otkriveno, a ne iskazano ponašanje turista na velikim uzorcima: web i app analitiku (klikovi, zadržavanje, konverzije), veliki podaci koji povezuju rezervacije, pretrage i lokacije uz demand sensing poput Google Trendsa, društveno osluškivanje s analizom sentimenta recenzija te A/B testiranje ponuda na stvarnim korisnicima. Ove metode nastale su kao dio digitalne revolucije u istraživanju jer internet svaku interakciju pretvara u mjerljiv trag. Prednost im je razmjer i autentičnost podataka, dok su glavna ograničenja reprezentativnost (obuhvaćaju samo online korisnike) i pitanja privatnosti, što je važno za kritičko razumijevanje cjeline o evoluciji istraživačkih metoda.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-05.png"
+    },
+    {
+      "broj": 6,
+      "naslov": "Hrvatski kontekst: Dva komplementarna motora turističke analitike",
+      "tumacenje": "Slajd prikazuje dva ključna domaća izvora podataka o hrvatskom turizmu koji zajedno čine hrvatski turistički sustav – Tomas istraživanja i eVisitor. Tomas, koji provodi Institut za turizam kroz kontinuirano anketno ispitivanje, daje iskazane podatke o motivima, izvorima informiranja, načinu rezervacije i zadovoljstvu gostiju, dakle mjeri ono što evidencija sama ne može. eVisitor, kao nacionalni informacijski sustav Hrvatske turističke zajednice, prikuplja otkrivene podatke o dolascima, noćenjima, podrijetlu i vrsti smještaja gotovo u stvarnom vremenu. Slajd naglašava da su strateške i operativne odluke u turizmu utemeljene upravo na presjeku ovih dviju komplementarnih baza podataka.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-06.png"
+    },
+    {
+      "broj": 7,
+      "naslov": "Sinteza: \"Zašto\" se susreće sa \"Što, Koliko, Kada\"",
+      "tumacenje": "Slajd tablično uspoređuje dva hrvatska izvora podataka o turizmu, Tomas i eVisitor, prema pet kategorija: tipu podataka, obuhvatu, primarnom fokusu, vremenskom okviru i ključnim metrikama. Tomas donosi iskazane podatke na reprezentativnom uzorku, usmjeren na dubinu i motive te usporedbu kroz desetljeća (struktura potrošnje, zadovoljstvo, namjera povratka), dok eVisitor bilježi otkrivene podatke uz popisni obuhvat svih prijavljenih noćenja, gotovo u stvarnom vremenu (zemlja podrijetla, vrsta smještaja, sezonska dinamika). Ključni zaključak slajda jasno sažima razliku: eVisitor mjeri opseg i dinamiku sustava, a Tomas objašnjava psihologiju i motive iza tih brojki. Ova sinteza pokazuje kako se kvantitativni, sustavno prikupljani podaci (koliko, kada, što) nadopunjuju s kvalitativnim uvidom u razloge ponašanja turista (zašto), što je bit poglavlja o istraživanju ponašanja potrošača u turizmu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-07.png"
+    },
+    {
+      "broj": 8,
+      "naslov": "Od izvještaja do operativne korekcije",
+      "tumacenje": "Slajd na primjeru grafa noćenja kroz godinu prikazuje kako se eVisitor podaci (otkriveni podaci) koriste za ranu detekciju odstupanja od prošlogodišnjih rezultata u srpnju. Prikazan je trokoračni proces: detekcija pada na ključnom emitivnom tržištu, reakcija turističke zajednice kroz ad hoc operativnu korekciju (pojačano ciljano oglašavanje), te praćenje učinka kampanje kroz iste dnevne podatke. Time se pokazuje da eVisitor nije samo pasivni evidencijski arhiv, već alat za taktičko upravljanje sezonom, odnosno da statistika postaje podloga za brzu operativnu akciju.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-08.png"
+    },
+    {
+      "broj": 9,
+      "naslov": "Zatvorena petlja: AI, automatizacija i taktička prilagodba",
+      "tumacenje": "Slajd prikazuje ciklički model u četiri koraka (mjeri, predviđa, djeluje, uči) koji opisuje kako AI sustavi u stvarnom vremenu prate ponašanje turista, predviđaju njihovu namjeru, automatski prilagođavaju ponudu i cijenu te uče iz rezultata kako bi poboljšali sljedeći ciklus. Time se demonstrira spajanje otkrivenih ponašajnih podataka (poput eVisitor evidencije) s prediktivnom analitikom, dok primjer iz prakse pokazuje kako se istraživanje i reakcija na ponašanje potrošača stapaju u jedan automatizirani proces. Ovaj slajd zaokružuje cjelinu jer pokazuje najnoviju fazu evolucije istraživanja ponašanja turista, u kojoj se podaci ne prikupljaju samo radi razumijevanja nego i radi trenutačne taktičke prilagodbe ponude.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-09.png"
+    },
+    {
+      "broj": 10,
+      "naslov": "Metodološka granica: Odgovornost u eri \"Crne kutije\"",
+      "tumacenje": "Slajd donosi tri ključna ograničenja digitalnih metoda istraživanja ponašanja turista: problem reprezentativnosti i pristranosti (jer digitalni tragovi mjere samo one koji su na mreži, a algoritmi mogu preuzeti i pojačati pristranosti iz ulaznih podataka), pitanje privatnosti (GDPR zahtijeva informirani pristanak pri prikupljanju otkrivenih podataka) te \"paradoks crne kutije\" – rizik oslanjanja na predikcije umjetne inteligencije čiju unutarnju logiku ne razumijemo, pa znamo što će se dogoditi, ali ne i zašto. Zaključna poruka naglašava komplementarnost pristupa: digitalna analitika odgovara na pitanja ŠTO i KOLIKO, dok samo klasične metode poput iskaza ispitanika mogu objasniti ZAŠTO, odnosno stvarni motiv turista. Time se povezuje ranije spomenuta razlika između otkrivenih i iskazanih podataka, pokazujući zašto klasične metode ostaju nezamjenjive unatoč razvoju digitalne analitike.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/9%20cjelina/slajdovi/slajd-10.png"
+    }
+  ]
+}
