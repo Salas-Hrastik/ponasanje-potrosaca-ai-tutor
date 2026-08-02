@@ -34,6 +34,14 @@ function naslovIzImena(ime: string): string {
   return ime.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
 }
 
+/**
+ * Naslov koji ništa ne govori: „Cjelina 6", „Audio", „6"… Takve datoteke ne
+ * zaslužuju svoj naslov u popisu medija, nego preuzimaju ime cjeline.
+ */
+function genericanNaslov(naslov: string): boolean {
+  return /^(cjelina|poglavlje|audio|podcast|snimka|zvuk)?\s*\d*$/i.test(naslov.trim());
+}
+
 async function raspon(url: string, od: number, do_: number): Promise<Buffer | null> {
   const res = await fetch(url, { headers: { Range: `bytes=${od}-${do_}` } });
   if (!res.ok) return null;
@@ -147,7 +155,8 @@ async function main() {
   /**
    * Naslov se izvodi iz imena datoteke, koje je bez dijakritika („Zasto
    * putovanja…"). Ako je naslov već jednom sređen, ponovno pokretanje ga NE
-   * smije pregaziti — zato se postojeći naslovi po URL-u čuvaju.
+   * smije pregaziti — zato se postojeći naslovi po URL-u čuvaju. Generički
+   * naslovi nisu „sređeni", pa se osvježavaju.
    */
   const { data: postojeci } = await sb
     .from('mediji')
@@ -155,21 +164,30 @@ async function main() {
     .eq('poglavlje_id', pog.id);
   const raniji = new Map((postojeci ?? []).map((r) => [r.url, r.naslov]));
 
+  /** Ime cjeline umjesto ničega — inače u popisu stoji „🎧 Audio · Cjelina 6". */
+  function naslovStavke(ime: string, tip: Tip, url: string): { naslov: string; zadrzan: boolean } {
+    const cuvani = raniji.get(url);
+    if (cuvani && !genericanNaslov(cuvani)) return { naslov: cuvani, zadrzan: true };
+    const izImena = naslovIzImena(ime);
+    if (genericanNaslov(izImena)) return { naslov: pog!.naslov, zadrzan: false };
+    return { naslov: izImena, zadrzan: false };
+  }
+
   const redovi = [];
   for (const [i, s] of stavke.entries()) {
     const url = `${baza}/${encodeURIComponent(s.ime)}`;
     const t = await trajanjeSekundi(url, s.ime, s.velicina);
+    const { naslov, zadrzan } = naslovStavke(s.ime, s.tip, url);
     redovi.push({
       poglavlje_id: pog.id,
       tip: s.tip,
-      naslov: raniji.get(url) ?? naslovIzImena(s.ime),
+      naslov,
       url,
       trajanje_s: t ? Math.round(t) : null,
       redoslijed: i,
     });
-    const naslov = raniji.get(url) ?? naslovIzImena(s.ime);
     console.log(
-      `  ${s.tip.padEnd(13)} ${naslov.padEnd(42)} ${t ? mmss(t) : '—'}${raniji.has(url) ? '  (postojeći naslov zadržan)' : ''}`,
+      `  ${s.tip.padEnd(13)} ${naslov.padEnd(46)} ${t ? mmss(t) : '—'}${zadrzan ? '  (postojeći naslov zadržan)' : ''}`,
     );
   }
 
