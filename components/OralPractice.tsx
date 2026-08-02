@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import TtsGumb from './TtsGumb';
+import CitanoStivo from './CitanoStivo';
 import Modal from './Modal';
 
 interface Citat {
@@ -170,8 +170,11 @@ export default function OralPractice({
 
       {(faza === 'odgovaranje' || faza === 'povratna') && pitanje?.pitanje && (
         <div className="usmena-pitanje-blok">
-          <p className="usmena-pitanje">{pitanje.pitanje}</p>
-          <TtsGumb tekst={pitanje.pitanje} oznaka="Pročitaj pitanje naglas" />
+          <CitanoStivo
+            tekst={pitanje.pitanje}
+            klasa="usmena-pitanje"
+            oznaka="Pročitaj pitanje naglas"
+          />
           {!!pitanje.citati?.length && (
             <ul className="chat-citati">
               {pitanje.citati.map((c, i) => (
@@ -283,8 +286,7 @@ export default function OralPractice({
               {povratna.idealni_odgovor && (
                 <div className="usmena-idealni">
                   <h4>Idealan sažeti odgovor</h4>
-                  <p>{povratna.idealni_odgovor}</p>
-                  <TtsGumb tekst={povratna.idealni_odgovor} oznaka="Pročitaj naglas" />
+                  <CitanoStivo tekst={povratna.idealni_odgovor} />
                 </div>
               )}
 

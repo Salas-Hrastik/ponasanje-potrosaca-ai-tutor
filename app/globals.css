@@ -1284,6 +1284,75 @@ code {
   display: none;
 }
 
+/* --- Čitanje naglas, rečenicu po rečenicu -------------------------------- */
+.citac {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.citac-traka {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.citac-gumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 34px;
+  justify-content: center;
+  padding: 6px 10px;
+  border: 1px solid var(--rub-jaci);
+  border-radius: 999px;
+  background: var(--ploha);
+  color: var(--more-800);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.citac-gumb:hover:not(:disabled) {
+  border-color: var(--more-500);
+  background: var(--more-050);
+}
+.citac-gumb:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.citac-gumb-glavni {
+  font-weight: 600;
+  padding: 6px 14px;
+}
+.citac-oznaka {
+  white-space: nowrap;
+}
+.citac-brojac {
+  font-size: 14.5px;
+  color: var(--tekst-blijedi);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.citac-greska {
+  font-size: 14.5px;
+  color: var(--crvena-600);
+}
+.citac-tekst {
+  margin: 0;
+}
+/* Rečenica je i dio teksta i mjesto odakle čitanje može krenuti. */
+.citac-recenica {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.citac-recenica:hover {
+  background: var(--more-050);
+}
+.citac-recenica.aktivna {
+  background: var(--pijesak-100);
+  box-shadow: 0 0 0 2px var(--pijesak-100);
+}
+
 /* --- Kviz ---------------------------------------------------------------- */
 .page-kviz {
   max-width: 800px;
