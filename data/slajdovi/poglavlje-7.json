@@ -1,0 +1,96 @@
+{
+  "poglavlje": 7,
+  "prezentacija": "Digital Traveler Blueprint",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Anatomija suvremenog putnika",
+      "tumacenje": "Ovo je naslovni slajd nastavne cjeline o online ponašanju turističkog potrošača, s podnaslovom \"Od unutarnjeg motiva do digitalne odluke\". Slajd je dekorativan i uvodni te ne sadrži konkretno gradivo, već najavljuje temu koja će obrađivati put potrošača od unutarnjih motiva do donošenja odluke u digitalnom okruženju, odnosno teme poput digitalnog putničkog puta, ZMOT-a, eWOM-a i personalizacije koje slijede u nastavku cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-01.png"
+    },
+    {
+      "broj": 2,
+      "naslov": "Motivacijski motor turizma spaja unutarnje potrebe i vanjsku privlačnost",
+      "tumacenje": "Slajd prikazuje push-pull model motivacije u turizmu: s lijeve strane su unutarnji (push) motivi poput bijega od rutine, odmora i obnove, samospoznaje i statusa, dok su s desne strane vanjski (pull) čimbenici privlačnosti destinacije poput prirodnih ljepota, kulture, sigurnosti i gastronomije. U sredini su prikazani suvremeni fenomeni koji povezuju ta dva pola, primjerice instagrammability, workation/digitalni nomadizam, set-jetting i digitalni detoks, čime se pojedini push motiv spaja s konkretnim pull elementom destinacije. Iako ovaj sadržaj izlazi izvan okvira sažetka o digitalnom ponašanju potrošača (poglavlje 7), slajd ilustrira kako se klasična push-pull teorija motivacije nadograđuje suvremenim, digitalno posredovanim oblicima putovanja, što je važno za razumijevanje šireg konteksta turističkog odlučivanja prije nego što se uđe u fazu online istraživanja i ZMOT-a.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-02.png"
+    },
+    {
+      "broj": 3,
+      "naslov": "Temeljne potrebe oblikuju okvir putovanja, a više potrebe mikro doživljaje",
+      "tumacenje": "Slajd prikazuje Maslowljevu hijerarhiju potreba primijenjenu na putovanje: baza (fiziološke potrebe i sigurnost) zadovoljava se makro odlukama poput pouzdanog smještaja i sigurne destinacije, sredina (pripadanje i samopoštovanje) zajedničkim aktivnostima i prestižnim lokacijama, a vrh (samoaktualizacija) transformativnim putovanjima i osobnim rastom kroz mikro doživljaje. Ispod piramide dodan je Plogov model s psihocentricima, koji su skloni poznatom i sigurnom te su ovisniji o bazi potreba, i alocentricima, koji su skloni nepoznatom i avanturi te teže vrhu piramide. Slajd time povezuje osobnost putnika (psihocentrik–alocentrik kontinuum) s razinom potreba koju putovanje treba zadovoljiti, što je važno za razumijevanje razlike između makro i mikro odluka u turističkom ponašanju.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-03.png"
+    },
+    {
+      "broj": 4,
+      "naslov": "Arhitektura odluke: Od makro okvira do mikro doživljaja",
+      "tumacenje": "Slajd prikazuje razliku između makro odluka (okvir putovanja poput destinacije, leta i smještaja) koje se donose prije puta, nose visok financijski i emocionalni percipirani rizik te je učinak eventualne greške teško popravljiv, i mikro odluka (na odredištu, npr. izbor plaže, restorana ili dnevnog izleta) koje se donose spontano tijekom puta, nose nizak rizik i izrazito su potpomognute mobilnim aplikacijama i AI preporukama. Ova podjela izravno se nadovezuje na koncept trenutaka istine iz cjeline o online ponašanju potrošača, jer se makro odluka vezuje uz ZMOT i prvi trenutak istine, dok niz mikro odluka odgovara nizu mikro trenutaka istine tijekom boravka. Vizualni prikaz mreže puta (makro) i gradske mreže s više destinacijskih točaka (mikro) naglašava da turističko iskustvo nije jedna odluka, već slojevita arhitektura odlučivanja različitog intenziteta rizika i podrške tehnologijom.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-04.png"
+    },
+    {
+      "broj": 5,
+      "naslov": "Sociokulturni nacrt: Uloge, status i podijeljeno odlučivanje",
+      "tumacenje": "Slajd prikazuje četiri uloge u obiteljskom/skupnom odlučivanju o putovanju: inicijatora (pokreće ideju, često pod utjecajem društvenih mreža), utjecatelja (oblikuje izbor, npr. digitalno urođena djeca kao snažni utjecatelji), korisnika (svi članovi koji konzumiraju doživljaj, uključujući skip-gen formate poput djedova i baka s unucima) te odlučitelja i kupca (donosi konačnu odluku o budžetu i plaća, sve češće kao ravnopravno partnerstvo). Time se ilustrira da odluka o putovanju nije jedinstven čin pojedinca, nego podijeljen proces u kojem različiti članovi domaćinstva imaju različite uloge. Dodatno je istaknut statusni kontekst — putovanje kao simbol pripadanosti višem sloju ili željenoj skupini, gdje potrošač balansira između aspiracije (želje za statusom) i autentičnosti iskustva. Ovo je važno za razumijevanje cjeline jer pokazuje kako sociokulturni čimbenici i podjela uloga unutar skupine oblikuju put odlučivanja prije nego što potrošač uopće dođe do online faza opisanih u ostatku poglavlja.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-05.png"
+    },
+    {
+      "broj": 6,
+      "naslov": "Generacijski profil putnika i tehnološka adaptacija",
+      "tumacenje": "Slajd prikazuje tablicu koja povezuje pet generacija putnika (Baby Boomeri, Generacija X, Milenijalci, Generacija Z i Generacija Alpha) s njihovim ključnim motivima putovanja i digitalnim profilom ponašanja, uz vizualni prikaz rastuće razine tehnološke prihvaćenosti od starijih prema mlađim generacijama. Prikazuje se postupan prijelaz od generacija koje kombiniraju online istraživanje s ljudskim kontaktom prema digitalnim urođenicima koji se oslanjaju na recenzije, OTA platforme i AI alate. Ovo je važno za razumijevanje cjeline jer pokazuje kako se ZMOT, eWOM i personalizacija različito manifestiraju ovisno o generacijskoj pripadnosti potrošača, što utječe na to koliko će pojedina generacija povjerenja pridavati algoritamskim preporukama i sažetcima recenzija.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-06.png"
+    },
+    {
+      "broj": 7,
+      "naslov": "Dijagnoza emitivnih tržišta: Srednja Europa vs. Daleki istok",
+      "tumacenje": "Slajd uspoređuje ponašanje srednjoeuropskih gostiju (Njemačka, Austrija, Češka, Slovenija) i dalekoistočnih gostiju (Kina, Japan, J. Koreja) prema pet obilježja: načinu dolaska, trajanju boravka, organizaciji putovanja, ponovljenosti posjeta i motivima. Srednjoeuropski gost dolazi automobilom, ostaje dulje na jednoj destinaciji, putovanje organizira samostalno i sve više online, sklon je lojalnosti i vraćanju, a motiviran je odmorom, morem i opuštanjem. Dalekoistočni gost dolazi zrakoplovom zbog velike udaljenosti, ostvaruje kratke posjete s više zemalja u sklopu organiziranih grupa, riječ je uglavnom o jednokratnom posjetu u životu, a motivi su mu ikonične lokacije, kultura, kupnja i fotografiranje. Ovakva usporedba pokazuje kako geografska udaljenost i kulturni kontekst oblikuju makro odluke o putovanju (način dolaska, organizaciju, ponovljenost) te je važna za razumijevanje razlika u ponašanju potrošača iz različitih emitivnih tržišta.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-07.png"
+    },
+    {
+      "broj": 8,
+      "naslov": "Gastronomski kontinuum: Hrana kao motivacija ili izvor tjeskobe",
+      "tumacenje": "Slajd prikazuje kontinuum turističkih potrošača prema njihovu odnosu spram hrane, od gastrofilije (užitak, znatiželja i otvorenost prema isprobavanju lokalnih specijaliteta poput tartufa ili pašticade) preko midcentrika koji traže balans autentičnog i poznatog, do fobičnih asocijacija obilježenih neofobijom, strahom od nepoznatog te opreznošću zbog alergena i higijene. Ovakav prikaz zapravo predstavlja svojevrsni percipirani rizik vezan uz hranu kao dio turističkog iskustva, jer pokazuje kako isti gastronomski sadržaj kod jednih potrošača djeluje kao motivacija, a kod drugih kao izvor tjeskobe. Zaključak slajda naglašava da uspješan ugostitelj mora znati kombinirati autentičnu ponudu za gastrofile s jasnim, umirujućim informacijama za oprezne goste, čime se povezuje s temom upravljanja rizikom i prilagodbe ponude različitim segmentima potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-08.png"
+    },
+    {
+      "broj": 9,
+      "naslov": "Evolucija utjecaja: Od institucionalnog autoriteta do društvenog dokaza",
+      "tumacenje": "Slajd prikazuje obrnutu piramidu koja rangira vrste influencera prema dosegu i povjerenju/autentičnosti: mega influenceri i slavne osobe imaju najveći doseg ali nižu povezanost s publikom, dok mikro i nano influenceri (obični gosti, \"netko poput mene\") imaju najmanju publiku ali najveće povjerenje i djeluju kao najuvjerljiviji društveni dokaz. Ovime se ilustrira zašto je sadržaj korisnika (UGC) vjerodostojniji od službene marketinške komunikacije, jer dolazi od osobe sličnoj potrošaču, što je izravno vezano za koncept eWOM-a iz cjeline. Dodatna napomena o formatu naglašava da kratke video-forme (TikTok, Reels), pojačane AI algoritmima, danas dominiraju kao izvor inspiracije u fazi sanjarenja putničkog puta.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-09.png"
+    },
+    {
+      "broj": 10,
+      "naslov": "Smrt linearnog lijevka i uspon \"Neuredne sredine\" (Messy Middle)",
+      "tumacenje": "Slajd suprotstavlja zastarjeli linearni model odlučivanja (potreba – informacije – vrednovanje – odluka – nakon kupnje) Googleovom \"messy middle\" modelu koji prikazuje nelinearan proces. U novom modelu potrošač nakon okidača i faze sanjarenja ulazi u petlju gdje naizmjence širi izbor istraživanjem (planiranje) i sužava izbor vrednovanjem, sve dok ne stekne dovoljno povjerenja (društveni dokaz) za donošenje odluke o rezervaciji. Ovo je ključno za razumijevanje digitalne customer journey jer pokazuje da put do odluke nije uredan slijed koraka, već kaotično kruženje između istraživanja i vrednovanja opcija.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-10.png"
+    },
+    {
+      "broj": 11,
+      "naslov": "Multiplikacija trenutaka istine u digitalnom dobu",
+      "tumacenje": "Slajd prikazuje pet uzastopnih trenutaka istine koji se nižu tijekom cijelog turističkog putovanja, umjesto samo jednog klasičnog trenutka susreta s uslugom. Slijed počinje ZMOT-om (online istraživanje i čitanje recenzija prije kontakta), nastavlja se trenutkom makro odluke (rezervacija i plaćanje, povezano s financijskim rizikom), zatim prvim trenutkom istine na licu mjesta (dolazak i prvi dojam), nizom mikro trenutaka istine (svaka pojedinačna interakcija tijekom boravka) te završava konačnim trenutkom istine, odnosno eWOM-om, gdje ostavljena recenzija postaje novi ZMOT za sljedećeg putnika. Time se ilustrira zašto pružatelj usluge mora osigurati kvalitetu na svakoj dodirnoj točki, jer svaki od tih trenutaka može potvrditi ili narušiti zadovoljstvo i utjecati na buduće odluke drugih potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-11.png"
+    },
+    {
+      "broj": 12,
+      "naslov": "Suvišak informacija i umjetna inteligencija kao kustos izbora",
+      "tumacenje": "Slajd prikazuje kako obilje online informacija (recenzija, sadržaja) vodi paralizi izbora, te kako potrošač prolazi faze informiranja od pasivnosti preko senzibiliteta do aktivnog traženja i ciljane usporedbe. Kao rješenje javlja se algoritamski filtar temeljen na umjetnoj inteligenciji i heuristikama (prosječna ocjena, broj recenzija), pri čemu generativni AI sažima brojne recenzije i suzbija beskonačan izbor. Rezultat je evocirani skup – uzak, personaliziran set alternativa koje potrošač na kraju vrednuje, čime AI ubrzava odlučivanje, ali preuzima dio moći oblikovanja izbora, što izravno nadovezuje na temu eWOM-a i personalizacije iz cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-12.png"
+    },
+    {
+      "broj": 13,
+      "naslov": "Ekosustav platformi: Disintermedijacija i mobilno-prvi putnik",
+      "tumacenje": "Slajd prikazuje mobitel kao središte suvremenog turističkog odlučivanja, oko kojeg se granaju platforme prema fazama puta: inspiracija (Instagram, TikTok, Pinterest), planiranje i usporedba cijena (Google Travel, Skyscanner, metapretraživači), rezervacija (Booking.com, Airbnb), recenzije kao društveni dokaz (TripAdvisor, Google recenzije) te navigacija na odredištu (Google Maps) za mikro odluke u stvarnom vremenu. Time se ilustrira nelinearan digitalni put potrošača kroz faze sanjarenja, planiranja, rezerviranja i doživljavanja, gdje mobilna platforma prati potrošača kroz sve trenutke istine, od ZMOT-a do boravka. Ključna poruka (insight) jest da mali broj platformi istovremeno predstavlja mjesto gdje se ponašanje potrošača odvija i glavni izvor podataka o tom ponašanju, što ih čini ključnima za razumijevanje eWOM-a, reputacije i personalizacije u turizmu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-13.png"
+    },
+    {
+      "broj": 14,
+      "naslov": "Dinamika rizika, cijene i last-minute ponašanja",
+      "tumacenje": "Slajd prikazuje graf koji pokazuje kako se percipirani rizik i osjetljivost na cijenu mijenjaju s protekom vremena do putovanja, od ranih rezervacija mjesecima unaprijed do kupnje u posljednji čas. Kod first-minute rezervacija dominira visoka uključenost, dulje istraživanje i niža tolerancija na rizik jer gost traži sigurnost i točno određenu destinaciju, dok se krivulja percipiranog rizika postupno spušta kako se približava datum putovanja. U last-minute segmentu ponašanje se mijenja: odluke su brze i emocionalne, uz manje istraživanja, okidač postaje popust i lov na priliku umjesto unaprijed odabrane destinacije, raste tolerancija na rizik u zamjenu za nižu cijenu, a često dominiraju bliža, autom dostupna tržišta. Slajd je važan jer ilustrira kako se turistički potrošač kreće kroz različite faze odlučivanja s bitno različitim odnosom prema riziku i cijeni, što se nadovezuje na koncept mikro i makro odluka te percipiranog rizika iz cjeline o online ponašanju potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-14.png"
+    },
+    {
+      "broj": 15,
+      "naslov": "Zatvorena petlja: U digitalnom dobu, reputacija je akvizicija",
+      "tumacenje": "Slajd prikazuje putnički put kao beskonačnu petlju (simbol beskonačnosti) u kojoj završetak jednog putovanja postaje početak sljedećeg: doživljavanje i eWOM (UGC, recenzije, fotografije) na kraju putovanja stvaraju sadržaj koji potiče ZMOT i sanjarenje sljedećeg putnika. U središtu petlje nalazi se umjetna inteligencija kao ubrzivač koji prikuplja, sažima i pojačava taj društveni dokaz, čime konačni trenutak istine jednog potrošača postaje izvor informacija za mnoge druge. Poruka slajda (takeaway) jest da kvaliteta mikro doživljaja na destinaciji nije samo pitanje usluge, već postaje najmoćniji digitalni marketinški alat, jer se reputacija izgrađena kroz recenzije izravno pretvara u novu akviziciju gostiju.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/7%20cjelina/slajdovi/slajd-15.png"
+    }
+  ]
+}
