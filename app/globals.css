@@ -1284,6 +1284,103 @@ code {
   display: none;
 }
 
+/* --- Govor-na-govor (Realtime) ------------------------------------------- */
+.glasovni {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.glasovni-zvuk {
+  display: none;
+}
+.glasovni-traka {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rub);
+  margin-bottom: 10px;
+}
+/* Točka koja pulsira dok veza stoji — jedini pouzdan znak da mikrofon radi. */
+.glasovni-znak {
+  color: var(--crvena-600);
+  font-size: 13px;
+  animation: kucanje 1.6s ease-in-out infinite;
+}
+@keyframes kucanje {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glasovni-znak {
+    animation: none;
+  }
+}
+.glasovni-stanje {
+  flex: 1;
+  min-width: 0;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--more-800);
+}
+.glasovni-tijek {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.glasovni-cekanje {
+  margin: 0;
+  color: var(--tekst-blijedi);
+  font-size: 16px;
+}
+.glasovni-replika {
+  border-radius: var(--radijus-mali);
+  padding: 8px 12px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.glasovni-replika p {
+  margin: 2px 0 0;
+}
+.glasovni-student {
+  background: var(--more-050);
+  align-self: flex-end;
+  max-width: 88%;
+}
+.glasovni-asistent {
+  background: var(--pijesak-100);
+  align-self: flex-start;
+  max-width: 92%;
+}
+.glasovni-autor {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tekst-blijedi);
+}
+.glasovni-izvori {
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+.glasovni-napomena {
+  flex-shrink: 0;
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--tekst-blijedi);
+}
+
 /* --- Čitanje naglas, rečenicu po rečenicu -------------------------------- */
 .citac {
   display: flex;

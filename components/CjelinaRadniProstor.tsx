@@ -12,6 +12,7 @@ import OralPractice from './OralPractice';
 import UsmeniRazgovor from './UsmeniRazgovor';
 import MedijModal from './MedijModal';
 import ProzorAktivnosti from './ProzorAktivnosti';
+import GlasovniRazgovor from './GlasovniRazgovor';
 
 interface Odjeljak {
   id: string;
@@ -129,6 +130,7 @@ export default function CjelinaRadniProstor({
   brojPitanja,
   prethodna,
   sljedeca,
+  realtime,
 }: {
   broj: number;
   naslov: string;
@@ -144,6 +146,8 @@ export default function CjelinaRadniProstor({
   brojPitanja: number;
   prethodna: Susjedna | null;
   sljedeca: Susjedna | null;
+  /** Govor-na-govor; kad je isključen, vrijedi raniji put snimka → prijepis. */
+  realtime: boolean;
 }) {
   const [nacin, setNacin] = useState<Nacin | null>(null);
   const koraci = useMemo(() => koraciPoOdjeljcima(sazetakMd, odjeljci), [sazetakMd, odjeljci]);
@@ -292,7 +296,15 @@ export default function CjelinaRadniProstor({
             <p className="razgovaraj-stupac-naslov">
               🎙️ Usmeni razgovor — govorite i zamijenite uloge
             </p>
-            <UsmeniRazgovor poglavljeBroj={broj} naslovPoglavlja={naslov} />
+            {realtime ? (
+              <GlasovniRazgovor
+                poglavljeBroj={broj}
+                nacin="razgovor"
+                naslovIzvora="Razgovaraj o sadržaju poglavlja"
+              />
+            ) : (
+              <UsmeniRazgovor poglavljeBroj={broj} naslovPoglavlja={naslov} />
+            )}
           </div>
           <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
             <p className="razgovaraj-stupac-naslov">⌨️ Pismeni razgovor — pitajte i čitajte odgovor</p>
@@ -363,7 +375,15 @@ export default function CjelinaRadniProstor({
           <div className="provjeri-stupac provjeri-stupac-usmena">
             <p className="provjeri-stupac-naslov">🎙️ Usmena provjera — pitanje i povratna informacija</p>
             {/* Naslov cjeline već stoji u zaglavlju, pa se opseg ne ponavlja. */}
-            <OralPractice poglavljeBroj={broj} />
+            {realtime ? (
+              <GlasovniRazgovor
+                poglavljeBroj={broj}
+                nacin="ispit"
+                naslovIzvora="Usmena provjera gradiva"
+              />
+            ) : (
+              <OralPractice poglavljeBroj={broj} />
+            )}
           </div>
           <div className="provjeri-stupac provjeri-stupac-kviz">
             <p className="provjeri-stupac-naslov">📝 Kviz cjeline — jedno pitanje po ekranu</p>

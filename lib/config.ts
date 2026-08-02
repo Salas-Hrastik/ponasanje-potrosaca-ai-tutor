@@ -59,6 +59,14 @@ export const config = {
   ttsModel: process.env.TTS_MODEL || 'gpt-4o-mini-tts',
   ttsVoice: process.env.TTS_VOICE || 'alloy',
 
+  /**
+   * Govor-na-govor (Realtime). Razgovor ide izravno između preglednika i
+   * OpenAI-ja, pa otpada ciklus snimka → prijepis → odgovor → sinteza.
+   */
+  realtimeModel: process.env.REALTIME_MODEL || 'gpt-realtime-2.1',
+  realtimeVoice: process.env.REALTIME_VOICE || 'marin',
+  realtimeUkljucen: bool('REALTIME', true),
+
   ragTopK: int('RAG_TOP_K', 10),
   ragRerankTopN: int('RAG_RERANK_TOP_N', 6),
   ragRerank: bool('RAG_RERANK', true),

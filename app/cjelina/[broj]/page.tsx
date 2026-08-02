@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getCjelina, getPoglavlja } from '@/lib/content';
 import { supabaseAdmin } from '@/lib/supabase';
 import CjelinaRadniProstor from '@/components/CjelinaRadniProstor';
+import { config } from '@/lib/config';
 
 /**
  * Nastavna cjelina = poglavlje. Stranica je STATIČKA ruta: sadržaj (ciljevi,
@@ -54,6 +55,7 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
         brojPitanja={brojPitanja}
         prethodna={prethodna}
         sljedeca={sljedeca}
+        realtime={config.realtimeUkljucen}
       />
     </div>
   );
