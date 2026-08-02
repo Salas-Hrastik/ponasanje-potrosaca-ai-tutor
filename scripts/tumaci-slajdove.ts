@@ -34,6 +34,20 @@ interface Slajd {
   slika: string;
 }
 
+/**
+ * Model zna prepisati znak sa slajda kao HTML entitet („Skift &amp; McKinsey").
+ * U sučelju bi se takav zapis prikazao doslovno, pa se vraća u obični znak.
+ */
+function bezEntiteta(t: string): string {
+  return t
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&(#39|apos);/g, "'")
+    .replace(/&nbsp;/g, ' ');
+}
+
 /** Slajdovi u ispravnom redoslijedu, sa slikom svakog slajda. */
 async function izvuciSlike(pptx: Buffer): Promise<{ broj: number; slika: Buffer; tip: string }[]> {
   const zip = await JSZip.loadAsync(pptx);
@@ -162,7 +176,12 @@ Pravila:
       continue;
     }
     const { naslov, tumacenje } = alat.input as { naslov: string; tumacenje: string };
-    slajdovi.push({ broj: s.broj, naslov: naslov.trim(), tumacenje: tumacenje.trim(), slika: slikaUrl });
+    slajdovi.push({
+      broj: s.broj,
+      naslov: bezEntiteta(naslov.trim()),
+      tumacenje: bezEntiteta(tumacenje.trim()),
+      slika: slikaUrl,
+    });
     console.log(`  ${String(s.broj).padStart(2)}. ${naslov}`);
   }
 

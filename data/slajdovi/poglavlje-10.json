@@ -1,0 +1,78 @@
+{
+  "poglavlje": 10,
+  "prezentacija": "The Algorithmic Compass",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Algoritamski kompas: Paradoks autentičnosti u eri umjetne inteligencije",
+      "tumacenje": "Ovo je naslovni slajd nastavne cjeline, koji kroz vizualni kontrast tehnoloških shema (algoritmi, digitalna sučelja) i tople, ljudske scene (osobna razmjena na tradicionalnoj tržnici) najavljuje središnju temu poglavlja - paradoks autentičnosti. Podnaslov jasno definira opseg gradiva: strateški vodič za hrvatski turizam koji obuhvaća put od generativne tehnologije, preko autonomnih asistenata, do nezamjenjivog ljudskog dodira. Time se studentu najavljuje da će cjelina povezati AI trendove i etiku s temeljnim uvidom da tehnologija optimizira proces, ali sam smisao putovanja ostaje ljudski.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-01.png"
+    },
+    {
+      "broj": 2,
+      "naslov": "Strateški nacrt",
+      "tumacenje": "Slajd u četiri koraka prikazuje strukturu cjeline: (1) novi putnik i vrijednosni pomaci koji oblikuju potražnju, (2) povjerenje utemeljeno na GDPR-u kao konkurentskoj prednosti, (3) prijelaz u autonomnu eru gdje tehnologija sve više samostalno djeluje umjesto da samo predlaže, te (4) „ljudski paradoks\" – tehnološka automatizacija zapravo povećava vrijednost ljudske topline i autentičnosti. Ovaj vizualni pregled služi kao mapa puta kroz temeljne teme cjeline: od potrošačkih trendova, preko etike podataka i odgovornog AI-ja, do budućnosti autonomnog putnog asistenta i ljudskog dodira koji algoritam ne može zamijeniti.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-02.png"
+    },
+    {
+      "broj": 3,
+      "naslov": "Novi potrošački trendovi: Matrica motivacije",
+      "tumacenje": "Slajd prikazuje pet suvremenih potrošačkih trendova raspoređenih u matrici s dvije osi: planirano–spontano i fokus na sebe (interno)–fokus na svijet (eksterno). U gornjem eksternom dijelu nalaze se održivost i odgovornost te autentičnost i doživljaji, dok su u internom dijelu bleisure i solo/wellness putovanja, a spontanost uz tehnologiju smještena je na sredini spontane strane. Matrica pomaže razumjeti da svaki trend ima različitu motivacijsku podlogu – od brige za okoliš do potrebe za samospoznajom – što je ključno za segmentaciju i predviđanje ponašanja potrošača u turizmu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-03.png"
+    },
+    {
+      "broj": 4,
+      "naslov": "Temelj umjetne inteligencije: Podaci i privatnost",
+      "tumacenje": "Slajd prikazuje trostruku vezu između personalizacije putem AI-ja koja ovisi o osobnim podacima, GDPR okvira koji potrošačima jamči pravo na pristanak, pristup i brisanje podataka, te povjerenja kao konkurentske prednosti. Poruka je da transparentnost u korištenju podataka nije samo zakonska obveza, nego i presudan čimbenik izbora pružatelja usluge. Time se povezuje etika podataka s poslovnim rezultatom - povjerenje postaje \"valuta\" u odnosu s potrošačem.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-04.png"
+    },
+    {
+      "broj": 5,
+      "naslov": "Odgovorno korištenje AI-ja u marketingu",
+      "tumacenje": "Slajd prikazuje arhitekturu odgovornog AI-ja u turističkom marketingu u obliku svoda koji nosi \"dugoročno povjerenje potrošača\", oslonjenog na tri stupa: transparentnost, poštenje i kontrolu. Transparentnost znači da potrošač zna da komunicira sa strojem i zašto mu je prikazana određena ponuda, poštenje podrazumijeva izbjegavanje manipulativnih obrazaca i diskriminacijskih praksi u formiranju cijena, dok kontrola osigurava da potrošač može razumjeti i osporiti algoritamsku preporuku. Poruka slajda je da moć algoritamskog uokvirivanja izbora nosi odgovornost, jer kratkoročna dobit od manipulacije dugoročno potkopava povjerenje - temeljni kapital turizma.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-05.png"
+    },
+    {
+      "broj": 6,
+      "naslov": "Tehnološki skok: Od prijedloga do akcije",
+      "tumacenje": "Slajd uspoređuje dvije faze razvoja AI-ja u turizmu: generativni AI kao trenutno stanje, koji ima pasivnu savjetodavnu ulogu (odgovara na upite, generira tekst i slike, predlaže destinacije), te agentski AI kao budućnost, zamišljen kao autonomni putni asistent. Agentski AI ne samo da predlaže, nego uz dopuštenje korisnika samostalno uspoređuje opcije, izvršava rezervacije i proaktivno prilagođava putovanje u stvarnom vremenu. Ova usporedba ilustrira ključni pomak opisan u cjelini – prijelaz od faze komunikacije prema fazi djelovanja, čime se uloga potrošača pomiče prema postavljanju ciljeva i ograničenja, dok izvedbu preuzima sustav.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-06.png"
+    },
+    {
+      "broj": 7,
+      "naslov": "Nova uloga potrošača: Od izvršitelja do stratega",
+      "tumacenje": "Slajd uspoređuje stari model, u kojem potrošač sam obavlja sve korake (pretraživanje, uspoređivanje opcija, ručnu rezervaciju i praćenje promjena), s novim modelom u kojem potrošač postavlja ciljeve i ograničenja (npr. budžet, stil), dok agentski AI samostalno izvršava i optimizira putovanje. Time se uloga potrošača pomiče od izvršitelja prema strateškom postavljaču ciljeva, što odražava viziju autonomnog putnog asistenta iz cjeline. Ključno pitanje istaknuto na dnu slajda upućuje na temeljni izazov za turističku struku: kako osigurati vidljivost i odabir ponude u okruženju gdje prvu odluku donosi algoritam, a ne čovjek.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-07.png"
+    },
+    {
+      "broj": 8,
+      "naslov": "Jaz između namjere i stvarnosti (Podaci za 2025. prema Skift & McKinsey)",
+      "tumacenje": "Slajd prikazuje lijevkasti dijagram koji ilustrira jaz između namjere i prakse u primjeni umjetne inteligencije u turizmu: 90% organizacija već koristi generativni AI, 80% turističkih rukovoditelja planira uvesti agentski AI u širu primjenu unutar 3-5 godina, no tek 2% organizacija trenutno ima agentski AI u širokoj primjeni. Uz to se ističe podatak da bi 60% potrošača prije odabralo tvrtku koja nudi sposobnog AI-asistenta za putovanja. Ovi podaci pokazuju da je usvajanje agentskog AI-ja, koji vodi prema autonomnom putnom asistentu, već u tijeku, ali da postoji značajan raskorak između deklariranih namjera industrije i stvarne implementacije.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-08.png"
+    },
+    {
+      "broj": 9,
+      "naslov": "Preduvjeti za vidljivost hrvatskog turizma",
+      "tumacenje": "Slajd prikazuje tri ključna preduvjeta koja hrvatski turistički subjekti moraju ispuniti da bi bili vidljivi u AI-okruženju: strojno čitljive (strukturirane) podatke o ponudi, upravljanje reputacijom putem recenzija i digitalnog ugleda te dokazanu transparentnost temeljenu na kvaliteti podataka i etičnom korištenju. Poruka u AI sučelju naglašava da algoritam ne može odabrati ponudu koju ne može pročitati, čime se povezuje s implikacijama iz cjeline o tome da kvaliteta i upravljanje reputacijom postaju važniji od klasičnog oglašavanja. Vizualna metafora \"gradnje\" (nosivi elementi) sugerira da su ovi preduvjeti temeljni, slojeviti uvjeti za konkurentsku prednost u budućnosti obilježenoj agentskim AI-jem.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-09.png"
+    },
+    {
+      "broj": 10,
+      "naslov": "Nova podjela rada: Algoritam vs. Ljudski dodir",
+      "tumacenje": "Slajd tablično prikazuje podjelu zadataka u turizmu prema tome dominira li u njima algoritam ili čovjek. Algoritam dominira u analitičkim i operativnim zadacima kao što su analiza podataka i personalizacija, usporedba cijena i rezervacija u stvarnom vremenu te optimizacija logistike i ruta. Čovjek i dalje dominira u stvaranju autentične lokalne povezanosti, emocionalnoj rezonanci i gostoljubivosti te isporučivanju istinskog doživljaja. Time se ilustrira ključna poruka cjeline da AI optimizira put do putovanja, dok sam smisao i doživljaj putovanja ostaju duboko ljudski.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-10.png"
+    },
+    {
+      "broj": 11,
+      "naslov": "Najveći paradoks digitalnog turizma",
+      "tumacenje": "Grafikon prikazuje kako s porastom razine usvajanja tehnologije raste i razina algoritamskog odlučivanja, ali paralelno raste i percipirana vrijednost ljudske autentičnosti na tržištu. Poruka slajda je da što je više tehnologije i AI-a u procesu odlučivanja, potrošač sve više cijeni ono što tehnologija ne može pružiti – autentičnost, ljudsku toplinu i istinski doživljaj. Ovo ilustrira ključnu implikaciju za struku: AI može savršeno optimizirati logistiku putovanja, ali sam smisao putovanja ostaje duboko ljudski i nezamjenjiv.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-11.png"
+    },
+    {
+      "broj": 12,
+      "naslov": "Strateški kompas: Plan djelovanja",
+      "tumacenje": "Slajd donosi četiri konkretne preporuke za turističke djelatnike u kontekstu AI-a i autonomnih putnih asistenata: strukturiranje podataka u strojno čitljiv oblik, aktivno upravljanje reputacijom kroz recenzije, izgradnju etičkog povjerenja usklađenošću s GDPR-om i transparentnošću, te maksimiziranje ljudskog dodira i autentičnosti koje AI ne može zamijeniti. Ovime se sažimaju implikacije za struku iz cjeline, povezujući poglavlja o etici podataka, odgovornom AI-ju i ulozi ljudskog faktora u budućnosti turizma. Slajd praktično objedinjuje ključne poruke o tome kako ostati vidljiv i konkurentan u svijetu gdje algoritmi sve više sudjeluju u odlukama potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/10%20cjelina/slajdovi/slajd-12.png"
+    }
+  ]
+}
