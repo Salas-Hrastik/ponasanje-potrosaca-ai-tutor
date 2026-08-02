@@ -1,0 +1,84 @@
+{
+  "poglavlje": 5,
+  "prezentacija": "Special Interest Tourism Strategy",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Od masovnog odmora do turizma posebnih interesa",
+      "tumacenje": "Ovo je naslovni slajd nastavne cjeline, s podnaslovom koji najavljuje da će se obraditi motivi, eno-gastronomija i ponašanje modernih putnika. Slajd nema sadržajnih informacija, već samo uvodi temu prijelaza od klasičnog odmorišnog turizma prema turizmu posebnih interesa (SIT), gdje sam interes postaje glavni razlog putovanja. Njegova je uloga isključivo dekorativna i orijentacijska za studente prije ulaska u razradu podvrsta turizma i specifičnosti ponašanja potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-01.png"
+    },
+    {
+      "broj": 2,
+      "naslov": "Masovni odmorišni turizam vs. Turizam posebnih interesa (SIT)",
+      "tumacenje": "Slajd usporedno prikazuje obilježja masovnog odmorišnog turizma („sunce i more\") i turizma posebnih interesa (SIT) kroz tri kategorije: fokus motivacije, dubinu traženja informacija te ovisnost o sezoni. Dok masovni turizam karakterizira širok, općenit motiv i visoka sezonalnost, SIT se odlikuje uskim ali dubokim istraživanjem interesa (specijalizirane zajednice i forumi), većom lojalnošću i spremnošću na potrošnju te manjom ovisnošću o sezoni. Poruka na dnu slajda naglašava ključnu ideju cjeline: kod SIT-a sam interes odnosno hobi postaje glavni razlog putovanja, čime se oblikuju bitno drugačiji obrasci ponašanja potrošača u odnosu na klasični odmorišni turizam.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-02.png"
+    },
+    {
+      "broj": 3,
+      "naslov": "Pregled podvrsta turizma posebnih interesa",
+      "tumacenje": "Slajd u obliku tablice prikazuje osam kategorija turizma posebnih interesa (eno-gastronomski, nautički, sportski/aktivni, city break, vjerski/hodočasnički, poslovni-MICE, kulturni i zdravstveni/wellness) uz njihov dominantni motiv i specifičnost ponašanja potrošača. Za svaku podvrstu istaknuta je ključna razlika u ponašanju, primjerice visoka potrošnja i rezervacije unaprijed kod eno-gastronomskog turizma, spontane mikro odluke kod city breaka ili manja osjetljivost na cijenu kod vjerskog turizma. Slajd tako sistematizira kako se motiv i specifičan interes odražavaju na obrasce odlučivanja, čime studentu omogućuje usporedbu podvrsta i uvid u to zašto se ponašanje potrošača bitno razlikuje ovisno o vrsti turizma posebnih interesa.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-03.png"
+    },
+    {
+      "broj": 4,
+      "naslov": "Arhitektura hodočasničkog turizma / Arhitektura City break putovanja",
+      "tumacenje": "Slajd usporedbom dviju vizualnih shema pokazuje kako se lanac odluka (potreba → želja → motiv → odluka) i podjela na makro i mikro odluke primjenjuju različito ovisno o vrsti turizma. Kod hodočasničkog turizma prikazana je jednostavna, linearna putanja prema jednom cilju jer je makro odluka o mjestu i vremenu gotovo unaprijed zadana samim motivom i kalendarom. Kod city break putovanja prikazana je razgranata mreža brojnih mogućih izbora (hrana, kupovina, znamenitosti, prijevoz), što ilustrira eksploziju spontanih mikro odluka na odredištu uz snažno oslanjanje na digitalne alate. Zaključni okvir naglašava da isti lanac odluka vrijedi za sve podvrste turizma, ali se težište radikalno pomiče ovisno o vrsti putovanja.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-04.png"
+    },
+    {
+      "broj": 5,
+      "naslov": "Hrana kao motiv i hrana kao ograničenje",
+      "tumacenje": "Slajd prikazuje dvojnu ulogu hrane u turizmu putem kružnog dijagrama podijeljenog na dvije strane. Lijeva strana (motiv) obuhvaća potragu za autentičnim okusima, vinske ceste i doživljaj terroira kao glavni razlog putovanja za specifične segmente turista. Desna strana (ograničenje) prikazuje kako prehrambene navike, dijete i alergije oblikuju mikro odluke svih turista te izravno utječu na zadovoljstvo i digitalne recenzije. Poruka slajda, sažeta u donjoj traci, jest da bez obzira na primarni motiv putovanja, svakodnevne prehrambene navike oblikuju svako iskustvo.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-05.png"
+    },
+    {
+      "broj": 6,
+      "naslov": "Gastronomski ekosustav: od polja do stola",
+      "tumacenje": "Slajd prikazuje šest manifestacijskih oblika eno-gastronomskog turizma povezanih u kružni niz: tržnice i OPG-ovi, gastronomske manifestacije, vinske ceste, kuharske radionice i gastro-ture te vrhunska i autohtona gastronomija. Time se ilustrira kako se gastronomski doživljaj gradi kroz cijeli lanac od proizvodnje do konačne konzumacije, odnosno kako hrana i vino postaju motiv putovanja, a ne samo pratnja odmora. Ovakav pregled pomaže studentima uočiti raznolikost konkretnih proizvoda i aktivnosti kojima se u praksi zadovoljava potreba za autentičnim lokalnim doživljajem.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-06.png"
+    },
+    {
+      "broj": 7,
+      "naslov": "Vino kao teško kopirljiv turistički proizvod (terroir, doživljaj, status)",
+      "tumacenje": "Slajd piramidom prikazuje tri razine vrijednosti enofilnog turizma: u temelju je identitet prostora (terroir) koji povezuje jelo i krajolik, iznad njega doživljaj okusa kroz enofilni turizam i vođene kušnje, a na vrhu vino kao statusni simbol koji nosi ekskluzivnost i prepoznatljivost. Time se pokazuje kako slojevi zajedno stvaraju teško kopirljiv turistički proizvod visoke dodane vrijednosti uz cjelogodišnju potražnju. Bočni panel ističe konkretno bogatstvo Hrvatske kroz autohtone sorte po regijama – istarsku malvaziju i teran, slavonsku graševinu te dalmatinske sorte poput plavca malog, pošipa i dingača – čime se povezuje teorijski koncept terroira s primjerima iz priručnika.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-07.png"
+    },
+    {
+      "broj": 8,
+      "naslov": "Prehrambeni trendovi koji oblikuju potražnju",
+      "tumacenje": "Slajd prikazuje tri para suprotstavljenih prehrambenih trendova koji se prelijevaju iz svakodnevice u očekivanja na putovanju: brzina i doživljaj (fast food nasuprot slow food), sastav prehrane (fleksitarijanstvo i „bez\" prehrana nasuprot vegetarijanstvu i veganstvu) te podrijetlo i svrha (zdrava/funkcionalna prehrana nasuprot lokalnoj i organskoj/bio ponudi). Uz svaki pojam navedena je njegova implikacija za ponudu, npr. jasno označene biljne opcije ili standardizacija bezglutenskih i bezlaktoznih jela. Ovo je važno jer pokazuje da ponuda u eno-gastronomskom turizmu mora pratiti raznolike i često suprotstavljene potrošačke navike kako bi zadovoljila različite segmente gostiju.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-08.png"
+    },
+    {
+      "broj": 9,
+      "naslov": "Ograničenja, alergije i fobije u prehrani",
+      "tumacenje": "Slajd prikazuje četiri skupine prehrambenih ograničenja koja oblikuju ponašanje turista: alergije i intolerancije (npr. gluten, laktoza), vjerska pravila prehrane (halal, košer, posni režimi), etičke i svjetonazorske izbore (poput veganstva) te neofobiju, odnosno strah od nepoznate hrane. Poruka u donjem okviru naglašava da ova ograničenja nisu stvar mode, nego zdravlja, vjere ili psihologije, pa njihovo zanemarivanje ugrožava sigurnost gosta i može rezultirati negativnim recenzijama. Za razumijevanje cjeline važno je uočiti da prehrana djeluje kao ograničavajući čimbenik u mikro odlukama svakog gosta, bez obzira na podvrstu turizma kojom se bavi.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-09.png"
+    },
+    {
+      "broj": 10,
+      "naslov": "Pametno dizajniran jelovnik kao odgovor na potražnju",
+      "tumacenje": "Slajd na primjeru konkretnog jelovnika prikazuje kako oznake alergena, veganska opcija i naznaka lokalnog OPG-a istovremeno odgovaraju na različite potrebe gostiju. Time se smanjuje percipirani rizik (zdravstveni, vezan uz alergene), otvara pristup rastućem segmentu veganskih potrošača te zadovoljava potreba za autentičnim „slow food\" doživljajem. Poruka slajda jest da dobro osmišljen gastronomski proizvod istovremeno širi tržište i štiti reputaciju ugostiteljskog objekta, povezujući trendove i ograničenja u prehrani opisane u cjelini o eno-gastronomskom turizmu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-10.png"
+    },
+    {
+      "broj": 11,
+      "naslov": "Univerzalna ponuda više ne zadovoljava; uspjeh zahtijeva stratešku prilagodbu ponude",
+      "tumacenje": "Slajd ističe tri ključna načela prilagodbe gastronomske ponude suvremenom gostu: transparentnost (jasne oznake sastojaka i alergena radi uklanjanja neizvjesnosti pri odlučivanju), autentičnost (povezivanje proizvoda s lokalnom pričom i terroirom, posebno važno u eno-gastronomiji) i fleksibilnost (mogućnost prilagodbe jela prehrambenom profilu pojedinog gosta). Time se izravno nadovezuje na dio cjeline o prehrambenim trendovima i ograničenjima, pokazujući da ponuda mora odgovoriti na različite motive, alergije i vjerske ili etičke izbore kako bi zadovoljila sve segmente potražnje. Poruka je da univerzalna, jednoobrazna ponuda više ne odgovara raznolikim mikro odlukama gostiju o hrani, pa je strateška prilagodba nužna za konkurentnost.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-11.png"
+    },
+    {
+      "broj": 12,
+      "naslov": "AI i personalizacija gastronomske ponude",
+      "tumacenje": "Slajd prikazuje metaforu lijevka kroz koji se kaotična potražnja (alergije, dijete, sklonosti, veganstvo, neofobija) pomoću digitalnih alata, filtara i AI-asistenata pretvara u personalizirane preporuke restorana. Poruka je da AI prehrambena ograničenja iz izvora neizvjesnosti pretvara u strukturirani podatak, omogućujući savršeno uparivanje ponude i potražnje te maksimizirano zadovoljstvo gosta. Ovo se nadovezuje na dio cjeline o eno-gastronomskom turizmu u kojem su alergije, veganstvo i neofobija prepoznati kao prehrambena ograničenja koja izravno utječu na mikro odluke i zadovoljstvo turista.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-12.png"
+    },
+    {
+      "broj": 13,
+      "naslov": "Pet ključnih zaključaka o gastronomiji i turizmu posebnih interesa",
+      "tumacenje": "Slajd sažima pet glavnih poruka cjeline: fragmentacija tržišta prema posebnim interesima donosi veću lojalnost i potrošnju, dok je prehrana univerzalni „mikro-motiv\" i istovremeno faktor percipiranog rizika u svim podvrstama turizma. Naglašava se da trendovi poput slow founda i biljne prehrane postaju standardna očekivanja gostiju, a transparentno označavanje alergena i uvažavanje vjerskih pravila ključni su za sigurnost i reputaciju ponude. Peta točka najavljuje ulogu umjetne inteligencije kao tehnologije koja omogućuje hiper-personalizaciju usluge, povezujući potrebe pojedinca s ponudom.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/5%20cjelina/slajdovi/slajd-13.png"
+    }
+  ]
+}
