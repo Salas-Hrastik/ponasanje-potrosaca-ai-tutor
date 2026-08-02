@@ -18,18 +18,25 @@ export default function Modal({
   onClose,
   children,
   klasa = '',
+  skriven = false,
 }: {
   naslov: string;
   podnaslov?: string;
   onClose: () => void;
   children: React.ReactNode;
   klasa?: string;
+  /**
+   * Sakriva prozor, ali ga ostavlja u stablu — sadržaj (npr. tijek kviza ili
+   * usmene provjere) time preživi zatvaranje i nastavlja se gdje je stao.
+   */
+  skriven?: boolean;
 }) {
   // Portal traži DOM, kojega pri poslužiteljskom iscrtavanju nema.
   const [montiran, setMontiran] = useState(false);
   useEffect(() => setMontiran(true), []);
 
   useEffect(() => {
+    if (skriven) return;
     const naTipku = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
@@ -41,12 +48,17 @@ export default function Modal({
       window.removeEventListener('keydown', naTipku);
       document.body.style.overflow = prethodni;
     };
-  }, [onClose]);
+  }, [onClose, skriven]);
 
   if (!montiran) return null;
 
   return createPortal(
-    <div className="modal-pozadina" onClick={onClose} role="presentation">
+    <div
+      className={`modal-pozadina ${skriven ? 'modal-skriven' : ''}`}
+      onClick={onClose}
+      role="presentation"
+      aria-hidden={skriven}
+    >
       <div
         className={`modal-sadrzaj ${klasa}`}
         onClick={(e) => e.stopPropagation()}

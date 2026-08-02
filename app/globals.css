@@ -1124,6 +1124,77 @@ code {
   color: var(--crvena-600);
 }
 
+/* --- Uvodna kartica aktivnosti (kviz, usmena provjera) -------------------- */
+/* Provjera se ne nameće nego pokreće: u stupcu stoji poziv, a rad se odvija u
+   skočnom prozoru gdje ima mjesta za pitanje, odgovore i obrazloženje. */
+.aktivnost-pocetak {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  min-height: 0;
+  padding: 14px 16px 10px;
+  overflow-y: auto;
+}
+.aktivnost-znak {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  font-size: 38px;
+  line-height: 1;
+  background: radial-gradient(circle at 50% 35%, #fff 0%, var(--more-050) 45%, var(--more-100) 100%);
+  border: 6px solid #fff;
+  box-shadow:
+    0 0 0 1px var(--more-100),
+    0 10px 28px rgba(6, 51, 63, 0.13);
+  margin-bottom: 12px;
+}
+.aktivnost-naslov {
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--more-900);
+  letter-spacing: -0.01em;
+}
+.aktivnost-stanje {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--more-800);
+}
+.aktivnost-opis {
+  margin: 0 0 16px;
+  max-width: 46ch;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--tekst-blijedi);
+}
+
+/* Prozori provjere: širi od zadanog, jer nose pitanje s odgovorima. Selektor
+   mora biti jači od `.modal-sadrzaj { width: min(760px, …) }` niže u datoteci. */
+.modal-sadrzaj.modal-kviz,
+.modal-sadrzaj.modal-usmena {
+  width: min(880px, 100%);
+}
+/* U prozoru kviz nosi vlastito pomicanje kroz tijelo modala. */
+.modal-kviz .kviz-runner,
+.modal-usmena .usmena-vjezba {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+/* Skriveni prozor ostaje u stablu da se rad ne izgubi. Selektor mora biti jači
+   od `.modal-pozadina { display: grid }`, koji je deklariran niže u datoteci. */
+.modal-pozadina.modal-skriven {
+  display: none;
+}
+
 /* --- Prošireni prikaz pismenog razgovora --------------------------------- */
 /* Nakon prvog pitanja razgovor se seli u veliki prozor: u uskom stupcu se duži
    odgovor jedva čita. Zatvaranjem se vraća ugrađeni prikaz. */

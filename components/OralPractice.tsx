@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TtsGumb from './TtsGumb';
+import Modal from './Modal';
 
 interface Citat {
   poglavlje: string;
@@ -54,6 +55,10 @@ export default function OralPractice({
   const [snima, setSnima] = useState(false);
   const [transkribira, setTranskribira] = useState(false);
   const [ocjenjuje, setOcjenjuje] = useState(false);
+  // Sama provjera odvija se u skočnom prozoru; u stupcu ostaje uvodna kartica.
+  // Prozor se pri zatvaranju samo skriva, pa se pitanje i povratna informacija
+  // ne gube — student nastavlja gdje je stao.
+  const [otvoren, setOtvoren] = useState(false);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dijeloviRef = useRef<Blob[]>([]);
@@ -67,6 +72,7 @@ export default function OralPractice({
   );
 
   const pokreni = useCallback(async () => {
+    setOtvoren(true);
     setGreska(null);
     setPovratna(null);
     setTranskript('');
@@ -154,31 +160,11 @@ export default function OralPractice({
     }
   }
 
-  return (
-    <section className="usmena-vjezba kartica">
-      <div className="usmena-zaglavlje">
-        <h3>🎙️ Usmena vježba</h3>
-      </div>
-      {naslovOpsega && <p className="usmena-opseg">Opseg: {naslovOpsega}</p>}
+  const uTijeku = faza !== 'pocetak';
 
+  const tijek = (
+    <>
       {greska && <p className="usmena-greska">{greska}</p>}
-
-      {faza === 'pocetak' && (
-        <div className="usmena-pocetak">
-          <span className="usmena-znak" aria-hidden="true">
-            🎙️
-          </span>
-          <h4 className="usmena-pocetak-naslov">Razgovaraj o sadržaju poglavlja</h4>
-          <p className="usmena-pocetak-stanje">Glasovni razgovor nije pokrenut</p>
-          <p className="usmena-pocetak-opis">
-            Asistent postavlja pitanje iz priručnika. Odgovorite glasom ili upišite odgovor —
-            snimka se nigdje ne pohranjuje.
-          </p>
-          <button className="gumb-pilula" onClick={pokreni}>
-            Pokreni glasovni razgovor
-          </button>
-        </div>
-      )}
 
       {faza === 'ucitavanje' && <p className="usmena-cekanje">Pripremam pitanje iz priručnika…</p>}
 
@@ -317,6 +303,45 @@ export default function OralPractice({
             Novo pitanje
           </button>
         </div>
+      )}
+    </>
+  );
+
+  return (
+    <section className="usmena-vjezba kartica">
+      <div className="usmena-zaglavlje">
+        <h3>🎙️ Usmena vježba</h3>
+      </div>
+      {naslovOpsega && <p className="usmena-opseg">Opseg: {naslovOpsega}</p>}
+
+      <div className="aktivnost-pocetak">
+        <span className="aktivnost-znak" aria-hidden="true">
+          🎙️
+        </span>
+        <h4 className="aktivnost-naslov">Razgovaraj o sadržaju poglavlja</h4>
+        <p className="aktivnost-stanje">
+          {uTijeku ? 'Provjera je u tijeku' : 'Glasovni razgovor nije pokrenut'}
+        </p>
+        <p className="aktivnost-opis">
+          Asistent postavlja pitanje iz priručnika. Odgovorite glasom ili upišite odgovor — snimka
+          se nigdje ne pohranjuje.
+        </p>
+        <button className="gumb-pilula" onClick={uTijeku ? () => setOtvoren(true) : pokreni}>
+          {uTijeku ? 'Nastavi provjeru' : 'Pokreni glasovni razgovor'}
+        </button>
+        {!uTijeku && greska && <p className="usmena-greska">{greska}</p>}
+      </div>
+
+      {uTijeku && (
+        <Modal
+          naslov="Usmena provjera"
+          podnaslov="Vježba bez službenog ocjenjivanja — snimka se ne pohranjuje"
+          onClose={() => setOtvoren(false)}
+          klasa="modal-usmena"
+          skriven={!otvoren}
+        >
+          {tijek}
+        </Modal>
       )}
     </section>
   );

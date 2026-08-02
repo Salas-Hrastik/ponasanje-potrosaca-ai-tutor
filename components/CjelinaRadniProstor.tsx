@@ -11,6 +11,7 @@ import SazetakModal from './SazetakModal';
 import OralPractice from './OralPractice';
 import UsmeniRazgovor from './UsmeniRazgovor';
 import MedijModal from './MedijModal';
+import ProzorAktivnosti from './ProzorAktivnosti';
 
 interface Odjeljak {
   id: string;
@@ -355,7 +356,18 @@ export default function CjelinaRadniProstor({
           <div className="provjeri-stupac provjeri-stupac-kviz">
             <p className="provjeri-stupac-naslov">📝 Kviz cjeline — jedno pitanje po ekranu</p>
             {brojPitanja > 0 ? (
-              <QuizRunner poglavljeBroj={broj} />
+              <ProzorAktivnosti
+                znak="📝"
+                naslov="Kviz cjeline"
+                opis={`${brojPitanja} pitanja, jedno po ekranu. Nakon svakog odgovora dobivate obrazloženje s uputom na stranicu priručnika.`}
+                gumbPokreni="Pokreni provjeru"
+                gumbNastavi="Nastavi provjeru"
+                naslovProzora={`Kviz cjeline — ${naslov}`}
+                podnaslovProzora={`${brojPitanja} pitanja · rezultat je informativan`}
+                klasaProzora="modal-kviz"
+              >
+                <QuizRunner poglavljeBroj={broj} />
+              </ProzorAktivnosti>
             ) : (
               <p className="prazno-stanje">Kviz za ovu cjelinu još nije pripremljen.</p>
             )}
