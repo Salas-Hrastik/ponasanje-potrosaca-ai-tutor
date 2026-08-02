@@ -296,7 +296,19 @@ export default function CjelinaRadniProstor({
           </div>
           <div className="razgovaraj-stupac razgovaraj-stupac-pismeni">
             <p className="razgovaraj-stupac-naslov">⌨️ Pismeni razgovor — pitajte i čitajte odgovor</p>
-            <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
+            <ProzorAktivnosti
+              znak="⌨️"
+              naslov="Pismeni razgovor"
+              opis="Napiši ili diktiraj pitanje i sačekaj odgovor. Asistent odgovara prema priručniku i navodi stranicu."
+              gumbPokreni="Pokreni"
+              gumbNastavi="Nastavi razgovor"
+              stanjeMirno="Razgovor nije pokrenut"
+              stanjeUTijeku="Razgovor je u tijeku"
+              naslovProzora={`Pismeni razgovor — ${naslov}`}
+              klasaProzora="modal-chat"
+            >
+              <AiChat poglavljeBroj={broj} naslovPoglavlja={naslov} predlozenaPitanja={predlozenaPitanja} />
+            </ProzorAktivnosti>
           </div>
         </div>
       )}

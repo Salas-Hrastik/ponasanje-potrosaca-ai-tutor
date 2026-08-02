@@ -48,18 +48,10 @@ export default function AiChat({
   const [snima, setSnima] = useState(false);
   const [transkribira, setTranskribira] = useState(false);
   const [glasovnaGreska, setGlasovnaGreska] = useState<string | null>(null);
-  // Nakon prvog pitanja razgovor se seli u veliki prozor: u uskom stupcu se
-  // duži odgovor jedva čita. Zatvaranjem se vraća ugrađeni prikaz, sa
-  // sačuvanim razgovorom — mijenja se samo okvir oko istog sučelja.
-  const [prosireno, setProsireno] = useState(false);
-  // Kad student sam zatvori prozor, prikaz mu se više ne nameće — inače bi se
-  // vratio već pri sljedećem kliku u polje za upit. Tada se nudi gumb za povratak.
-  const [zatvorenoRucno, setZatvorenoRucno] = useState(false);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dijeloviRef = useRef<Blob[]>([]);
   const porukeRef = useRef<HTMLDivElement | null>(null);
-  const unosRef = useRef<HTMLInputElement | null>(null);
 
   // Mikrofon se otpušta i kad korisnik napusti stranicu usred snimanja.
   useEffect(
@@ -73,38 +65,7 @@ export default function AiChat({
   useEffect(() => {
     const el = porukeRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [poruke, ucitava, prosireno]);
-
-  /** Prošireni prikaz čim student krene sastavljati pitanje — tipkanjem ili glasom. */
-  function otvoriUzUnos() {
-    if (!prosireno && !zatvorenoRucno) setProsireno(true);
-  }
-
-  function zatvoriProsireno() {
-    setZatvorenoRucno(true);
-    setProsireno(false);
-  }
-
-  // Polje za upit seli u prozor, pa fokus mora za njim — inače bi student
-  // nastavio tipkati u polje koje više nije na zaslonu.
-  useEffect(() => {
-    if (prosireno) unosRef.current?.focus();
-  }, [prosireno]);
-
-  // Escape zatvara prozor, a pozadina se ne pomiče dok je otvoren.
-  useEffect(() => {
-    if (!prosireno) return;
-    const naTipku = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') zatvoriProsireno();
-    };
-    document.addEventListener('keydown', naTipku);
-    const prijasnji = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', naTipku);
-      document.body.style.overflow = prijasnji;
-    };
-  }, [prosireno]);
+  }, [poruke, ucitava]);
 
   // Red čekanja: iskorišteni prijedlog nestaje, a sljedeći neiskorišteni ulazi na njegovo mjesto.
   const vidljiviPrijedlozi = predlozenaPitanja
@@ -114,7 +75,6 @@ export default function AiChat({
 
   async function pocniSnimanje() {
     setGlasovnaGreska(null);
-    otvoriUzUnos();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const rec = new MediaRecorder(stream);
@@ -165,9 +125,6 @@ export default function AiChat({
     // Povijest se uzima PRIJE dodavanja nove poruke — model treba ono što je
     // rečeno dosad, a tekuću poruku dobiva zasebno.
     const povijest = poruke.slice(-6).map((p) => ({ autor: p.autor, tekst: p.tekst }));
-    // Prijedlog se klikne bez dodirivanja polja za upit, pa se prikaz otvara i
-    // ovdje. Nakon što ga student jednom zatvori, više se ne nameće.
-    otvoriUzUnos();
     setPoruke((p) => [...p, { autor: 'student', tekst: pitanje }]);
     setUcitava(true);
     setCekaPrvi(true);
@@ -272,7 +229,7 @@ export default function AiChat({
   }
 
 
-  const jezgra = (
+  return (
     <div className="ai-chat">
       <div className="chat-zaglavlje">
         <h3>🤖 AI asistent</h3>
@@ -342,10 +299,8 @@ export default function AiChat({
           {snima ? '⏹' : '🎤'}
         </button>
         <input
-          ref={unosRef}
           value={upit}
           onChange={(e) => setUpit(e.target.value)}
-          onFocus={otvoriUzUnos}
           placeholder={
             transkribira
               ? 'Prepoznajem govor…'
@@ -367,52 +322,5 @@ export default function AiChat({
     </div>
   );
 
-  if (prosireno) {
-    return (
-      <div className="chat-preklop" onClick={zatvoriProsireno} role="presentation">
-        <div
-          className={`chat-modal ${poruke.length === 0 ? 'chat-modal-prazan' : ''}`}
-          onClick={(e) => e.stopPropagation()}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Pismeni razgovor"
-        >
-          <div className="chat-modal-traka">
-            <h3>⌨️ Pismeni razgovor{naslovPoglavlja ? ` — ${naslovPoglavlja}` : ''}</h3>
-            <button
-              className="chat-modal-zatvori"
-              onClick={zatvoriProsireno}
-              aria-label="Zatvori prošireni prikaz"
-              title="Zatvori (Esc)"
-            >
-              ✕
-            </button>
-          </div>
-          {jezgra}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      {/* Nakon zatvaranja prozora razgovor se nastavlja u stupcu; gumb ga vraća
-          u veliki prikaz kad god zatreba. */}
-      {(poruke.length > 0 || zatvorenoRucno) && (
-        <div className="chat-alati">
-          <button
-            type="button"
-            className="chat-prosiri"
-            onClick={() => {
-              setZatvorenoRucno(false);
-              setProsireno(true);
-            }}
-          >
-            ⛶ Prošireni prikaz
-          </button>
-        </div>
-      )}
-      {jezgra}
-    </>
-  );
 }
+

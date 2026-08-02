@@ -1180,6 +1180,38 @@ code {
 .modal-sadrzaj.modal-usmena {
   width: min(880px, 100%);
 }
+/* Razgovor raste s brojem poruka: prazan prozor se skuplja na sadržaj, a kad
+   poruke narastu do granice, pomiču se one, dok polje za upit ostaje pri dnu. */
+.modal-sadrzaj.modal-chat {
+  width: min(1000px, 100%);
+  height: auto;
+  max-height: min(88vh, 820px);
+}
+.modal-chat .modal-tijelo {
+  display: flex;
+  overflow: hidden;
+  padding: 0;
+}
+.modal-chat .modal-tijelo > * {
+  flex: 1;
+  min-height: 0;
+}
+.modal-chat .ai-chat {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  max-height: none;
+  margin-bottom: 0;
+}
+/* Vlastito zaglavlje chata ponavljalo bi naslov prozora. (Pravilo koje ga je
+   skrivalo u stupcu više ne vrijedi — prozor se iscrtava kroz portal, izvan
+   stabla panela.) */
+.modal-chat .chat-zaglavlje {
+  display: none;
+}
+.modal-chat .chat-prijedlozi {
+  max-height: 45%;
+}
 .modal-kviz .kviz-runner,
 .modal-usmena .usmena-vjezba {
   border: none;
@@ -1250,103 +1282,6 @@ code {
    od `.modal-pozadina { display: grid }`, koji je deklariran niže u datoteci. */
 .modal-pozadina.modal-skriven {
   display: none;
-}
-
-/* --- Prošireni prikaz pismenog razgovora --------------------------------- */
-/* Nakon prvog pitanja razgovor se seli u veliki prozor: u uskom stupcu se duži
-   odgovor jedva čita. Zatvaranjem se vraća ugrađeni prikaz. */
-.chat-preklop {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(6, 51, 63, 0.72);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.chat-modal {
-  display: flex;
-  flex-direction: column;
-  width: min(1100px, 94vw);
-  height: min(92vh, 900px);
-  background: var(--ploha);
-  border-radius: var(--radijus);
-  box-shadow: var(--sjena-jaka);
-  overflow: hidden;
-}
-.chat-modal-traka {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 18px;
-  background: var(--more-900);
-  color: #fff;
-}
-.chat-modal-traka h3 {
-  margin: 0;
-  font-size: 19px;
-}
-.chat-modal-zatvori {
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 17px;
-  cursor: pointer;
-}
-.chat-modal-zatvori:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-/* Dok razgovor još nije počeo prozor se skuplja na sadržaj — inače bi iznad
-   polja za upit zjapio prazan prostor visok pola zaslona. */
-.chat-modal-prazan {
-  height: auto;
-  max-height: min(92vh, 900px);
-}
-.chat-modal-prazan .chat-poruke {
-  flex: 0 0 auto;
-  min-height: 0;
-  padding: 0;
-}
-
-/* Unutar prozora chat ispunjava raspoloživu visinu i nosi vlastito pomicanje. */
-.chat-modal .ai-chat {
-  flex: 1;
-  min-height: 0;
-  max-height: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  margin-bottom: 0;
-}
-.chat-modal .chat-prijedlozi {
-  max-height: none;
-}
-
-/* Povratak u veliki prikaz nakon zatvaranja prozora. */
-.chat-alati {
-  display: flex;
-  justify-content: flex-end;
-  padding: 6px 16px 0;
-}
-.chat-prosiri {
-  background: transparent;
-  border: 1px solid var(--rub-jaci);
-  border-radius: 999px;
-  padding: 4px 12px;
-  font-family: inherit;
-  font-size: 14.5px;
-  color: var(--more-800);
-  cursor: pointer;
-}
-.chat-prosiri:hover {
-  border-color: var(--more-500);
-  background: var(--more-050);
 }
 
 /* --- Kviz ---------------------------------------------------------------- */

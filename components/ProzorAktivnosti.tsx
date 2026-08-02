@@ -17,6 +17,8 @@ export default function ProzorAktivnosti({
   opis,
   gumbPokreni,
   gumbNastavi,
+  stanjeMirno = 'Provjera nije pokrenuta',
+  stanjeUTijeku = 'Provjera je u tijeku',
   naslovProzora,
   podnaslovProzora,
   klasaProzora,
@@ -27,6 +29,8 @@ export default function ProzorAktivnosti({
   opis: string;
   gumbPokreni: string;
   gumbNastavi: string;
+  stanjeMirno?: string;
+  stanjeUTijeku?: string;
   naslovProzora: string;
   podnaslovProzora?: string;
   klasaProzora?: string;
@@ -41,9 +45,7 @@ export default function ProzorAktivnosti({
         {znak}
       </span>
       <h4 className="aktivnost-naslov">{naslov}</h4>
-      <p className="aktivnost-stanje">
-        {pokrenuto ? 'Provjera je u tijeku' : 'Provjera nije pokrenuta'}
-      </p>
+      <p className="aktivnost-stanje">{pokrenuto ? stanjeUTijeku : stanjeMirno}</p>
       <p className="aktivnost-opis">{opis}</p>
       <button
         className="gumb-pilula"
