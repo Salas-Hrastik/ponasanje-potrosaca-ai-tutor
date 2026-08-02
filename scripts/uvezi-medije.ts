@@ -164,8 +164,15 @@ async function main() {
     .eq('poglavlje_id', pog.id);
   const raniji = new Map((postojeci ?? []).map((r) => [r.url, r.naslov]));
 
-  /** Ime cjeline umjesto ničega — inače u popisu stoji „🎧 Audio · Cjelina 6". */
+  /**
+   * AUDIO uvijek nosi ime cjeline, bez obzira kako se datoteka zove: snimke su
+   * razgovor o cjelini u cjelini, pa je popis medija ujednačen kroz sve cjeline.
+   * Video i prezentacija zadržavaju vlastiti naslov — ondje ime datoteke govori
+   * što je unutra („Dekodiranje putovanja", „Modern Tourist Blueprint") — osim
+   * ako i ono ništa ne govori.
+   */
   function naslovStavke(ime: string, tip: Tip, url: string): { naslov: string; zadrzan: boolean } {
+    if (tip === 'audio') return { naslov: pog!.naslov, zadrzan: false };
     const cuvani = raniji.get(url);
     if (cuvani && !genericanNaslov(cuvani)) return { naslov: cuvani, zadrzan: true };
     const izImena = naslovIzImena(ime);
