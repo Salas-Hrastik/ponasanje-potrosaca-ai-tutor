@@ -4,7 +4,6 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Modal from './Modal';
-import TtsGumb from './TtsGumb';
 
 interface Cjelina {
   naslov: string;
@@ -30,16 +29,6 @@ function podijeliNaCjeline(md: string): Cjelina[] {
   }
   if (redci.join('').trim()) cjeline.push({ naslov, sadrzaj: redci.join('\n') });
   return cjeline;
-}
-
-/** Uklanja Markdown oznake da TTS ne čita zvjezdice i crtice. */
-function zaCitanje(md: string): string {
-  return md
-    .replace(/^#+\s*/gm, '')
-    .replace(/[*_`>]/g, '')
-    .replace(/\n{2,}/g, '. ')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 export default function SazetakModal({
@@ -77,7 +66,6 @@ export default function SazetakModal({
           onClose={() => setOtvoren(false)}
           klasa="sazetak-modal"
         >
-          <TtsGumb tekst={zaCitanje(sazetakMd).slice(0, 1800)} oznaka="Poslušaj sažetak" />
           <div className="sazetak-sadrzaj">
             {cjeline.length <= 1 ? (
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{sazetakMd}</ReactMarkdown>
@@ -91,6 +79,14 @@ export default function SazetakModal({
                 </details>
               ))
             )}
+          </div>
+
+          {/* Izlaz i na kraju sažetka: nakon dugog teksta ne treba se vraćati
+              na vrh da bi se zatvorio pregled. */}
+          <div className="sazetak-izlaz">
+            <button className="gumb-izlaz" onClick={() => setOtvoren(false)}>
+              ✕ Zatvori sažetak
+            </button>
           </div>
         </Modal>
       )}
