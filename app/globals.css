@@ -1370,6 +1370,47 @@ code {
   text-transform: uppercase;
   color: var(--tekst-blijedi);
 }
+/* Pisana ocjena stoji u tijeku, ali se ne smije čitati kao replika asistenta:
+   puna širina i topliji rub odvajaju je od izgovorenog razgovora. */
+.glasovni-ocjena {
+  align-self: stretch;
+  background: var(--more-050);
+  border: 1px solid var(--more-100);
+  border-left: 3px solid var(--more-500);
+  border-radius: var(--radijus-mali);
+  padding: 10px 14px;
+}
+.glasovni-ocjena > .glasovni-autor {
+  display: block;
+}
+.glasovni-ocjena > .usmena-procjena {
+  font-size: 17px;
+  margin: 6px 0 10px;
+}
+/* U uskom stupcu tri stupca rubrike lome natpise; dva stanu cijela. */
+.glasovni-ocjena .usmena-rubrika {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+.glasovni-ocjena .usmena-idealni {
+  background: #fff;
+  margin-bottom: 10px;
+}
+.glasovni-ocjena .usmena-idealni h4 {
+  font-size: 17px;
+}
+.glasovni-ocjena .usmena-idealni p,
+.glasovni-ocjena .usmena-blok ul {
+  font-size: 16.5px;
+}
+.glasovni-ocjena .usmena-rubrika {
+  margin-bottom: 12px;
+}
+.glasovni-ocjena .usmena-natuknice {
+  margin: 0;
+}
+.glasovni-ocjena .chat-citati {
+  margin-top: 8px;
+}
 .glasovni-izvori {
   flex-shrink: 0;
   margin-top: 10px;

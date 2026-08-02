@@ -13,14 +13,70 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * alat postavljeni su na poslužitelju (/api/realtime/sesija), a jedini put do
  * gradiva je alat „dohvati_gradivo" (/api/realtime/gradivo), koji vrti isti
  * dohvat i istu branu pokrića kao pismeni razgovor.
+ *
+ * U načinu „ispit" uz govor ide i PISANA povratna informacija: svaki studentov
+ * odgovor u pozadini prolazi kroz /api/usmena-vjezba/ocijeni i u tijek se
+ * upisuje kartica s procjenom, razradom i idealnim odgovorom. Izgovorena
+ * pohvala nestane čim je izrečena; napisani idealan odgovor ostaje za učenje.
  */
 
-interface Replika {
-  autor: 'student' | 'asistent';
-  tekst: string;
+interface Citat {
+  poglavlje: string;
+  stranice: string;
 }
 
+interface Povratna {
+  tip: string;
+  procjena?: string;
+  tocno?: string[];
+  nedostaje?: string[];
+  pogresno?: string[];
+  savjeti?: string[];
+  idealni_odgovor?: string;
+  citati?: Citat[];
+  rubrika?: { tocnost: number; pokrivenost: number; terminologija: number; jasnoca: number };
+  poruka?: string;
+}
+
+/**
+ * Tijek je jedan niz, a ne dva usporedna: pisana povratna informacija mora
+ * stajati točno ispod odgovora na koji se odnosi.
+ */
+type Replika = { vrsta: 'replika'; autor: 'student' | 'asistent'; tekst: string };
+type Ocjena = { vrsta: 'ocjena'; stanje: 'ceka' | 'gotovo' | 'greska'; podaci?: Povratna };
+type Stavka = (Replika | Ocjena) & { kljuc: number };
+
 type Stanje = 'mirno' | 'spajanje' | 'spojeno' | 'greska';
+
+const PROCJENA_KLASA: Record<string, string> = {
+  'uglavnom točno': 'procjena-dobro',
+  djelomično: 'procjena-djelomicno',
+  netočno: 'procjena-lose',
+};
+
+/**
+ * Detekcija govora reže studentov odgovor na odsječke već pri kraćoj stanci,
+ * pa se odsječci prvo skupljaju i tek se onda šalju na ocjenu — inače bi se
+ * ocjenjivala prva polovica rečenice.
+ */
+const SASTAVI_ODGOVOR_MS = 1500;
+
+/**
+ * Ispitivač u jednoj replici prvo komentira prethodni odgovor pa tek onda pita
+ * novo. Na ocjenu smije ići samo pitanje — komentar bi odvukao dohvat na
+ * prethodnu temu. Uzima se zadnja rečenica koja završava upitnikom.
+ */
+function izvuciPitanje(tekst: string): string {
+  const kraj = tekst.lastIndexOf('?');
+  if (kraj < 0) return '';
+  const dio = tekst.slice(0, kraj + 1);
+  const pocetak = Math.max(
+    dio.lastIndexOf('.', kraj - 1),
+    dio.lastIndexOf('!', kraj - 1),
+    dio.lastIndexOf('?', kraj - 1),
+  );
+  return dio.slice(pocetak + 1).trim();
+}
 
 export default function GlasovniRazgovor({
   poglavljeBroj,
@@ -33,7 +89,7 @@ export default function GlasovniRazgovor({
 }) {
   const [stanje, setStanje] = useState<Stanje>('mirno');
   const [greska, setGreska] = useState<string | null>(null);
-  const [replike, setReplike] = useState<Replika[]>([]);
+  const [stavke, setStavke] = useState<Stavka[]>([]);
   const [izvori, setIzvori] = useState<string[]>([]);
   const [utisan, setUtisan] = useState(false);
 
@@ -43,15 +99,61 @@ export default function GlasovniRazgovor({
   const zvukRef = useRef<HTMLAudioElement | null>(null);
   const tijekRef = useRef<HTMLDivElement | null>(null);
 
+  // Pisana ocjena: zadnje pitanje asistenta, odsječci odgovora i njihov tajmer.
+  const pitanjeRef = useRef('');
+  const odgovorRef = useRef('');
+  const tajmerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const brojacRef = useRef(0);
+
   useEffect(() => {
     const el = tijekRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [replike]);
+  }, [stavke]);
+
+  const dodaj = useCallback((s: Replika | Ocjena) => {
+    const kljuc = ++brojacRef.current;
+    setStavke((p) => [...p, { ...s, kljuc }]);
+    return kljuc;
+  }, []);
 
   const posalji = useCallback((poruka: unknown) => {
     const dc = dcRef.current;
     if (dc?.readyState === 'open') dc.send(JSON.stringify(poruka));
   }, []);
+
+  /**
+   * Pisana ocjena ide kroz istu rutu kao i nekadašnja usmena vježba: dohvat s
+   * branom pokrića pa ocjena u JSON-u. Namjerno se NE traži od glasovnog
+   * modela — ono što je izgovorio nitko ne provjerava, a ovdje ocjena nastaje
+   * iz isječaka priručnika.
+   */
+  const ocijeni = useCallback(async () => {
+    const pitanje = pitanjeRef.current.trim();
+    const odgovor = odgovorRef.current.trim();
+    odgovorRef.current = '';
+    if (nacin !== 'ispit' || !pitanje || !odgovor) return;
+    // Jedno pitanje — jedna ocjena; nastavak razgovora čeka novo pitanje.
+    pitanjeRef.current = '';
+
+    const kljuc = dodaj({ vrsta: 'ocjena', stanje: 'ceka' });
+    const zamijeni = (stanje: Ocjena['stanje'], podaci?: Povratna) =>
+      setStavke((p) =>
+        p.map((s) => (s.kljuc === kljuc ? { vrsta: 'ocjena' as const, kljuc, stanje, podaci } : s)),
+      );
+
+    try {
+      const res = await fetch('/api/usmena-vjezba/ocijeni', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ poglavljeBroj, pitanje, transkript: odgovor }),
+      });
+      const podaci = (await res.json()) as Povratna;
+      if (!res.ok || !podaci?.tip) zamijeni('greska');
+      else zamijeni('gotovo', podaci);
+    } catch {
+      zamijeni('greska');
+    }
+  }, [dodaj, nacin, poglavljeBroj]);
 
   /** Model traži gradivo — jedini put kojim sadržaj priručnika ulazi u razgovor. */
   const obradiAlat = useCallback(
@@ -123,22 +225,39 @@ export default function GlasovniRazgovor({
       // Prijepisi — razgovor ostaje čitljiv i bez slušanja.
       if (tip === 'conversation.item.input_audio_transcription.completed') {
         const t = String(d.transcript ?? '').trim();
-        if (t) setReplike((p) => [...p, { autor: 'student', tekst: t }]);
+        if (!t) return;
+        dodaj({ vrsta: 'replika', autor: 'student', tekst: t });
+        if (nacin === 'ispit' && pitanjeRef.current) {
+          odgovorRef.current = `${odgovorRef.current} ${t}`.trim();
+          if (tajmerRef.current) clearTimeout(tajmerRef.current);
+          tajmerRef.current = setTimeout(() => void ocijeni(), SASTAVI_ODGOVOR_MS);
+        }
         return;
       }
       if (tip === 'response.output_audio_transcript.done' || tip === 'response.audio_transcript.done') {
         const t = String(d.transcript ?? '').trim();
-        if (t) setReplike((p) => [...p, { autor: 'asistent', tekst: t }]);
+        if (!t) return;
+        dodaj({ vrsta: 'replika', autor: 'asistent', tekst: t });
+        // Ocjenjuje se samo odgovor na pitanje; komentar asistenta nije pitanje.
+        if (nacin === 'ispit') {
+          const p = izvuciPitanje(t);
+          if (p) {
+            pitanjeRef.current = p;
+            odgovorRef.current = '';
+          }
+        }
         return;
       }
       if (tip === 'error') {
         console.error('[realtime]', d);
       }
     },
-    [obradiAlat],
+    [dodaj, nacin, obradiAlat, ocijeni],
   );
 
   const prekini = useCallback(() => {
+    if (tajmerRef.current) clearTimeout(tajmerRef.current);
+    tajmerRef.current = null;
     dcRef.current?.close();
     pcRef.current?.close();
     mikRef.current?.getTracks().forEach((t) => t.stop());
@@ -232,7 +351,7 @@ export default function GlasovniRazgovor({
           </p>
           <p className="aktivnost-opis">
             {nacin === 'ispit'
-              ? 'Asistent postavlja pitanja iz priručnika i odmah komentira vaš odgovor. Govorite prirodno — možete ga i prekinuti. Vježba je bez ocjenjivanja, a snimka se nigdje ne pohranjuje.'
+              ? 'Asistent postavlja pitanja iz priručnika i odmah komentira vaš odgovor. Uz izgovoreni komentar u tijek se upisuje i pisana procjena s idealnim odgovorom. Vježba je bez ocjenjivanja, a snimka se nigdje ne pohranjuje.'
               : 'Govorite prirodno i pitajte što vas zanima; možete i prekinuti asistenta usred rečenice. Zatražite li zamjenu uloga, on ispituje vas. Snimka se nigdje ne pohranjuje.'}
           </p>
           <button className="gumb-pilula" onClick={pokreni} disabled={stanje === 'spajanje'}>
@@ -256,15 +375,19 @@ export default function GlasovniRazgovor({
           </div>
 
           <div className="glasovni-tijek" ref={tijekRef}>
-            {replike.length === 0 && (
+            {stavke.length === 0 && (
               <p className="glasovni-cekanje">Slušam… recite nešto kad budete spremni.</p>
             )}
-            {replike.map((r, i) => (
-              <div key={i} className={`glasovni-replika glasovni-${r.autor}`}>
-                <span className="glasovni-autor">{r.autor === 'student' ? 'Vi' : 'Asistent'}</span>
-                <p>{r.tekst}</p>
-              </div>
-            ))}
+            {stavke.map((s) =>
+              s.vrsta === 'replika' ? (
+                <div key={s.kljuc} className={`glasovni-replika glasovni-${s.autor}`}>
+                  <span className="glasovni-autor">{s.autor === 'student' ? 'Vi' : 'Asistent'}</span>
+                  <p>{s.tekst}</p>
+                </div>
+              ) : (
+                <OcjenaKartica key={s.kljuc} stanje={s.stanje} podaci={s.podaci} />
+              ),
+            )}
           </div>
 
           {izvori.length > 0 && (
@@ -280,6 +403,122 @@ export default function GlasovniRazgovor({
           </p>
         </>
       )}
+    </div>
+  );
+}
+
+/**
+ * Pisana povratna informacija u tijeku razgovora. Idealan odgovor stoji
+ * otvoren jer je on ono zbog čega se provjera i radi; razrada je sklopljena da
+ * ne pregazi razgovor iznad nje.
+ */
+function OcjenaKartica({ stanje, podaci }: { stanje: 'ceka' | 'gotovo' | 'greska'; podaci?: Povratna }) {
+  if (stanje === 'ceka') {
+    return (
+      <div className="glasovni-ocjena">
+        <p className="usmena-cekanje">Pripremam pisanu povratnu informaciju…</p>
+      </div>
+    );
+  }
+  if (stanje === 'greska' || !podaci) {
+    return (
+      <div className="glasovni-ocjena">
+        <p className="usmena-greska">
+          Pisanu povratnu informaciju nije bilo moguće pripremiti. Razgovor teče dalje.
+        </p>
+      </div>
+    );
+  }
+  if (podaci.tip === 'nedovoljno_konteksta') {
+    return (
+      <div className="glasovni-ocjena">
+        <p>{podaci.poruka}</p>
+      </div>
+    );
+  }
+
+  const imaRazradu =
+    !!podaci.rubrika ||
+    !!podaci.tocno?.length ||
+    !!podaci.nedostaje?.length ||
+    !!podaci.pogresno?.length ||
+    !!podaci.savjeti?.length;
+
+  return (
+    <div className="glasovni-ocjena">
+      <span className="glasovni-autor">Pisana povratna informacija</span>
+
+      {podaci.procjena && (
+        <p className={`usmena-procjena ${PROCJENA_KLASA[podaci.procjena] ?? ''}`}>
+          Procjena: <strong>{podaci.procjena}</strong>
+        </p>
+      )}
+
+      {podaci.idealni_odgovor && (
+        <div className="usmena-idealni">
+          <h4>Idealan sažeti odgovor</h4>
+          <p>{podaci.idealni_odgovor}</p>
+        </div>
+      )}
+
+      {imaRazradu && (
+        <details className="usmena-natuknice">
+          <summary>Prikaži razradu odgovora</summary>
+
+          {podaci.rubrika && (
+            <ul className="usmena-rubrika">
+              <li>
+                Točnost pojmova <span>{podaci.rubrika.tocnost}/2</span>
+              </li>
+              <li>
+                Pokrivenost <span>{podaci.rubrika.pokrivenost}/2</span>
+              </li>
+              <li>
+                Terminologija <span>{podaci.rubrika.terminologija}/2</span>
+              </li>
+              <li>
+                Jasnoća izlaganja <span>{podaci.rubrika.jasnoca}/2</span>
+              </li>
+            </ul>
+          )}
+
+          {!!podaci.tocno?.length && (
+            <Blok naslov="✓ Dobro ste naveli" stavke={podaci.tocno} klasa="blok-tocno" />
+          )}
+          {!!podaci.nedostaje?.length && (
+            <Blok naslov="◻ Nedostaje" stavke={podaci.nedostaje} klasa="blok-nedostaje" />
+          )}
+          {!!podaci.pogresno?.length && (
+            <Blok naslov="✗ Netočno" stavke={podaci.pogresno} klasa="blok-pogresno" />
+          )}
+          {!!podaci.savjeti?.length && (
+            <Blok naslov="💡 Savjeti" stavke={podaci.savjeti} klasa="blok-savjeti" />
+          )}
+        </details>
+      )}
+
+      {!!podaci.citati?.length && (
+        <ul className="chat-citati">
+          {podaci.citati.map((c, i) => (
+            <li key={i}>
+              {c.poglavlje}, str. {c.stranice}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function Blok({ naslov, stavke, klasa }: { naslov: string; stavke: string[]; klasa: string }) {
+  return (
+    <div className={`usmena-blok ${klasa}`}>
+      <h4>{naslov}</h4>
+      <ul>
+        {stavke.map((s, i) => (
+          <li key={i}>{s}</li>
+        ))}
+      </ul>
     </div>
   );
 }
