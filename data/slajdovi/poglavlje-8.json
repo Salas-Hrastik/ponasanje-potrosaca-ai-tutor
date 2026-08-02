@@ -1,0 +1,66 @@
+{
+  "poglavlje": 8,
+  "prezentacija": "Agentic AI in Tourism",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "Umjetna inteligencija u turizmu",
+      "tumacenje": "Ovo je naslovni slajd cjeline koji najavljuje temu umjetne inteligencije u turizmu, s podnaslovom „Od digitalnog savjetnika do samostalnog izvršitelja\" koji upućuje na razvoj od generativnog AI-ja prema agentskom AI-ju. Slajd je uvodni i dekorativan (prikazuje shematski model neuronske mreže), a njegova je svrha najaviti strateški pregled utjecaja AI-ja na ponašanje putnika i oblikovanje turističke ponude, što će biti razrađeno kroz ostatak prezentacije.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-01.png"
+    },
+    {
+      "broj": 2,
+      "naslov": "Tri stupa AI transformacije u turizmu",
+      "tumacenje": "Slajd prikazuje tri ključne promjene koje umjetna inteligencija donosi u ponašanje potrošača u turizmu. Prvi stup pokazuje kako AI preuzima kognitivni teret traženja, sažimanja informacija i preporučivanja, pa sustav postaje analitičar umjesto putnika. Drugi stup opisuje prijelaz na konverzacijski commerce, gdje potrošač iskazuje namjeru prirodnim jezikom umjesto ručnog filtriranja po izbornicima. Treći stup naglašava strateški pomak od generativnog AI-ja koji savjetuje prema agentskom AI-ju koji samostalno odlučuje i izvršava zadatke, što je ključno za razumijevanje najnovije faze AI transformacije obrađene u cjelini.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-02.png"
+    },
+    {
+      "broj": 3,
+      "naslov": "Promjena paradigme: Faza planiranja putovanja",
+      "tumacenje": "Slajd uspoređuje planiranje putovanja \"nekad\" i \"danas uz AI\". Prikazuje kako je nekadašnji proces zahtijevao sate samostalnog pretraživanja interneta, otvaranje desetaka stranica i ručno uspoređivanje ruta, što je predstavljalo izrazito visok trošak traženja informacija. Nasuprot tome, danas potrošač u razgovoru s AI sustavom opisuje svoje želje, a sustav generira strukturiran i personaliziran prijedlog itinerara, čime se faze traženja i vrednovanja stapaju u jedan dijalog. Slajd time ilustrira ključnu promjenu uloge potrošača, koji više ne prikuplja informacije od nule, već doradjuje i potvrđuje gotov plan.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-03.png"
+    },
+    {
+      "broj": 4,
+      "naslov": "Konverzacijski commerce i mehanika cijena",
+      "tumacenje": "Slajd prikazuje tok od konverzacijskog commercea, preko procesnog motora (Processing Engine), do hiperpersonalizacije i dinamičkih cijena: potrošač iskazuje namjeru prirodnim jezikom, a sustav tumači tu namjeru te favorizira pružatelje čiji su podaci strukturirani i strojno čitljivi. Prikazan je i „paradoks za potrošača\" – pozitivna strana je izrazito visoka relevantnost ponuda, dok je negativna gubitak transparentnosti i osjećaj da cijena nije ista za svakoga. Desni dio slajda pokazuje konkretan primjer algoritamske prilagodbe ponude i cijene u stvarnom vremenu (let, hotel, itinerar) temeljene na profilu korisnika, povijesti ponašanja, potražnji i vremenu do putovanja, čime se ilustrira koncept hiperpersonalizacije i dinamičkog oblikovanja cijena iz cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-04.png"
+    },
+    {
+      "broj": 5,
+      "naslov": "AI unutar faza ciklusa odlučivanja",
+      "tumacenje": "Slajd prikazuje ciklus odlučivanja potrošača (prepoznavanje potrebe, traženje informacija, vrednovanje alternativa, odluka, nakon kupnje) u obliku beskonačne petlje, uz naznaku kako AI intervenira u svakoj fazi. Za svaku fazu navedeno je kako AI mijenja ponašanje: potiče potrebu personaliziranim preporukama, snižava trošak traženja informacija, oblikuje evocirani skup rangiranjem alternativa, smanjuje percipirani rizik predviđanjima i jamstvima, te personalizira podršku i analizira zadovoljstvo nakon kupnje. Ovaj prikaz zaokružuje cjelinu prikazujući sustavno kako AI ne djeluje samo u jednoj fazi, već prožima cijeli proces potrošačevog odlučivanja.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-05.png"
+    },
+    {
+      "broj": 6,
+      "naslov": "Evolucija: Od Generativnog do Agentskog AI-ja",
+      "tumacenje": "Slajd uspoređuje dvije faze razvoja AI-ja kroz njihove uloge: generativni AI kao \"savjetnik\" koji odgovara na upite, generira prijedloge i reaktivan je te se oslanja na čovjeka za izvršavanje, nasuprot agentskom AI-ju kao \"izvršitelju\" koji obilježavaju autonomno odlučivanje, korištenje vanjskih alata i dugoročno pamćenje konteksta i preferencija korisnika. Istaknuta poruka pri dnu naglašava strateški pomak u ponašanju potrošača - s pretraživanja i potvrđivanja prijedloga na potpuno delegiranje zadataka AI sustavu. Ovaj prikaz ključan je za razumijevanje kako se uloga potrošača mijenja od aktivnog istraživača prema onome tko delegira odluke autonomnom sustavu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-06.png"
+    },
+    {
+      "broj": 7,
+      "naslov": "Agentski AI u praksi: Anatomija rješavanja problema",
+      "tumacenje": "Slajd na primjeru scenarija otkazanog leta uspoređuje reakciju generativnog AI-ja (starog modela), koji putniku samo savjetuje alternative i prepušta mu da sve ručno obavi, s akcijom agentskog AI-ja (novog modela), koji autonomno kroz četiri koraka detektira problem, samostalno prerezervira let, produljuje hotel i ažurira naplatu koristeći se vanjskim alatima poput Flight API-ja, Hotel CRM-a i Payment Gatewaya. Time se konkretno prikazuje autonomno odlučivanje i korištenje vanjskih alata kao ključna obilježja agentskog AI-ja iz cjeline. Zaključak slajda naglašava suštinski pomak u ponašanju potrošača: od pretraživanja i potvrđivanja prema potpunom delegiranju krizong menadžmenta asistentu.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-07.png"
+    },
+    {
+      "broj": 8,
+      "naslov": "Jaz Povjerenja",
+      "tumacenje": "Slajd prikazuje lijevak povjerenja prema agentskom AI-ju u turizmu: 90% potrošača vjeruje točnosti informacija dobivenih putem AI-ja, ~70% željelo bi digitalnog asistenta koji samostalno rezervira i vodi putovanje, no samo 2% spremno je dati AI-ju potpunu autonomiju bez ljudskog nadzora. Uz to, više od 60% potrošača odabralo bi tvrtku koja nudi takvog sposobnog AI-asistenta, čime povjerenje postaje ključna konkurentska prednost. Ključni uvid slajda je da potrošači žele sposobnost AI-ja, ali mu još ne prepuštaju kontrolu, što ilustrira temeljni jaz između zainteresiranosti za agentski AI i stvarnog povjerenja u njegovu autonomiju.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-08.png"
+    },
+    {
+      "broj": 9,
+      "naslov": "Rizici prepuštanja kontrole algoritmima",
+      "tumacenje": "Slajd prikazuje dijagram \"Risk Radar\" s pet povezanih rizika koji proizlaze iz oslanjanja na AI u odlučivanju potrošača: algoritamska pristranost, filter mjehurići, halucinacije, privatnost i pretjerano povjerenje. Uz svaki rizik dan je kratak opis - primjerice, da sustav pojačava postojeće predrasude iz povijesnih podataka, da personalizacija sužava izloženost raznolikosti, te da hiperpersonalizacija zahtijeva opsežno prikupljanje osobnih podataka. Ovaj prikaz je važan za razumijevanje cjeline jer sažima ključne opasnosti koje prate prednosti AI-ja u turizmu, podsjećajući da algoritmi oblikuju izbor potrošača te da je stoga potreban kritički odnos prema njihovim preporukama.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-09.png"
+    },
+    {
+      "broj": 10,
+      "naslov": "Tko oblikuje okvir, oblikuje i izbor",
+      "tumacenje": "Slajd shematski prikazuje kako potrošač (Consumer) svoju odluku ne donosi izravno, nego joj pristupa kroz \"okvir\" umjetne inteligencije koja obrađuje mrežu podataka i na kraju mu nudi ograničen skup opcija (Choice 1, 2, 3 – primjerice putovanje, destinaciju, atrakciju). Citat \"AI ne ukida potrošačevu odluku — on je uokviruje\" naglašava da AI ne donosi odluku umjesto potrošača, ali oblikuje evocirani skup i kriterije usporedbe u fazi vrednovanja alternativa. Zaključak upućuje da prepuštanjem kognitivnog tereta planiranja algoritmima, pružatelji usluga i tehnološke platforme koje kontroliraju AI infrastrukturu postaju stvarni arhitekti turističkog izbora, što je važno za razumijevanje utjecaja AI-ja na proces odlučivanja potrošača.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/8%20cjelina/slajdovi/slajd-10.png"
+    }
+  ]
+}
