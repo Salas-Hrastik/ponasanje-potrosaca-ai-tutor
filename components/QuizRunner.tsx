@@ -124,9 +124,12 @@ export default function QuizRunner({ poglavljeBroj, zavrsna }: { poglavljeBroj?:
         </p>
       </div>
 
-      <h3 className="kviz-pitanje">{trenutno.pitanje}</h3>
+      {/* Pitanje i odgovori se pomiču, a napredak i gumb ostaju na mjestu, pa
+          kviz stane u stupac „Provjeri" i kad objašnjenje naraste. */}
+      <div className="kviz-tijelo">
+        <h3 className="kviz-pitanje">{trenutno.pitanje}</h3>
 
-      <ul className="kviz-odgovori">
+        <ul className="kviz-odgovori">
         {trenutno.odgovori.map((odg, i) => {
           let klasa = 'kviz-odgovor-gumb';
           if (odabrano === i) klasa += ' odabrano';
@@ -145,24 +148,27 @@ export default function QuizRunner({ poglavljeBroj, zavrsna }: { poglavljeBroj?:
             </li>
           );
         })}
-      </ul>
+        </ul>
 
-      {potvrdjeno && (trenutno.objasnjenje || trenutno.stranica_ref) && (
-        <p className="kviz-objasnjenje">
-          {trenutno.objasnjenje}
-          {trenutno.stranica_ref && <span className="kviz-stranica"> ({trenutno.stranica_ref})</span>}
-        </p>
-      )}
+        {potvrdjeno && (trenutno.objasnjenje || trenutno.stranica_ref) && (
+          <p className="kviz-objasnjenje">
+            {trenutno.objasnjenje}
+            {trenutno.stranica_ref && <span className="kviz-stranica"> ({trenutno.stranica_ref})</span>}
+          </p>
+        )}
+      </div>
 
-      {!potvrdjeno ? (
-        <button className="gumb-primarni" disabled={odabrano === null} onClick={potvrdi}>
-          Potvrdi
-        </button>
-      ) : (
-        <button className="gumb-primarni" onClick={dalje} disabled={salje}>
-          {zadnje ? (salje ? 'Računam…' : 'Prikaži rezultat') : 'Sljedeće pitanje'}
-        </button>
-      )}
+      <div className="kviz-akcija">
+        {!potvrdjeno ? (
+          <button className="gumb-primarni" disabled={odabrano === null} onClick={potvrdi}>
+            Potvrdi
+          </button>
+        ) : (
+          <button className="gumb-primarni" onClick={dalje} disabled={salje}>
+            {zadnje ? (salje ? 'Računam…' : 'Prikaži rezultat') : 'Sljedeće pitanje'}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

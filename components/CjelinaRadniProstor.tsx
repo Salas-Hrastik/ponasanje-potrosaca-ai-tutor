@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -148,6 +148,12 @@ export default function CjelinaRadniProstor({
   const koraci = useMemo(() => koraciPoOdjeljcima(sazetakMd, odjeljci), [sazetakMd, odjeljci]);
   const predlozenaPitanja = useMemo(() => ciljevi.map((c) => ciljKaoPitanje(c.tekst)), [ciljevi]);
   const stranice = `${stranicaOd}–${stranicaDo}`;
+
+  // Bez ovoga bi se, nakon dugog čitanja u „Prouči", sljedeći način rada
+  // otvorio na sredini stranice.
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [nacin]);
 
   /**
    * Prijelaz na susjednu cjelinu stoji u istom retku s povratkom na početak
@@ -316,6 +322,22 @@ export default function CjelinaRadniProstor({
               )}
             </section>
           ))}
+
+          {/* Izlaz na kraju teksta: nakon nekoliko zaslona čitanja ne treba se
+              vraćati na vrh da bi se izašlo iz cjeline. */}
+          {koraci.length > 0 && (
+            <div className="prouci-izlaz">
+              <button className="gumb-izlaz" onClick={() => setNacin(null)}>
+                ← Izlaz na početak cjeline
+              </button>
+              <button
+                className="gumb-izlaz-blijedi"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                ↑ Na vrh teksta
+              </button>
+            </div>
+          )}
         </div>
       )}
 
