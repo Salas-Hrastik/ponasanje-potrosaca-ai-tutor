@@ -1,0 +1,455 @@
+{
+  "izmjereno": "2026-08-03",
+  "anatomija": {
+    "poglavlja": 11,
+    "dijelovi": [
+      {
+        "naslov": "DIO I · Temelji ponašanja potrošača",
+        "poglavlja": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "naslov": "DIO II · Digitalno doba i umjetna inteligencija",
+        "poglavlja": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "naslov": "Dodaci",
+        "poglavlja": [
+          11
+        ]
+      }
+    ],
+    "odjeljaka": 60,
+    "stranica": 52
+  },
+  "raspodjela": {
+    "stranicaPoPoglavlju": {
+      "n": 10,
+      "min": 3,
+      "med": 6,
+      "max": 8,
+      "prosjek": 5.5
+    },
+    "odjeljakaPoPoglavlju": {
+      "n": 10,
+      "min": 4,
+      "med": 6,
+      "max": 7,
+      "prosjek": 5.7
+    },
+    "stranicaPoOdjeljku": {
+      "n": 60,
+      "min": 1,
+      "med": 2,
+      "max": 4,
+      "prosjek": 1.8
+    },
+    "rijeciPoPoglavlju": {
+      "n": 10,
+      "min": 612,
+      "med": 1583,
+      "max": 2521,
+      "prosjek": 1418.3
+    },
+    "odlomakaPoPoglavlju": {
+      "n": 10,
+      "min": 15,
+      "med": 23,
+      "max": 53,
+      "prosjek": 30.6
+    }
+  },
+  "okviriPoglavlja": [
+    {
+      "naziv": "SAŽETAK POGLAVLJA",
+      "uPoglavljima": 10,
+      "poglavlja": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "naziv": "PITANJA ZA PONAVLJANJE",
+      "uPoglavljima": 10,
+      "poglavlja": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "naziv": "AI U FOKUSU",
+      "uPoglavljima": 8,
+      "poglavlja": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9,
+        10
+      ]
+    },
+    {
+      "naziv": "PRIMJER IZ PRAKSE",
+      "uPoglavljima": 6,
+      "poglavlja": [
+        1,
+        2,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "naziv": "KLJUČNI POJMOVI POGLAVLJA",
+      "uPoglavljima": 1,
+      "poglavlja": [
+        1
+      ]
+    },
+    {
+      "naziv": "INFORMACIJA, KVALITETA I VIDLJIVOST ZA AI",
+      "uPoglavljima": 1,
+      "poglavlja": [
+        1
+      ]
+    }
+  ],
+  "ciljevi": {
+    "poCjelini": {
+      "n": 10,
+      "min": 6,
+      "med": 6,
+      "max": 7,
+      "prosjek": 6.1
+    },
+    "rijeciPoCilju": {
+      "n": 61,
+      "min": 7,
+      "med": 17,
+      "max": 28,
+      "prosjek": 17.5
+    },
+    "poRazini": {
+      "znanje": 5,
+      "analiza": 19,
+      "razumijevanje": 23,
+      "primjena": 5,
+      "vrednovanje": 9
+    }
+  },
+  "kartice": {
+    "poCjelini": {
+      "n": 10,
+      "min": 10,
+      "med": 10,
+      "max": 10,
+      "prosjek": 10
+    },
+    "rijeciPojma": {
+      "n": 100,
+      "min": 1,
+      "med": 3,
+      "max": 8,
+      "prosjek": 3.1
+    },
+    "rijeciDefinicije": {
+      "n": 100,
+      "min": 6,
+      "med": 27,
+      "max": 42,
+      "prosjek": 26.2
+    }
+  },
+  "kviz": {
+    "poCjelini": {
+      "n": 10,
+      "min": 8,
+      "med": 8,
+      "max": 8,
+      "prosjek": 8
+    },
+    "odgovoraPoPitanju": {
+      "n": 80,
+      "min": 4,
+      "med": 4,
+      "max": 4,
+      "prosjek": 4
+    },
+    "rijeciPitanja": {
+      "n": 80,
+      "min": 4,
+      "med": 13,
+      "max": 27,
+      "prosjek": 13.5
+    },
+    "rijeciObjasnjenja": {
+      "n": 80,
+      "min": 10,
+      "med": 17,
+      "max": 28,
+      "prosjek": 17.2
+    },
+    "poPolozajuTocnog": {
+      "0": 72,
+      "1": 7,
+      "2": 1
+    }
+  },
+  "mediji": {
+    "poTipu": {
+      "video": 10,
+      "audio": 10,
+      "prezentacija": 10
+    },
+    "trajanjeMin": {
+      "n": 20,
+      "min": 6,
+      "med": 13,
+      "max": 31,
+      "prosjek": 15.5
+    }
+  },
+  "rag": {
+    "chunkova": 138,
+    "tokenaPoChunku": {
+      "n": 138,
+      "min": 54,
+      "med": 225,
+      "max": 376,
+      "prosjek": 223.3
+    },
+    "kljucnihRijeci": {
+      "n": 138,
+      "min": 8,
+      "med": 8,
+      "max": 8,
+      "prosjek": 8
+    }
+  },
+  "poPoglavlju": [
+    {
+      "broj": 1,
+      "naslov": "Uvod u ponašanje potrošača u turizmu",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranice": "4–9",
+      "brojStranica": 6,
+      "odjeljaka": 5,
+      "rijeciSazetka": 1583,
+      "odlomaka": 23,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 2,
+      "naslov": "Psihološki čimbenici ponašanja",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranice": "9–15",
+      "brojStranica": 7,
+      "odjeljaka": 6,
+      "rijeciSazetka": 2262,
+      "odlomaka": 49,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 3,
+      "naslov": "Sociokulturni i društveni čimbenici",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranice": "15–22",
+      "brojStranica": 8,
+      "odjeljaka": 6,
+      "rijeciSazetka": 2521,
+      "odlomaka": 46,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 4,
+      "naslov": "Proces donošenja odluke o putovanju",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranice": "22–28",
+      "brojStranica": 7,
+      "odjeljaka": 7,
+      "rijeciSazetka": 1935,
+      "odlomaka": 53,
+      "ciljeva": 7,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 5,
+      "naslov": "Podvrste turizma posebnih interesa i specifičnosti ponašanja",
+      "dio": "DIO I · Temelji ponašanja potrošača",
+      "stranice": "28–33",
+      "brojStranica": 6,
+      "odjeljaka": 4,
+      "rijeciSazetka": 1231,
+      "odlomaka": 22,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 6,
+      "naslov": "Internet i digitalna transformacija tržišta",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranice": "33–36",
+      "brojStranica": 4,
+      "odjeljaka": 5,
+      "rijeciSazetka": 843,
+      "odlomaka": 15,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 7,
+      "naslov": "Online ponašanje turističkog potrošača",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranice": "36–39",
+      "brojStranica": 4,
+      "odjeljaka": 5,
+      "rijeciSazetka": 706,
+      "odlomaka": 18,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 8,
+      "naslov": "Umjetna inteligencija i ponašanje potrošača",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranice": "39–42",
+      "brojStranica": 4,
+      "odjeljaka": 7,
+      "rijeciSazetka": 897,
+      "odlomaka": 20,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 9,
+      "naslov": "Istraživanje ponašanja: od klasičnih metoda do stvarnog vremena",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranice": "42–47",
+      "brojStranica": 6,
+      "odjeljaka": 7,
+      "rijeciSazetka": 1593,
+      "odlomaka": 45,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 10,
+      "naslov": "Trendovi, etika i budućnost",
+      "dio": "DIO II · Digitalno doba i umjetna inteligencija",
+      "stranice": "47–49",
+      "brojStranica": 3,
+      "odjeljaka": 5,
+      "rijeciSazetka": 612,
+      "odlomaka": 15,
+      "ciljeva": 6,
+      "kartica": 10,
+      "kvizPitanja": 8,
+      "medija": [
+        "video",
+        "audio",
+        "prezentacija"
+      ]
+    },
+    {
+      "broj": 11,
+      "naslov": "Dodaci — predgovor, pojmovnik i literatura",
+      "dio": "Dodaci",
+      "stranice": "3–52",
+      "brojStranica": 50,
+      "odjeljaka": 3,
+      "rijeciSazetka": 1052,
+      "odlomaka": 90,
+      "ciljeva": 0,
+      "kartica": 0,
+      "kvizPitanja": 0,
+      "medija": []
+    }
+  ]
+}

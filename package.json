@@ -16,7 +16,8 @@
     "kviz:uvezi": "tsx --env-file=.env.local scripts/uvezi-kviz.ts",
     "rag:debug": "tsx --env-file=.env.local scripts/rag-debug.ts",
     "mediji": "tsx --env-file=.env.local scripts/uvezi-medije.ts",
-    "slajdovi": "tsx --env-file=.env.local scripts/tumaci-slajdove.ts"
+    "slajdovi": "tsx --env-file=.env.local scripts/tumaci-slajdove.ts",
+    "knjiga:mjere": "tsx --env-file=.env.local scripts/izmjeri-knjigu.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

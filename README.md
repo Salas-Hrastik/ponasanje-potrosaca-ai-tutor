@@ -110,7 +110,10 @@ zastavice na `true`.
 
 ## Radni tijek punjenja sadržaja
 
-Detaljno u [`docs/RADNI-TIJEK.md`](docs/RADNI-TIJEK.md). Ukratko:
+Detaljno u [`docs/RADNI-TIJEK.md`](docs/RADNI-TIJEK.md). Za **novu knjigu u istom
+stilu** vidi [`docs/PREDLOZAK-NOVE-KNJIGE.md`](docs/PREDLOZAK-NOVE-KNJIGE.md) —
+struktura, kostur poglavlja i norme izvedenih elemenata, izmjereni skriptom
+`npm run knjiga:mjere`. Ukratko:
 
 1. **Nastavnik isporučuje priručnik** (DOCX) → `materijali/prirucnik.docx`.
 2. **Potvrda mapiranja:** `npm run struktura` izvuče cjeline/odjeljke i stvarne

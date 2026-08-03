@@ -3,6 +3,10 @@
 Ovaj dokument opisuje kako se kolegij puni sadržajem i kako se održava. Namijenjen
 je nastavniku; programerski detalji su u [`../README.md`](../README.md).
 
+> Pišete li **novu knjigu** koja treba izgledati kao ova, počnite od
+> [`PREDLOZAK-NOVE-KNJIGE.md`](PREDLOZAK-NOVE-KNJIGE.md): ondje je struktura,
+> kostur poglavlja i koliko čega ide po cjelini. Ovdje je kako se to unosi.
+
 > **Nastavna cjelina = poglavlje.** Sažetak, ciljevi učenja, kartice za učenje,
 > mediji i kviz dodaju se **po poglavlju**. Odjeljci (1.1, 4.4 …) nisu zasebne
 > stranice — oni strukturiraju sažetak cjeline i nose brojeve stranica za citate.
