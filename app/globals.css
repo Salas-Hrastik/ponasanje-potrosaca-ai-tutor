@@ -34,10 +34,11 @@
   --rub-jaci: #b9ced3;
   --pozadina: #f5f9fa;
   --ploha: #ffffff;
-  /* Podloga radne površine cjeline — nijansa istog tirkiza kao zaglavlje
-     cjeline, dovoljno zasićena da se bijele kartice i njihov tekst jasno
-     odvoje od podloge. */
-  --radna-pozadina: #8bc6da;
+  /* Podloga radne površine cjeline — mramorno siva s tek naznakom hladnog
+     tona. Zasićeno plava podloga natjecala se sa zaglavljem cjeline i s
+     bojama kartica načina rada; neutralna siva ih pušta da vode, a bijele
+     kartice i dalje jasno odvaja od podloge. */
+  --radna-pozadina: #aebfc4;
 
   --radijus: 12px;
   --radijus-mali: 8px;
