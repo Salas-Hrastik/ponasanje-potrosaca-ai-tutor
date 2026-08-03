@@ -13,7 +13,7 @@ import Modal from './Modal';
 
 const CINJENICE: { broj: string; opis: string }[] = [
   { broj: '90+', opis: 'znanstvenih i stručnih radova' },
-  { broj: '7', opis: 'knjiga u uporabi kao udžbenici' },
+  { broj: '9', opis: 'knjiga u uporabi kao udžbenici' },
   { broj: '2011.', opis: 'redoviti profesor u trajnom zvanju' },
 ];
 
@@ -36,7 +36,7 @@ const ODJELJCI: { naslov: string; odlomci: string[] }[] = [
   {
     naslov: 'Znanstveni i stručni rad',
     odlomci: [
-      'Autor je više od 90 znanstvenih i stručnih radova, znatnim dijelom posvećenih ugostiteljstvu te turizmu i marketingu u tim područjima. Napisao je sedam knjiga koje se koriste kao udžbenici na više hrvatskih fakulteta. Znanstveni interes obuhvaća marketing u ugostiteljstvu i turizmu, e-marketing i primjenu suvremenih tehnologija u tim područjima.',
+      'Autor je više od 90 znanstvenih i stručnih radova, znatnim dijelom posvećenih ugostiteljstvu te turizmu i marketingu u tim područjima. Napisao je devet knjiga koje se koriste kao udžbenici na više hrvatskih fakulteta. Znanstveni interes obuhvaća marketing u ugostiteljstvu i turizmu, e-marketing i primjenu suvremenih tehnologija u tim područjima.',
     ],
   },
   {
