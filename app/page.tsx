@@ -69,21 +69,10 @@ export default async function NaslovnicaPage() {
             <VodicModal />
           </div>
         </div>
-        <div className="hero-korice" aria-hidden="true">
-          <div className="korice-vrh">
-            <img src="/baltazar-logo.png" alt="" className="korice-znak" />
-            <span className="korice-izdavac">
-              Veleučilište
-              <br />
-              Baltazar Zaprešić
-            </span>
-          </div>
-          <div className="korice-sredina">
-            <span className="korice-oznaka">Veleučilišni priručnik</span>
-            <span className="korice-naslov">Ponašanje potrošača u turizmu</span>
-          </div>
-          <span className="korice-dno">{config.autorPrirucnika || config.studij}</span>
-        </div>
+        {/* Naslov, ustanova i autor već stoje u tekstu hero-a, pa su korice
+            ukras — čitač zaslona ih ne treba ponavljati. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/korice-prirucnik.jpg" alt="" className="hero-korice" aria-hidden="true" />
       </section>
 
       <section className="napredak-traka-sekcija">
