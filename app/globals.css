@@ -1339,29 +1339,36 @@ code {
   flex-direction: column;
   gap: 10px;
 }
-.glasovni-cekanje {
-  margin: 0;
+/* Razgovor se ne ispisuje, pa prostor drži miran znak da veza stoji — bez
+   teksta koji bi vukao pogled s govora. */
+.glasovni-slusanje {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
   color: var(--tekst-blijedi);
-  font-size: 16px;
 }
-.glasovni-replika {
-  border-radius: var(--radijus-mali);
-  padding: 8px 12px;
+.glasovni-slusanje p {
+  margin: 0;
   font-size: 17px;
-  line-height: 1.5;
+  max-width: 34ch;
 }
-.glasovni-replika p {
-  margin: 2px 0 0;
+.glasovni-slusanje-znak {
+  font-size: 40px;
+  opacity: 0.55;
+  animation: kucanje 2.4s ease-in-out infinite;
 }
-.glasovni-student {
-  background: var(--more-050);
-  align-self: flex-end;
-  max-width: 88%;
+@media (prefers-reduced-motion: reduce) {
+  .glasovni-slusanje-znak {
+    animation: none;
+  }
 }
-.glasovni-asistent {
-  background: var(--pijesak-100);
-  align-self: flex-start;
-  max-width: 92%;
+.glasovni-slusanje-uputa {
+  font-size: 15px;
 }
 .glasovni-autor {
   font-size: 13px;

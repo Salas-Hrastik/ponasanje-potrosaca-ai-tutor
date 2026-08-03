@@ -52,9 +52,12 @@ async function POSTImpl(request: NextRequest) {
         instructions: buildRealtimeUpute(nacin, pog.broj, pog.naslov),
         audio: {
           input: {
-            // Prijepis studentova govora ide na zaslon, da razgovor ostane
-            // provjerljiv i da se može čitati bez slušanja.
-            transcription: { model: config.asrModel, language: 'hr' },
+            // Prijepis se ne prikazuje nigdje na zaslonu. U ispitu je ipak
+            // potreban jer je studentov odgovor podloga za pisanu ocjenu; u
+            // razgovoru nema svrhu, pa se ni ne traži.
+            ...(nacin === 'ispit'
+              ? { transcription: { model: config.asrModel, language: 'hr' } }
+              : {}),
             turn_detection: { type: 'server_vad', silence_duration_ms: 700 },
           },
           output: { voice: config.realtimeVoice },
