@@ -3,6 +3,7 @@ import { config } from '@/lib/config';
 import { dohvatiKorisnika } from '@/lib/auth';
 import { getPoglavlja, getNapredakMap, type NapredakStanje } from '@/lib/content';
 import VodicModal from '@/components/VodicModal';
+import ZivotopisModal from '@/components/ZivotopisModal';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,7 +52,7 @@ export default async function NaslovnicaPage() {
           </p>
           {config.autorPrirucnika && (
             <p className="hero-autor">
-              <Link href="/o-prirucniku">{config.autorPrirucnika}</Link>
+              <ZivotopisModal ime={config.autorPrirucnika} />
             </p>
           )}
           <div className="hero-opis">
