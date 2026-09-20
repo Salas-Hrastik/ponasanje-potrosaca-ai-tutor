@@ -2,25 +2,55 @@ import Link from 'next/link';
 import { config } from '@/lib/config';
 import { dohvatiKorisnika } from '@/lib/auth';
 import { getPoglavlja, getNapredakMap, type NapredakStanje } from '@/lib/content';
+import { redigiraj } from '@/lib/greske';
 import VodicModal from '@/components/VodicModal';
 import ZivotopisModal from '@/components/ZivotopisModal';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NaslovnicaPage() {
-  const [poglavlja, korisnik] = await Promise.all([getPoglavlja(), dohvatiKorisnika()]);
+  const [{ poglavlja, greska }, korisnik] = await Promise.all([
+    getPoglavlja(),
+    dohvatiKorisnika(),
+  ]);
   const napredak: Map<string, NapredakStanje> = korisnik
     ? await getNapredakMap(korisnik.id)
     : new Map();
+
+  /* Neuspio dohvat i prazna baza traže različite upute. Prije su davali isti
+     ekran, pa je nedostupan Supabase izgledao kao neodrađen ingest. */
+  if (greska) {
+    return (
+      <div className="page">
+        <h1>Sadržaj trenutačno nije dostupan</h1>
+        <p>
+          Baza kolegija nije odgovorila. Sadržaj je najvjerojatnije na mjestu —{' '}
+          <strong>osvježite stranicu za koji trenutak</strong>. Besplatni Supabase projekt uspava se
+          nakon duljeg mirovanja i prvi zahtjev nakon toga zna pasti dok se budi.
+        </p>
+        <p className="usmena-uvod">
+          Ako se ponavlja, nastavnik neka provjeri je li Supabase projekt aktivan i vrijede li još
+          ključevi u Vercelu (<code>NEXT_PUBLIC_SUPABASE_URL</code>,{' '}
+          <code>SUPABASE_SERVICE_ROLE_KEY</code>). Ovo <strong>nije</strong> znak da treba ponovno
+          pokretati ingest.
+        </p>
+        {process.env.DIAGNOSTIKA === '1' && (
+          <p className="usmena-uvod">
+            <code>{redigiraj(greska)}</code>
+          </p>
+        )}
+      </div>
+    );
+  }
 
   if (poglavlja.length === 0) {
     return (
       <div className="page">
         <h1>Sadržaj kolegija još nije učitan</h1>
         <p>
-          Nastavnik treba pokrenuti punjenje sadržaja: <code>npm run struktura</code> →{' '}
-          <code>npm run ingest</code> nakon postavljanja Supabase projekta i sheme iz{' '}
-          <code>supabase/schema.sql</code>.
+          Baza je dostupna, ali prazna. Nastavnik treba pokrenuti punjenje sadržaja:{' '}
+          <code>npm run struktura</code> → <code>npm run ingest</code> nakon postavljanja Supabase
+          projekta i sheme iz <code>supabase/schema.sql</code>.
         </p>
       </div>
     );

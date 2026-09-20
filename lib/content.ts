@@ -23,13 +23,28 @@ export interface PoglavljeSaOdjeljcima {
   odjeljci: Odjeljak[];
 }
 
+/**
+ * Ishod dohvata karte kolegija.
+ *
+ * Prazna baza i neuspio dohvat NISU ista stvar, a prije su izgledali isto:
+ * oboje je davalo prazan popis, a sučelje je onda nastavniku govorilo da
+ * pokrene ingest — i kad je ingest bio uredno odrađen, a Supabase samo
+ * nedostupan (uspavan projekt na besplatnom planu, istekao ključ, pad mreže).
+ * Zato se greška sada nosi uz podatke.
+ */
+export interface DohvatPoglavlja {
+  poglavlja: PoglavljeSaOdjeljcima[];
+  /** Postavljeno samo kad dohvat NIJE uspio. Prazna baza ovdje daje null. */
+  greska: string | null;
+}
+
 export interface NapredakStanje {
   posjeceno: boolean;
   zavrseno: boolean;
 }
 
 /** Cijela karta kolegija: poglavlja (nastavne cjeline) s pripadajućim odjeljcima. */
-export async function getPoglavlja(): Promise<PoglavljeSaOdjeljcima[]> {
+export async function getPoglavlja(): Promise<DohvatPoglavlja> {
   const admin = supabaseAdmin();
   const [{ data: poglavlja, error: e1 }, { data: odjeljci, error: e2 }] = await Promise.all([
     admin.from('poglavlja').select('id, broj, naslov, dio, stranica_od, stranica_do').order('broj'),
@@ -38,13 +53,23 @@ export async function getPoglavlja(): Promise<PoglavljeSaOdjeljcima[]> {
       .select('id, poglavlje_id, broj, oznaka, naslov, stranica_od, stranica_do, redoslijed')
       .order('redoslijed'),
   ]);
-  if (e1 || !poglavlja) return [];
-  if (e2) return poglavlja.map((p) => ({ ...p, odjeljci: [] }));
+  if (e1 || !poglavlja) {
+    const poruka = e1?.message ?? 'Baza nije vratila podatke.';
+    console.error('[sadrzaj] dohvat poglavlja nije uspio:', poruka);
+    return { poglavlja: [], greska: poruka };
+  }
+  /* Poglavlja su tu, a odjeljci nisu: karta kolegija je upotrebljiva i bez
+     njih, pa se ne prijavljuje kao greška — samo se zabilježi. */
+  if (e2) {
+    console.error('[sadrzaj] dohvat odjeljaka nije uspio:', e2.message);
+    return { poglavlja: poglavlja.map((p) => ({ ...p, odjeljci: [] })), greska: null };
+  }
 
-  return poglavlja.map((p) => ({
+  const spojena = poglavlja.map((p) => ({
     ...p,
     odjeljci: (odjeljci ?? []).filter((o) => o.poglavlje_id === p.id),
   }));
+  return { poglavlja: spojena, greska: null };
 }
 
 /**

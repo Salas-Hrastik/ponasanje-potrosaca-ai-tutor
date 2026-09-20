@@ -229,6 +229,22 @@ select * from telemetrija_sazetak;
 
 ---
 
+## Kad sadržaja nema na ekranu
+
+Dva različita uzroka daju dva različita ekrana — prije su davali isti, pa je
+nedostupna baza izgledala kao neodrađen ingest:
+
+| Ekran | Što se dogodilo | Što učiniti |
+| --- | --- | --- |
+| „Sadržaj trenutačno nije dostupan" | Supabase nije odgovorio (uspavan projekt na besplatnom planu, istekao ključ, pad mreže) | Osvježiti stranicu. Ako se ponavlja: provjeriti je li projekt aktivan i vrijede li ključevi u Vercelu. **Ingest se NE pokreće ponovno.** |
+| „Sadržaj kolegija još nije učitan" | Baza je dostupna, ali prazna | Pokrenuti `npm run struktura` → `npm run ingest` |
+
+Greška se uvijek zapisuje u zapisnik poslužitelja (`[sadrzaj] dohvat poglavlja
+nije uspio: …`). Uz `DIAGNOSTIKA=1` kratak, redigiran tehnički trag prikazuje se
+i na stranici; u normalnom radu ostaje skriven.
+
+---
+
 ## Poznata ograničenja
 
 - **Kvizovi i kartice su prazni dok nastavnik ne isporuči ili ne odobri sadržaj.**

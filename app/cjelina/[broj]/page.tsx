@@ -30,7 +30,10 @@ export default async function CjelinaPage({ params }: { params: { broj: string }
   const broj = Number(params.broj);
   if (!Number.isFinite(broj)) return notFound();
 
-  const [detalji, sveCjeline] = await Promise.all([getCjelina(broj), getPoglavlja()]);
+  const [detalji, { poglavlja: sveCjeline }] = await Promise.all([
+    getCjelina(broj),
+    getPoglavlja(),
+  ]);
   if (!detalji) return notFound();
   const { poglavlje, odjeljci, ciljevi, kartice, mediji, slajdovi, brojPitanja } = detalji;
 

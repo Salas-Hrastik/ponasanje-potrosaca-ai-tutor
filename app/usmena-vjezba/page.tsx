@@ -5,7 +5,7 @@ import OralPracticePicker from '@/components/OralPracticePicker';
 export const dynamic = 'force-dynamic';
 
 export default async function UsmenaVjezbaPage() {
-  const poglavlja = await getPoglavlja();
+  const { poglavlja, greska } = await getPoglavlja();
 
   return (
     <div className="page page-usmena">
@@ -23,8 +23,13 @@ export default async function UsmenaVjezbaPage() {
         🔒 Snimka se ne pohranjuje — čuva se samo transkript i tehničke metrike.
       </p>
 
-      {poglavlja.length === 0 ? (
-        <p>Sadržaj kolegija još nije učitan.</p>
+      {greska ? (
+        <p>
+          Baza kolegija trenutačno nije odgovorila — osvježite stranicu za koji trenutak. Ovo nije
+          znak da sadržaj nije učitan.
+        </p>
+      ) : poglavlja.length === 0 ? (
+        <p>Baza je dostupna, ali prazna — sadržaj kolegija još nije učitan.</p>
       ) : (
         <OralPracticePicker
           poglavlja={poglavlja.map((p) => ({

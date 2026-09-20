@@ -38,7 +38,7 @@ export function odgovorNaGresku(e: unknown, opcenitaPoruka: string): NextRespons
 }
 
 /** Uklanja sve što izgleda kao API ključ ili token iz teksta greške. */
-function redigiraj(tekst: string): string {
+export function redigiraj(tekst: string): string {
   return tekst
     .replace(/\b(sk|pk|rk)-[A-Za-z0-9_-]{8,}/g, '$1-***')
     .replace(/\beyJ[A-Za-z0-9_.-]{20,}/g, 'eyJ***')
