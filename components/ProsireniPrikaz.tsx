@@ -20,7 +20,6 @@ import { createPortal } from 'react-dom';
  * zatvorio modal i usput vratio traku.
  */
 
-const KLJUC_POHRANE = 'prikaz-siroko';
 const KLASA_SIROKO = 'prikaz-siroko';
 const KLASA_BEZ_TRAKE = 'prikaz-bez-trake';
 
@@ -34,28 +33,18 @@ export default function ProsireniPrikaz() {
   const [siroko, setSiroko] = useState(false);
   const [trakaSkrivena, setTrakaSkrivena] = useState(false);
 
-  /* Pri učitavanju se vraća samo širina, nikad skrivena traka. Korisnik koji
-     je zatvorio karticu u proširenom prikazu inače bi se vratio na stranicu
-     bez ijednog vidljivog gumba i bez naznake što se dogodilo. */
-  useEffect(() => {
-    setMontiran(true);
-    try {
-      if (localStorage.getItem(KLJUC_POHRANE) === 'da') setSiroko(true);
-    } catch {
-      /* privatni način rada ili blokirana pohrana — prikaz i dalje radi */
-    }
-  }, []);
+  /* Stanje se NAMJERNO ne pamti između učitavanja. Prva izvedba ga je pamtila,
+     pa se aplikacija znala otvoriti u širokom prikazu s vidljivom trakom —
+     izgledala je uobičajeno, a gumb je nudio smanjivanje. Natpis na gumbu mora
+     odgovarati onome što korisnik vidi, a jedini način da to uvijek vrijedi
+     jest da svako učitavanje počne u uobičajenom prikazu. */
+  useEffect(() => setMontiran(true), []);
 
   useEffect(() => {
     if (!montiran) return;
     const k = document.documentElement.classList;
     k.toggle(KLASA_SIROKO, siroko);
     k.toggle(KLASA_BEZ_TRAKE, siroko && trakaSkrivena);
-    try {
-      localStorage.setItem(KLJUC_POHRANE, siroko ? 'da' : 'ne');
-    } catch {
-      /* isto kao gore */
-    }
   }, [montiran, siroko, trakaSkrivena]);
 
   const vratiTraku = useCallback(() => {
@@ -114,12 +103,13 @@ export default function ProsireniPrikaz() {
         aria-pressed={siroko}
         title={
           siroko
-            ? 'Vrati uobičajenu širinu'
+            ? 'Smanji na uobičajenu širinu'
             : 'Proširi preko cijelog zaslona (Esc vraća alatnu traku)'
         }
       >
+        {/* Natpis imenuje RADNJU koju klik izvodi, ne stanje u kojem jesmo. */}
         <span aria-hidden="true">{siroko ? '⤡' : '⤢'}</span>
-        <span className="gumb-prikaz-tekst">{siroko ? 'Uobičajeno' : 'Cijeli zaslon'}</span>
+        <span className="gumb-prikaz-tekst">{siroko ? 'Smanji zaslon' : 'Cijeli zaslon'}</span>
       </button>
 
       {/* Jedini vidljivi izlaz dok je traka skrivena. Bez njega bi miš ostao

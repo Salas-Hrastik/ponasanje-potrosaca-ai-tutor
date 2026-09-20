@@ -179,8 +179,11 @@ prozora, skloni zaglavlje i podnožje i zatraži puni zaslon preglednika.
   zadržavaju svojih 800 px; na njima se dobiva okomiti prostor, ne vodoravni.
 - Dok je otvoren modal, **Esc pripada modalu** — inače bi jedan pritisak
   zatvorio modal i usput vratio traku.
-- Zapamti se samo širina, nikad skrivena traka: tko zatvori karticu u
-  proširenom prikazu, vraća se na stranicu s vidljivom trakom.
+- **Natpis na gumbu imenuje radnju, ne stanje**: „Cijeli zaslon" u uobičajenom
+  prikazu, „Smanji zaslon" u proširenom.
+- Stanje se **ne pamti** između učitavanja. Prva izvedba ga je pamtila, pa se
+  aplikacija znala otvoriti široka s vidljivom trakom — izgledala je uobičajeno,
+  a gumb je nudio smanjivanje. Svako učitavanje zato počinje uobičajeno.
 
 ---
 
