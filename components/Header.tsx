@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { config } from '@/lib/config';
 import { supabaseServer } from '@/lib/supabase';
 import HeaderAuthActions from './HeaderAuthActions';
+import ProsireniPrikaz from './ProsireniPrikaz';
 
 export default async function Header() {
   // Dok je autentikacija umirovljena, sesija se uopće ne dohvaća — nema
@@ -29,6 +30,7 @@ export default async function Header() {
       <nav className="zaglavlje-nav">
         <Link href="/izvori">Izvori</Link>
         <Link href="/o-prirucniku">O priručniku</Link>
+        <ProsireniPrikaz />
       </nav>
       {config.authEnabled && email && <HeaderAuthActions email={email} />}
     </header>

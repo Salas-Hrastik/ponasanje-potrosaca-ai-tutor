@@ -33,6 +33,7 @@ Stack: **Next.js 14 (App Router) + Supabase (Postgres + pgvector) + Claude
 | Praćenje napretka po korisniku | ✅ `napredak` |
 | Telemetrija (bez sadržaja razgovora) | ✅ `telemetrija`, pogled `telemetrija_sazetak` |
 | Autentikacija (Supabase Auth, uloge student/nastavnik) | ✅ implementirana, **namjerno umirovljena** |
+| Prošireni prikaz preko cijelog zaslona, Esc vraća alatnu traku | ✅ `components/ProsireniPrikaz.tsx` |
 
 ---
 
@@ -158,6 +159,28 @@ bez općeg disclaimera.
 Procjena je opisna (*uglavnom točno / djelomično / netočno*) uz rubriku 0–2 po
 kriteriju: točnost pojmova, pokrivenost ključnih elemenata, terminologija, jasnoća
 izlaganja.
+
+---
+
+## Prošireni prikaz
+
+Gumb **⤢ Cijeli zaslon** u zaglavlju razvuče sadržaj preko cijele širine
+prozora, skloni zaglavlje i podnožje i zatraži puni zaslon preglednika.
+
+- **Esc vraća alatnu traku**, a prikaz ostaje proširen. Preglednik na Esc sam
+  izlazi iz punog zaslona i taj se događaj ne može presresti, pa se izlazak
+  tumači kao „vrati traku" — umjesto da se protiv toga borimo.
+- Dok je traka skrivena, dolje desno stoji tiha pilula `Esc · alatna traka`.
+  Ona je jedini vidljivi izlaz za miša; bez nje bi prikaz bez trake bio zamka.
+- Iz proširenog prikaza izlazi se istim gumbom, koji je tada opet vidljiv.
+- **Stupac štiva ostaje uzak** (810 px). Proširenje miče ogradu samo s vanjskih
+  spremnika (`--sirina`, `.radni-prostor`) — preko cijele širine redak bi nosio
+  150+ znakova. Uske stranice proze (`O priručniku`, `Izvori`, kviz) zato
+  zadržavaju svojih 800 px; na njima se dobiva okomiti prostor, ne vodoravni.
+- Dok je otvoren modal, **Esc pripada modalu** — inače bi jedan pritisak
+  zatvorio modal i usput vratio traku.
+- Zapamti se samo širina, nikad skrivena traka: tko zatvori karticu u
+  proširenom prikazu, vraća se na stranicu s vidljivom trakom.
 
 ---
 
