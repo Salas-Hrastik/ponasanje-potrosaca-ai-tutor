@@ -3777,27 +3777,27 @@ code {
    Stupac štiva NAMJERNO ostaje ograničen (.korak-kartica, 810px): preko cijele
    širine redak nosi 150+ znakova i oko gubi početak sljedećeg retka. Proširenje
    daje više prostora rasporedu, ne duži redak. */
-:root.prikaz-siroko {
-  --sirina: 100%;
-}
-:root.prikaz-siroko .radni-prostor {
-  max-width: none;
-}
+/* Jedno stanje, jedna klasa: Esc vraća sve odjednom, pa se širina i skrivena
+   traka nikad ne razilaze.
 
-/* Skrivena alatna traka. Ljepljivi elementi (izbornik načina rada, podzaglavlje
-   cjeline) računaju odmak iz --zaglavlje-visina, pa se spuštanjem na nulu sami
-   podignu na vrh — bez diranja njihovih pravila. */
-:root.prikaz-bez-trake {
+   Ljepljivi elementi (izbornik načina rada, podzaglavlje cjeline) računaju
+   odmak iz --zaglavlje-visina, pa se spuštanjem na nulu sami podignu na vrh —
+   bez diranja njihovih pravila. */
+:root.prikaz-prosiren {
+  --sirina: 100%;
   --zaglavlje-visina: 0px;
 }
-:root.prikaz-bez-trake .zaglavlje,
-:root.prikaz-bez-trake .podnozje {
+:root.prikaz-prosiren .radni-prostor {
+  max-width: none;
+}
+:root.prikaz-prosiren .zaglavlje,
+:root.prikaz-prosiren .podnozje {
   display: none;
 }
-:root.prikaz-bez-trake .glavni-sadrzaj {
+:root.prikaz-prosiren .glavni-sadrzaj {
   min-height: 100vh;
 }
-:root.prikaz-bez-trake .page {
+:root.prikaz-prosiren .page {
   padding-top: 16px;
 }
 

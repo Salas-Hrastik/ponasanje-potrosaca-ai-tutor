@@ -164,26 +164,26 @@ izlaganja.
 
 ## Prošireni prikaz
 
-Gumb **⤢ Cijeli zaslon** u zaglavlju razvuče sadržaj preko cijele širine
-prozora, skloni zaglavlje i podnožje i zatraži puni zaslon preglednika.
+Gumb **⤢ Cijeli zaslon** u zaglavlju razvuče sadržaj preko cijele širine,
+skloni zaglavlje i podnožje i zatraži puni zaslon preglednika.
 
-- **Esc vraća alatnu traku**, a prikaz ostaje proširen. Preglednik na Esc sam
-  izlazi iz punog zaslona i taj se događaj ne može presresti, pa se izlazak
-  tumači kao „vrati traku" — umjesto da se protiv toga borimo.
-- Dok je traka skrivena, dolje desno stoji tiha pilula `Esc · alatna traka`.
-  Ona je jedini vidljivi izlaz za miša; bez nje bi prikaz bez trake bio zamka.
-- Iz proširenog prikaza izlazi se istim gumbom, koji je tada opet vidljiv.
+- **Esc vraća sve na uobičajeno** — širinu, alatnu traku i puni zaslon
+  odjednom. Postoji samo jedno stanje: prikaz je ili uobičajen ili proširen.
+  Preglednik na Esc ionako sam izlazi iz punog zaslona i to se ne može
+  presresti; ovako su njegov i naš izlazak ista stvar, pa se ne mogu razići.
+- Dok je prikaz proširen, zaglavlje je skriveno pa gumb u njemu nije vidljiv.
+  Njegovu ulogu preuzima pilula `Esc · Smanji zaslon` dolje desno — jedini
+  vidljivi izlaz za miša.
+- **Natpis imenuje radnju, ne stanje**: „Cijeli zaslon" u uobičajenom prikazu,
+  „Smanji zaslon" u proširenom.
 - **Stupac štiva ostaje uzak** (810 px). Proširenje miče ogradu samo s vanjskih
   spremnika (`--sirina`, `.radni-prostor`) — preko cijele širine redak bi nosio
   150+ znakova. Uske stranice proze (`O priručniku`, `Izvori`, kviz) zato
   zadržavaju svojih 800 px; na njima se dobiva okomiti prostor, ne vodoravni.
 - Dok je otvoren modal, **Esc pripada modalu** — inače bi jedan pritisak
-  zatvorio modal i usput vratio traku.
-- **Natpis na gumbu imenuje radnju, ne stanje**: „Cijeli zaslon" u uobičajenom
-  prikazu, „Smanji zaslon" u proširenom.
-- Stanje se **ne pamti** između učitavanja. Prva izvedba ga je pamtila, pa se
-  aplikacija znala otvoriti široka s vidljivom trakom — izgledala je uobičajeno,
-  a gumb je nudio smanjivanje. Svako učitavanje zato počinje uobičajeno.
+  zatvorio modal i usput izašao iz proširenog prikaza.
+- Stanje se **ne pamti** između učitavanja; svako učitavanje počinje uobičajeno,
+  pa natpis na gumbu uvijek odgovara onome što se vidi.
 
 ---
 

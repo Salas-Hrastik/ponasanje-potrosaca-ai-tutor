@@ -4,24 +4,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 /**
- * Prošireni prikaz: sadržaj se razvuče preko cijelog zaslona, a alatna traka
- * (zaglavlje i podnožje) se skloni. Tipka Esc vraća traku, a prikaz ostaje
- * proširen.
+ * Prošireni prikaz: sadržaj se razvuče preko cijelog zaslona, alatna traka
+ * (zaglavlje i podnožje) se skloni, a preglednik se zamoli za puni zaslon.
  *
- * ZAŠTO ESC VRAĆA SAMO TRAKU, A NE IZLAZI SASVIM
+ * Esc vraća SVE na uobičajeno — širinu, traku i puni zaslon odjednom.
+ * Zato postoji samo jedno stanje: prikaz je ili uobičajen ili proširen.
+ *
+ * ZAŠTO SE TO DOBRO SLAŽE S PREGLEDNIKOM
  * Preglednik na Esc sam izlazi iz punog zaslona i taj se događaj ne može
- * presresti. Umjesto da se protiv toga borimo, izlazak iz punog zaslona
- * tumači se kao „vrati traku": stranica ostaje široka, a traka se pojavi.
- * Iz proširenog prikaza izlazi se gumbom u traci, koja je tada opet vidljiva.
+ * presresti. Budući da Esc ionako znači „vrati sve", izlazak iz punog zaslona
+ * i naš izlazak iz proširenog prikaza sada su ista stvar — nema stanja u
+ * kojem se njih dvoje razilaze.
  *
  * TKO IMA PREDNOST NA ESC
  * Modali (Modal.tsx, MedijModal.tsx) već slušaju Esc. Dok je modal otvoren,
- * Esc pripada njemu — ovaj ga rukovatelj ignorira, inače bi jedan pritisak
- * zatvorio modal i usput vratio traku.
+ * Esc pripada njemu — inače bi jedan pritisak zatvorio modal i usput izašao
+ * iz proširenog prikaza.
  */
 
-const KLASA_SIROKO = 'prikaz-siroko';
-const KLASA_BEZ_TRAKE = 'prikaz-bez-trake';
+const KLASA = 'prikaz-prosiren';
 
 /** Je li otvoren modal koji već koristi Esc? */
 function modalOtvoren() {
@@ -30,63 +31,50 @@ function modalOtvoren() {
 
 export default function ProsireniPrikaz() {
   const [montiran, setMontiran] = useState(false);
-  const [siroko, setSiroko] = useState(false);
-  const [trakaSkrivena, setTrakaSkrivena] = useState(false);
+  const [prosireno, setProsireno] = useState(false);
 
-  /* Stanje se NAMJERNO ne pamti između učitavanja. Prva izvedba ga je pamtila,
-     pa se aplikacija znala otvoriti u širokom prikazu s vidljivom trakom —
-     izgledala je uobičajeno, a gumb je nudio smanjivanje. Natpis na gumbu mora
-     odgovarati onome što korisnik vidi, a jedini način da to uvijek vrijedi
-     jest da svako učitavanje počne u uobičajenom prikazu. */
+  /* Stanje se NAMJERNO ne pamti između učitavanja: svako učitavanje počinje
+     uobičajeno, pa natpis na gumbu uvijek odgovara onome što se vidi. */
   useEffect(() => setMontiran(true), []);
 
   useEffect(() => {
     if (!montiran) return;
-    const k = document.documentElement.classList;
-    k.toggle(KLASA_SIROKO, siroko);
-    k.toggle(KLASA_BEZ_TRAKE, siroko && trakaSkrivena);
-  }, [montiran, siroko, trakaSkrivena]);
-
-  const vratiTraku = useCallback(() => {
-    setTrakaSkrivena(false);
-    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  }, []);
+    document.documentElement.classList.toggle(KLASA, prosireno);
+  }, [montiran, prosireno]);
 
   const ukljuci = useCallback(async () => {
-    setSiroko(true);
-    setTrakaSkrivena(true);
+    setProsireno(true);
     /* Puni zaslon je dodatak, ne uvjet: ako ga preglednik odbije (bez geste
        korisnika, iframe bez dopuštenja), prikaz i dalje zauzme cijeli prozor. */
     try {
       await document.documentElement.requestFullscreen();
     } catch {
-      /* nema punog zaslona — ostaje široki prikaz */
+      /* nema punog zaslona — ostaje široki prikaz bez trake */
     }
   }, []);
 
-  const iskljuci = useCallback(() => {
-    setSiroko(false);
-    setTrakaSkrivena(false);
+  const vrati = useCallback(() => {
+    setProsireno(false);
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   }, []);
 
-  // Esc vraća traku; prikaz ostaje širok.
+  // Esc vraća sve na uobičajeno.
   useEffect(() => {
-    if (!trakaSkrivena) return;
+    if (!prosireno) return;
     const naTipku = (e: KeyboardEvent) => {
       if (e.key !== 'Escape' || modalOtvoren()) return;
       e.preventDefault();
-      vratiTraku();
+      vrati();
     };
     window.addEventListener('keydown', naTipku);
     return () => window.removeEventListener('keydown', naTipku);
-  }, [trakaSkrivena, vratiTraku]);
+  }, [prosireno, vrati]);
 
-  /* Izlazak iz punog zaslona (najčešće Esc, koji preglednik pojede prije nas)
-     znači isto što i gornji rukovatelj: vrati traku, zadrži širinu. */
+  /* Izlazak iz punog zaslona (najčešće Esc, koji preglednik pojede prije nas,
+     ali i F11 ili gumb u sučelju) znači isto: vrati sve na uobičajeno. */
   useEffect(() => {
     const naPromjenu = () => {
-      if (!document.fullscreenElement) setTrakaSkrivena(false);
+      if (!document.fullscreenElement) setProsireno(false);
     };
     document.addEventListener('fullscreenchange', naPromjenu);
     return () => document.removeEventListener('fullscreenchange', naPromjenu);
@@ -99,36 +87,38 @@ export default function ProsireniPrikaz() {
       <button
         type="button"
         className="gumb-prikaz"
-        onClick={siroko ? iskljuci : ukljuci}
-        aria-pressed={siroko}
+        onClick={prosireno ? vrati : ukljuci}
+        aria-pressed={prosireno}
         title={
-          siroko
-            ? 'Smanji na uobičajenu širinu'
-            : 'Proširi preko cijelog zaslona (Esc vraća alatnu traku)'
+          prosireno
+            ? 'Smanji na uobičajeni prikaz'
+            : 'Proširi preko cijelog zaslona (Esc vraća uobičajeni prikaz)'
         }
       >
         {/* Natpis imenuje RADNJU koju klik izvodi, ne stanje u kojem jesmo. */}
-        <span aria-hidden="true">{siroko ? '⤡' : '⤢'}</span>
-        <span className="gumb-prikaz-tekst">{siroko ? 'Smanji zaslon' : 'Cijeli zaslon'}</span>
+        <span aria-hidden="true">{prosireno ? '⤡' : '⤢'}</span>
+        <span className="gumb-prikaz-tekst">{prosireno ? 'Smanji zaslon' : 'Cijeli zaslon'}</span>
       </button>
 
-      {/* Jedini vidljivi izlaz dok je traka skrivena. Bez njega bi miš ostao
-          bez ijednog gumba, a i Esc treba negdje najaviti. */}
-      {trakaSkrivena &&
+      {/* Dok je prikaz proširen, zaglavlje je skriveno pa gumb iznad nije
+          vidljiv. Ova pilula preuzima njegovu ulogu: ona je jedini vidljivi
+          izlaz za miša i mjesto gdje se najavljuje Esc. */}
+      {prosireno &&
         createPortal(
-          <button type="button" className="prikaz-povratak" onClick={vratiTraku}>
+          <button
+            type="button"
+            className="prikaz-povratak"
+            onClick={vrati}
+            title="Smanji na uobičajeni prikaz"
+          >
             <kbd>Esc</kbd>
-            <span>alatna traka</span>
+            <span>Smanji zaslon</span>
           </button>,
           document.body,
         )}
 
       <span className="sr-samo" role="status" aria-live="polite">
-        {siroko
-          ? trakaSkrivena
-            ? 'Prošireni prikaz, alatna traka skrivena. Esc vraća traku.'
-            : 'Prošireni prikaz, alatna traka vidljiva.'
-          : ''}
+        {prosireno ? 'Prošireni prikaz preko cijelog zaslona. Esc vraća uobičajeni prikaz.' : ''}
       </span>
     </>
   );
