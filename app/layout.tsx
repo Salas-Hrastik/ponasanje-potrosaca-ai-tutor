@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
+import AutorskaPrava from '@/components/AutorskaPrava';
 import { config } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: config.siteName,
   description:
     'Samostalni obrazovni AI asistent za kolegij Ponašanje potrošača u turizmu — odgovara isključivo prema veleučilišnom priručniku, uz citiranje poglavlja i stranice.',
+  other: {
+    'tdm-reservation': '1',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -23,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Asistent odgovara isključivo prema priručniku kolegija i uvijek navodi stranicu.
           </span>
         </footer>
+        <AutorskaPrava />
       </body>
     </html>
   );

@@ -5,6 +5,20 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['pdf-parse', 'jszip'],
   },
+  async headers() {
+    return [
+      {
+        // Strojno čitljiv pridržaj prava na rudarenje teksta i podataka (TDM).
+        source: '/:path*',
+        headers: [
+          {
+            key: 'tdm-reservation',
+            value: '1',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
