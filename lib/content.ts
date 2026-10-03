@@ -2,6 +2,25 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { supabaseAdmin } from './supabase';
 
+/**
+ * Besplatni Supabase projekt uspava se nakon duljeg mirovanja — prvi upit nakon
+ * toga zna pasti dok se baza budi (obično unutar nekoliko sekundi). Bez ovoga
+ * naslovnica je prijavljivala "Sadržaj trenutačno nije dostupan" i tražila od
+ * posjetitelja da ručno osvježi stranicu; sad se isto radi automatski.
+ */
+async function sPonavljanjem<T extends { error: unknown }>(
+  upit: () => PromiseLike<T>,
+  pokusaji = 2,
+  odgodaMs = 1500,
+): Promise<T> {
+  let zadnja: T = await upit();
+  for (let i = 0; i < pokusaji && zadnja.error; i++) {
+    await new Promise((r) => setTimeout(r, odgodaMs * (i + 1)));
+    zadnja = await upit();
+  }
+  return zadnja;
+}
+
 export interface Odjeljak {
   id: string;
   poglavlje_id: string;
@@ -47,11 +66,15 @@ export interface NapredakStanje {
 export async function getPoglavlja(): Promise<DohvatPoglavlja> {
   const admin = supabaseAdmin();
   const [{ data: poglavlja, error: e1 }, { data: odjeljci, error: e2 }] = await Promise.all([
-    admin.from('poglavlja').select('id, broj, naslov, dio, stranica_od, stranica_do').order('broj'),
-    admin
-      .from('odjeljci')
-      .select('id, poglavlje_id, broj, oznaka, naslov, stranica_od, stranica_do, redoslijed')
-      .order('redoslijed'),
+    sPonavljanjem(() =>
+      admin.from('poglavlja').select('id, broj, naslov, dio, stranica_od, stranica_do').order('broj'),
+    ),
+    sPonavljanjem(() =>
+      admin
+        .from('odjeljci')
+        .select('id, poglavlje_id, broj, oznaka, naslov, stranica_od, stranica_do, redoslijed')
+        .order('redoslijed'),
+    ),
   ]);
   if (e1 || !poglavlja) {
     const poruka = e1?.message ?? 'Baza nije vratila podatke.';
