@@ -2189,92 +2189,52 @@ code {
   color: var(--tekst-blijedi);
 }
 
-/* --- Autentikacija ------------------------------------------------------- */
-.page-auth {
-  max-width: 440px;
+/* --- Pristup platformi (isti izgled na svim AIEduka platformama) --- */
+.page-auth { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: #f4f6f9; }
+.auth-form { background: #ffffff; border: 1px solid #dfe4ec; border-radius: 18px; padding: 36px; width: min(430px, calc(100vw - 32px)); box-shadow: 0 20px 55px rgba(7, 43, 73, .13); }
+.auth-form h1 { margin: 0 0 4px; }
+.auth-podnaslov { color: #5a6472; font-size: 0.85rem; margin: 0 0 20px; }
+.auth-napomena { background: #fff3cc; color: #7c5900; border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; }
+.auth-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; margin-bottom: 12px; }
+.auth-form input { padding: 9px; border: 1px solid #dfe4ec; border-radius: 6px; font-size: 0.95rem; }
+.auth-form button[type="submit"] { width: 100%; background: #1a3c6e; color: #fff; border: none; border-radius: 8px; padding: 11px; cursor: pointer; font-weight: 600; margin-top: 4px; }
+.auth-eyebrow { display: block; color: #9a6700; font-size: .76rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+.auth-magic { width: 100%; background: transparent; border: 1px solid #dfe4ec; border-radius: 8px; padding: 9px; margin-top: 8px; cursor: pointer; }
+.auth-session-note { margin: 8px 0 0; color: #5a6472; font-size: .76rem; text-align: center; }
+.auth-greska { color: #b3261e; font-size: 0.85rem; }
+.auth-poruka { color: #1e7d4f; font-size: 0.85rem; }
+.auth-link { font-size: 0.85rem; text-align: center; margin-top: 14px; }
+.access-entry { width: min(760px, calc(100vw - 32px)); }
+.access-entry > label { font-weight: 800; }
+.access-entry > .auth-podnaslov { font-size: 1rem; line-height: 1.55; }
+.access-option { margin-top: 16px; padding: 20px; border: 1px solid #dfe4ec; border-radius: 14px; }
+.access-option h2 { margin: 0 0 8px; font-size: 1.3rem; line-height: 1.25; color: #1a3c6e; }
+.access-option p { margin: 0 0 16px; padding: 12px 14px; border-radius: 10px; color: #35445a; font-size: 1rem; line-height: 1.58; }
+.access-option-paid { background: linear-gradient(145deg, #e2edff 0%, #f1f6ff 100%); border-color: #8eafe0; }
+.access-option-paid p { background: #d5e5fb; border-left: 4px solid #315f9f; }
+.access-option-trial { background: linear-gradient(145deg, #e3f5e9 0%, #f2faf5 100%); border-color: #91c7a4; }
+.access-option-trial p { background: #d5eedf; border-left: 4px solid #2f7b53; }
+.access-option-contract { background: linear-gradient(145deg, #fff0cf 0%, #fff8e9 100%); border-color: #ddb75e; }
+.access-option-contract p { background: #f9e3ad; border-left: 4px solid #a86e00; }
+.access-option button { width: 100%; }
+.contract-open { width: 100%; padding: 10px 13px; border: 1px solid #a86e00; border-radius: 8px; background: #bd7b00; color: #fff; font: inherit; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; box-sizing: border-box; }
+.contract-open:hover { background: #9d6500; }
+@media (min-width: 720px) {
+  .access-entry { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  .access-entry > h1, .access-entry > .auth-podnaslov, .access-entry > label,
+  .access-entry > .auth-greska, .access-entry > .auth-poruka,
+  .access-entry > .auth-session-note { grid-column: 1 / -1; }
+  .access-option { margin-top: 0; }
+  .access-option-contract { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 18px; }
+  .access-option-contract .auth-eyebrow, .access-option-contract h2, .access-option-contract p { grid-column: 1; }
+  .access-option-contract p { margin-bottom: 0; }
+  .access-option-contract .contract-open { grid-column: 2; grid-row: 1 / 4; min-width: 210px; }
 }
-.auth-form {
-  background: var(--ploha);
-  border: 1px solid var(--rub);
-  border-radius: var(--radijus);
-  padding: 28px;
-  box-shadow: var(--sjena);
-}
-.auth-form h1 {
-  font-size: 27.5px;
-  margin-bottom: 4px;
-}
-.auth-podnaslov {
-  color: var(--tekst-blijedi);
-  font-size: 17.5px;
-  margin-top: 0;
-}
-.auth-napomena {
-  background: var(--jantar-100);
-  color: var(--jantar-600);
-  border-radius: var(--radijus-mali);
-  padding: 10px 14px;
-  font-size: 16px;
-}
-.auth-form label {
-  display: block;
-  font-size: 16px;
-  color: var(--tekst-blijedi);
-  margin-bottom: 14px;
-}
-.auth-form input {
-  display: block;
-  width: 100%;
-  margin-top: 4px;
-  border: 1px solid var(--rub-jaci);
-  border-radius: var(--radijus-mali);
-  padding: 10px 12px;
-  font-family: inherit;
-  font-size: 19px;
-}
-.auth-form button[type='submit'] {
-  width: 100%;
-  background: var(--more-700);
-  color: #fff;
-  border: none;
-  border-radius: var(--radijus-mali);
-  padding: 12px;
-  font-family: inherit;
-  font-size: 19px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.auth-magic {
-  width: 100%;
-  margin-top: 10px;
-  background: transparent;
-  border: 1px solid var(--rub-jaci);
-  border-radius: var(--radijus-mali);
-  padding: 10px;
-  font-family: inherit;
-  font-size: 18px;
-  color: var(--more-800);
-  cursor: pointer;
-}
-.auth-greska {
-  background: var(--crvena-100);
-  color: var(--crvena-600);
-  border-radius: var(--radijus-mali);
-  padding: 9px 12px;
-  font-size: 18px;
-}
-.auth-poruka {
-  background: var(--zelena-100);
-  color: var(--zelena-600);
-  border-radius: var(--radijus-mali);
-  padding: 9px 12px;
-  font-size: 18px;
-}
-.auth-link {
-  font-size: 17.5px;
-  text-align: center;
-  color: var(--tekst-blijedi);
-  margin-bottom: 0;
+@media (min-width: 1080px) {
+  .access-entry { width: min(1120px, calc(100vw - 32px)); grid-template-columns: repeat(3, 1fr); }
+  .access-option-contract { grid-column: auto; display: block; }
+  .access-option-contract p { margin-bottom: 16px; }
+  .access-option-contract .contract-open { min-width: 0; }
 }
 
 /* --- Radni prostor cjeline: 5 načina rada (Razgovaraj/Prouči/Gledaj/Vježbaj/Provjeri) --- */
