@@ -1,0 +1,96 @@
+{
+  "poglavlje": 12,
+  "prezentacija": "Anatomija nacionalnog turističkog istraživanja",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "TOMAS Hrvatska 2025./2026.: Anatomija nacionalnog turističkog istraživanja",
+      "tumacenje": "Naslovni slajd prezentacije koja korak po korak raščlanjuje metodologiju i rezultate istraživanja TOMAS 2025./2026. Napomena: na slajdu je naveden kolegij „Istraživanje turističkog tržišta”, ali sadržaj odgovara cjelini 12 ovog kolegija.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-01.jpg"
+    },
+    {
+      "broj": 2,
+      "naslov": "Zašto istražujemo? Strateška vrijednost TOMAS-a",
+      "tumacenje": "Slajd u tri stupca ponavlja što je TOMAS (kvantitativno primarno, nacionalno longitudinalno istraživanje od 1987.), koji su mu ciljevi (opis potražnje, praćenje trendova i održivosti) i koja mu je korist (informirano odlučivanje, strateški dokumenti, benchmarking). Odgovara odjeljku 12.1 cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-02.jpg"
+    },
+    {
+      "broj": 3,
+      "naslov": "Arhitektura uzorka: od sirovog podatka do reprezentativnosti",
+      "tumacenje": "Slajd prati put od okvira uzorka (eVisitor, travanj 2025. – ožujak 2026.) preko 153 mjesta i više od 4.200 smještajnih objekata do 14.770 ispitanika i utežavanja rezultata. Dobro pokazuje logiku stratificiranog uzorka i ponderiranja (cjelina, str. 5).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-03.jpg"
+    },
+    {
+      "broj": 4,
+      "naslov": "Segmentacija potražnje: kako seciramo nacionalno tržište?",
+      "tumacenje": "Šest šesterokuta prikazuje analitičke prizme istraživanja: regije, zemlju porijekla, vrstu smještaja, sezonu, glavni motiv dolaska i trendove. Poruka je da se potražnja ne promatra kroz opći prosjek nego kroz segmente (cjelina, str. 6).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-04.jpg"
+    },
+    {
+      "broj": 5,
+      "naslov": "Evolucija dobi turista (1987. – 2025.): smjena generacija",
+      "tumacenje": "Slajd prikazuje dominaciju turista srednje životne dobi kroz cijelo razdoblje, rast udjela najmlađih gostiju na obali (do 29 godina: s 14 % na 17 %) i stabilnu dobnu strukturu na kontinentu. Ističe i skupine starijih gostiju (Istra, Kvarner, hoteli, kampovi, zdravstveni motiv) te mlade goste hostela (cjelina, str. 8–9).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-05.jpg"
+    },
+    {
+      "broj": 6,
+      "naslov": "Uspon „premium” gosta: obrazovanje i prihodi",
+      "tumacenje": "Slajd ističe da 40 % gostiju na obali (45 % na kontinentu) ima fakultetsko obrazovanje, a 74 % gostiju u 2025. ima primanja kućanstva iznad 4.000 €. Navodi i gdje su takvi gosti najzastupljeniji: Zagreb, Splitsko-dalmatinska županija, hoteli s 4 i 5 zvjezdica, gosti motivirani kulturom i ruralnim područjima (cjelina, str. 10).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-06.jpg"
+    },
+    {
+      "broj": 7,
+      "naslov": "Matrica usporedbe: Jadranska nasuprot Kontinentalnoj Hrvatskoj",
+      "tumacenje": "Tablica uspoređuje ključne pokazatelje dviju regija: prosječnu dob (41 i 43,5 godina), udio primanja iznad 5.000 € (41 % i 25 %), dnevnu potrošnju (162 € i 164 €), zadovoljstvo ukupnim boravkom (87 % i 92 %) i namjeru preporuke (58 % i 69 %). Zaključak: kontinent privlači nešto starije goste nižih primanja, ali s većom potrošnjom i zadovoljstvom.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-07.jpg"
+    },
+    {
+      "broj": 8,
+      "naslov": "Smjena motiva: što pokreće dolazak na destinaciju?",
+      "tumacenje": "Na obali raste motiv zabave (s 8 % na 21 %) i odmora u gradu (sa 17 % na 23 %), a pada važnost prirode (sa 64 % na 58 %) i gastronomije (s 18 % na 13 %). Na kontinentu su posao i city break (po 22 %) i dalje glavni motivi, uz rast touringa i zabave (cjelina, str. 14).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-08.jpg"
+    },
+    {
+      "broj": 9,
+      "naslov": "Putovanje korisnika: informacije i prijevoz",
+      "tumacenje": "Lijevak informacija pokazuje rast interneta s 56 % na 65 % i sve veću ulogu alata umjetne inteligencije. Ispravak podataka sa slajda: automobilom dolazi 77 % gostiju na obali i 62 % na kontinentu, a zrakoplovom 18 % na obali i 31 % na kontinentu, a ne 31 % u obje regije (cjelina, str. 15–16). Točni su podaci o gostima kampova (46 % kamperom) i hostela (22 % autobusom).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-09.jpg"
+    },
+    {
+      "broj": 10,
+      "naslov": "Ponašanje u destinaciji: od plana do realizacije",
+      "tumacenje": "Slajd ističe da 40 % gostiju na obali planira izlete te prikazuje najčešće aktivnosti po regijama. Ispravak: na kontinentu razgledavanje gradova i odlazak u restorane iznose po 55 %, a posjet muzejima i galerijama 20 %, ne 55 %; izlete na kontinentu planira 22 % gostiju (cjelina, str. 19).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-10.jpg"
+    },
+    {
+      "broj": 11,
+      "naslov": "Indeks zadovoljstva: analiza jaza",
+      "tumacenje": "Ukupno zadovoljstvo je visoko (87 % na obali i 92 % na kontinentu daje ocjenu 6 ili 7), ali je na obali niže nego 2022. Slajd navodi elemente visokog zadovoljstva (vrijednost za novac, pješačke staze, označavanje znamenitosti) i ističe da kontinent prednjači u kulturi i umjetnosti (85 %) te sportskim sadržajima (80 %). Napomena da pad s povijesnog maksimuma treba shvatiti kao signal za korekciju strategije.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-11.jpg"
+    },
+    {
+      "broj": 12,
+      "naslov": "Kritične točke: što narušava iskustvo?",
+      "tumacenje": "Tri upozorenja sažimaju slabosti: cijene u restoranima i trgovinama ocijenjene su kao nadprosječno visoke, najveća smetnja su nedostatni ili neodržavani javni WC-i (5 %), a promet u mjestu ima samo srednje zadovoljstvo, u Zagrebu 64 % (cjelina, str. 22).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-12.jpg"
+    },
+    {
+      "broj": 13,
+      "naslov": "Ekonomski učinak: paradoks potrošnje i duljine boravka",
+      "tumacenje": "Dnevna potrošnja raste na 162 € na obali (+15 %) i 164 € na kontinentu (+21 %), dok se boravak skraćuje (na kontinentu 2,8 noćenja u mjestu). Zaključak slajda: gosti ostavljaju više novca u manje dana (cjelina, str. 18 i 26–27).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-13.jpg"
+    },
+    {
+      "broj": 14,
+      "naslov": "Sinteza: anatomija hrvatskog turista 2025./2026.",
+      "tumacenje": "Profil tipičnog gosta u pet točaka: viša kupovna moć (74 % s primanjima iznad 4.000 €), povratak novih gostiju (s 14 % na 22 %), oslanjanje na internet (65 %) i umjetnu inteligenciju, pomak motiva prema zabavi i city breaku te kraći, ali intenzivniji boravci. Dobar slajd za ponavljanje cijele cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-14.jpg"
+    },
+    {
+      "broj": 15,
+      "naslov": "Znanje je temelj održivog turizma",
+      "tumacenje": "Završni slajd upućuje na cjelovito izvješće TOMAS Hrvatska 2025./2026. Instituta za turizam. Ne donosi novo gradivo.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-anatomija/slajd-15.jpg"
+    }
+  ]
+}

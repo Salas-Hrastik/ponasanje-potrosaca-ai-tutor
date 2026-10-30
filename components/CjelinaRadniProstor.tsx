@@ -39,6 +39,10 @@ interface Slajd {
   naslov: string;
   tumacenje: string;
 }
+interface SetSlajdova {
+  prezentacija: string;
+  slajdovi: Slajd[];
+}
 interface Medij {
   id: string;
   tip: 'video' | 'audio' | 'prezentacija';
@@ -142,7 +146,7 @@ export default function CjelinaRadniProstor({
   ciljevi: Cilj[];
   kartice: KarticaT[];
   mediji: Medij[];
-  slajdovi: Slajd[];
+  slajdovi: SetSlajdova[];
   brojPitanja: number;
   prethodna: Susjedna | null;
   sljedeca: Susjedna | null;
@@ -366,7 +370,7 @@ export default function CjelinaRadniProstor({
         </div>
       )}
 
-      {nacin === 'gledaj' && <GledajISlusaj mediji={mediji} slajdovi={slajdovi} />}
+      {nacin === 'gledaj' && <GledajISlusaj mediji={mediji} setovi={slajdovi} />}
 
       {nacin === 'vjezbaj' && <Vjezbaj kartice={kartice} />}
 
@@ -410,10 +414,22 @@ export default function CjelinaRadniProstor({
   );
 }
 
-function GledajISlusaj({ mediji, slajdovi }: { mediji: Medij[]; slajdovi: Slajd[] }) {
+/**
+ * Tumačenja slajdova za odabranu prezentaciju: set istog naslova, a ako ga
+ * nema i cjelina ima samo jedan set — taj (cjeline s jednom prezentacijom).
+ */
+function slajdoviZa(m: Medij | null, setovi: SetSlajdova[]): Slajd[] {
+  if (!m || m.tip !== 'prezentacija') return [];
+  const poNaslovu = setovi.find((s) => s.prezentacija === m.naslov);
+  if (poNaslovu) return poNaslovu.slajdovi;
+  return setovi.length === 1 ? setovi[0].slajdovi : [];
+}
+
+function GledajISlusaj({ mediji, setovi }: { mediji: Medij[]; setovi: SetSlajdova[] }) {
   const [odabraniId, setOdabraniId] = useState(mediji[0]?.id ?? null);
   const [uModalu, setUModalu] = useState<Medij | null>(null);
   const odabrani = mediji.find((m) => m.id === odabraniId) ?? null;
+  const slajdovi = slajdoviZa(odabrani, setovi);
 
   if (mediji.length === 0) {
     return (
@@ -493,7 +509,7 @@ function GledajISlusaj({ mediji, slajdovi }: { mediji: Medij[]; slajdovi: Slajd[
           tip={uModalu.tip}
           naslov={uModalu.naslov || MEDIJ_OZNAKE[uModalu.tip]}
           url={uModalu.url}
-          slajdovi={uModalu.tip === 'prezentacija' ? slajdovi : []}
+          slajdovi={slajdoviZa(uModalu, setovi)}
           onZatvori={() => setUModalu(null)}
         />
       )}

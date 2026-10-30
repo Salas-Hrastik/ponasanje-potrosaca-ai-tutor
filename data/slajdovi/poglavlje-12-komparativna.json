@@ -1,0 +1,96 @@
+{
+  "poglavlje": 12,
+  "prezentacija": "TOMAS Hrvatska: komparativna analiza 2019. – 2023.",
+  "slajdovi": [
+    {
+      "broj": 1,
+      "naslov": "TOMAS Hrvatska: Komparativna analiza",
+      "tumacenje": "Naslovni slajd prezentacije koja sintetizira ključne nalaze istraživanja TOMAS od 2019. do 2026. i uspoređuje Jadransku i Kontinentalnu Hrvatsku. Važno: brojke u ovoj prezentaciji uglavnom potječu iz ranijih valova istraživanja (2019. i 2022./2023.), pa se razlikuju od rezultata za 2025./2026. iz teksta cjeline.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-01.jpg"
+    },
+    {
+      "broj": 2,
+      "naslov": "Evolucija istraživanja: od ljetnog fokusa do nacionalnog obuhvata",
+      "tumacenje": "Vremenska crta prikazuje razvoj istraživanja: do 2019. provodio se TOMAS Ljeto samo za primorske destinacije (od 1987.), 2019. prvo je cjelogodišnje nacionalno istraživanje s 13.582 ispitanika, 2022./2023. slijedi post-pandemijski val s ljestvicom zadovoljstva od 1 do 7, a 2025./2026. novi metodološki okvir. Slajd objašnjava zašto se trendovi za kontinent mogu pratiti tek od 2019.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-02.jpg"
+    },
+    {
+      "broj": 3,
+      "naslov": "Arhitektura podataka: metodološki temelj TOMAS istraživanja",
+      "tumacenje": "Slajd sažima metodu: kvantitativno primarno istraživanje osobnim intervjuima s turistima u komercijalnim smještajnim objektima, uz utežavanje podacima iz sustava eVisitor. Naglašava kontinuitet: rezultati za Jadransku Hrvatsku izravno su usporedivi sa starijim podacima TOMAS Ljeto. U valu 2025./2026. uzorak je iznosio 14.770 ispitanika (cjelina, str. 5).",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-03.jpg"
+    },
+    {
+      "broj": 4,
+      "naslov": "Dva lica hrvatskog turizma",
+      "tumacenje": "Karta razlikuje dvije regije istraživanja: Jadransku Hrvatsku (7 primorskih županija), tradicionalnu ljetnu destinaciju, i Kontinentalnu Hrvatsku (14 kontinentalnih županija i Grad Zagreb), rastuće cjelogodišnje tržište. Ta podjela je osnovna os usporedbe u cijeloj cjelini.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-04.jpg"
+    },
+    {
+      "broj": 5,
+      "naslov": "Sociodemografski profil: tko posjećuje hrvatske regije?",
+      "tumacenje": "Slajd uspoređuje obrazovanje i primanja gostiju dviju regija prema ranijem valu istraživanja (prag primanja od 3.000 €). U valu 2025./2026. fakultetsko obrazovanje ima 41 % gostiju na obali i 45 % na kontinentu, a primanja iznad 5.000 € 41 % odnosno 25 % (cjelina, str. 10). Zaključak je isti: gosti s obale imaju višu kupovnu moć, a kontinentalni gosti su nešto obrazovaniji.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-05.jpg"
+    },
+    {
+      "broj": 6,
+      "naslov": "Lojalnost i akvizicija: povratnici na obali, novi gosti na kontinentu",
+      "tumacenje": "Grafikon prema ranijem valu pokazuje da obala ima više lojalnih gostiju, a kontinent više gostiju koji dolaze prvi put. U valu 2025./2026. prvi je put u Hrvatskoj 22 % gostiju na obali i 32 % na kontinentu, a 60 % inozemnih gostiju bilo je ovdje tri ili više puta (cjelina, str. 12). Internet je i ovdje glavni izvor informacija.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-06.jpg"
+    },
+    {
+      "broj": 7,
+      "naslov": "Motivacijski pokretači: od mora do posla",
+      "tumacenje": "Usporedni grafikon motiva prema ranijem valu: na obali dominiraju more i priroda, a na kontinentu priroda, city break, touring i posao. U valu 2025./2026. more motivira 83 % gostiju na obali, a na kontinentu su najvažniji city break i posao s po 22 % (cjelina, str. 14). Struktura motiva dviju regija ostala je bitno različita.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-07.jpg"
+    },
+    {
+      "broj": 8,
+      "naslov": "Obilježja putovanja: obiteljska putovanja automobilom nasuprot solo letovima",
+      "tumacenje": "Slajd prema ranijem valu suprotstavlja obiteljske dolaske automobilom na obalu i samostalne, često poslovne dolaske zrakoplovom na kontinent. U valu 2025./2026. automobilom dolazi 77 % gostiju na obali i 62 % na kontinentu, a zrakoplovom 18 % odnosno 31 % (cjelina, str. 16). Na kontinentu se udio gostiju bez pratnje smanjio na 24 %.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-08.jpg"
+    },
+    {
+      "broj": 9,
+      "naslov": "Boravak i aktivnosti: dugo ljetovanje nasuprot kratkom gradskom odmoru",
+      "tumacenje": "Slajd prema ranijem valu prikazuje 7,6 noćenja na obali i 2,9 na kontinentu te zajedničke i specifične aktivnosti dviju regija. U valu 2025./2026. prosjek je 6,6 noćenja na obali i 2,8 na kontinentu, a boravak se u obje regije skraćuje (cjelina, str. 18). Odlazak u restorane i razgledavanje gradova zajedničke su aktivnosti obiju regija.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-09.jpg"
+    },
+    {
+      "broj": 10,
+      "naslov": "Turistička potrošnja: kontinent generira višu dnevnu potrošnju",
+      "tumacenje": "Prema ranijem valu dnevna potrošnja iznosila je 115 € na kontinentu i 97 € na obali, uz istu strukturu izdataka u obje regije. U valu 2025./2026. potrošnja je porasla na 164 € na kontinentu i 162 € na obali (cjelina, str. 24). Kontinent i dalje ima nešto višu dnevnu potrošnju po osobi.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-10.jpg"
+    },
+    {
+      "broj": 11,
+      "naslov": "Temelji konkurentnosti: najveće prednosti hrvatskog turizma",
+      "tumacenje": "Radarski prikaz izdvaja najbolje ocijenjene elemente ponude prema valu 2022./2023.: ljepotu prirode, osobnu sigurnost, ljepotu mjesta, atmosferu i gostoljubivost lokalnog stanovništva. Isti elementi zadržali su vrlo visoke ocjene i u valu 2025./2026. (cjelina, str. 20–21). Konkurentnost se dakle temelji na percepciji prirode i sigurnosti.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-11.jpg"
+    },
+    {
+      "broj": 12,
+      "naslov": "Dijagnostika nedostataka: kritične točke turističke ponude",
+      "tumacenje": "Slajd navodi probleme iz ranijeg vala (gužve, otpad, mirisi, buka) i najslabije ocijenjene elemente po regijama. U valu 2025./2026. promet u mjestu jedini je element sa srednjom ocjenom u obje regije, a najveća smetnja su nedostatni ili neodržavani javni WC-i (cjelina, str. 20–22). Takva dijagnostika pokazuje gdje upravljanje destinacijom treba intervenirati.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-12.jpg"
+    },
+    {
+      "broj": 13,
+      "naslov": "Metodološka evolucija: preciznije mjerenje zadovoljstva (2022./2023.)",
+      "tumacenje": "Slajd objašnjava prelazak na ljestvicu od 1 (vrlo loše) do 7 (odlično) u valu 2022./2023. i mjerenje zadovoljstva na mnogo pojedinačnih elemenata ponude. U valu 2025./2026. ocjenjuje se 31 element, a zadovoljstvo se iskazuje kao udio ocjena 6 ili 7 (cjelina, str. 20). Granularno mjerenje omogućuje ciljanije odluke o ulaganjima.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-13.jpg"
+    },
+    {
+      "broj": 14,
+      "naslov": "Budućnost sustava: nacrt za TOMAS 2025./2026.",
+      "tumacenje": "Slajd u obliku hrama prikazuje sedam elemenata metodološkog okvira i četiri elementa uzorka novog vala istraživanja, istih kao u prezentaciji Instituta za turizam (cjelina, str. 4). Navodi i usmjerenje prema preciznijem praćenju održivosti i otpornosti turizma.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-14.jpg"
+    },
+    {
+      "broj": 15,
+      "naslov": "Zaključna sinteza: od ljetne obale do cjelogodišnje cjeline",
+      "tumacenje": "Sažetak opisuje dva komplementarna tržišta: obalu, obiteljski orijentiranu i obilježenu lojalnošću i duljim boravcima, te kontinent, tržište kratkih boravaka s visokom dnevnom potrošnjom koje privlači nove goste. Poruka je prijelaz s praćenja volumena na upravljanje dodanom vrijednošću tijekom cijele godine.",
+      "slika": "https://jruzajcmcvwiqkjvvuyl.supabase.co/storage/v1/object/public/mediji/12%20cjelina/slajdovi-komparativna/slajd-15.jpg"
+    }
+  ]
+}

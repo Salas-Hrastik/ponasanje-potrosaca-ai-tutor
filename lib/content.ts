@@ -169,17 +169,37 @@ export interface Slajd {
   tumacenje: string;
 }
 
+/** Tumačenja slajdova jedne prezentacije; `prezentacija` = naslov medija. */
+export interface SetSlajdova {
+  prezentacija: string;
+  slajdovi: Slajd[];
+}
+
 /**
  * Tumačenja slajdova stoje kao podatak u repozitoriju (kao data/sadrzaj.json),
  * a ne u bazi — vežu se uz konkretnu datoteku prezentacije, pa ih je korisno
  * verzionirati zajedno s kodom. Pripremaju se skriptom `npm run slajdovi`.
+ *
+ * Cjelina može imati više prezentacija: uz poglavlje-N.json čitaju se i
+ * poglavlje-N-<oznaka>.json, a svaki se set uz medij veže po naslovu.
  */
-function ucitajSlajdove(broj: number): Slajd[] {
+function ucitajSlajdove(broj: number): SetSlajdova[] {
   try {
-    const put = path.join(process.cwd(), 'data', 'slajdovi', `poglavlje-${broj}.json`);
-    if (!fs.existsSync(put)) return [];
-    const json = JSON.parse(fs.readFileSync(put, 'utf8')) as { slajdovi?: Slajd[] };
-    return json.slajdovi ?? [];
+    const mapa = path.join(process.cwd(), 'data', 'slajdovi');
+    if (!fs.existsSync(mapa)) return [];
+    const uzorak = new RegExp(`^poglavlje-${broj}(-[\\w-]+)?\\.json$`);
+    return fs
+      .readdirSync(mapa)
+      .filter((ime) => uzorak.test(ime))
+      .sort()
+      .map((ime) => {
+        const json = JSON.parse(fs.readFileSync(path.join(mapa, ime), 'utf8')) as {
+          prezentacija?: string;
+          slajdovi?: Slajd[];
+        };
+        return { prezentacija: json.prezentacija ?? '', slajdovi: json.slajdovi ?? [] };
+      })
+      .filter((s) => s.slajdovi.length > 0);
   } catch {
     return [];
   }
