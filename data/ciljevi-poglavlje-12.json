@@ -1,0 +1,41 @@
+{
+  "napomena": "Ciljevi učenja cjeline 12 (TOMAS Hrvatska 2025./2026.). Uvoz: npm run ciljevi:uvezi -- --datoteka=data/ciljevi-poglavlje-12.json. Stranica = slajd prezentacije.",
+  "ciljevi": [
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Opisati svrhu, ciljeve i koristi nacionalnog longitudinalnog istraživanja TOMAS Hrvatska 2025./2026.",
+      "kognitivna_razina": "znanje",
+      "stranica": 3
+    },
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Objasniti kako stratificirani uzorak i utežavanje podacima iz sustava eVisitor osiguravaju reprezentativnost rezultata istraživanja.",
+      "kognitivna_razina": "razumijevanje",
+      "stranica": 5
+    },
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Usporediti profil, pratnju i vjernost gostiju Jadranske i Kontinentalne Hrvatske te uočiti promjene od 2022. do 2025.",
+      "kognitivna_razina": "analiza",
+      "stranica": 8
+    },
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Objasniti razlike u motivima putovanja, izvorima informacija i prijevoznim sredstvima između dviju regija i povezati ih s procesom odluke o putovanju.",
+      "kognitivna_razina": "razumijevanje",
+      "stranica": 14
+    },
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Analizirati duljinu boravka, aktivnosti, zadovoljstvo elementima ponude i namjeru preporuke kao pokazatelje ponašanja turista u destinaciji.",
+      "kognitivna_razina": "analiza",
+      "stranica": 18
+    },
+    {
+      "poglavlje_broj": 12,
+      "tekst": "Vrednovati ključne trendove potražnje i potrošnje te predložiti njihove implikacije za upravljanje destinacijom i turističku ponudu.",
+      "kognitivna_razina": "vrednovanje",
+      "stranica": 29
+    }
+  ]
+}
