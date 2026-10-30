@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { AIEDUKA_ACCESS_COOKIE, verifyAiedukaAccessToken } from "@/lib/aieduka-access";
 
 const PLATFORM_SLUG = "ponasanje-potrosaca";
-const PUBLIC_PATHS = ["/api/privremeno-cjelina", "/aktivacija", "/api/aieduka/activate", "/api/aieduka/trial", "/robots.txt", "/favicon.ico", "/.well-known/"];
+const PUBLIC_PATHS = ["/aktivacija", "/api/aieduka/activate", "/api/aieduka/trial", "/robots.txt", "/favicon.ico", "/.well-known/"];
 const GUEST_COOKIE = "gost_id";
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
