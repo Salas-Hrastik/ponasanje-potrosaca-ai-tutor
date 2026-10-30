@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { supabaseAdmin } from './supabase';
+import { DODACI_BROJ } from './prirucnik';
 
 /**
  * Besplatni Supabase projekt uspava se nakon duljeg mirovanja — prvi upit nakon
@@ -85,14 +86,25 @@ export async function getPoglavlja(): Promise<DohvatPoglavlja> {
      njih, pa se ne prijavljuje kao greška — samo se zabilježi. */
   if (e2) {
     console.error('[sadrzaj] dohvat odjeljaka nije uspio:', e2.message);
-    return { poglavlja: poglavlja.map((p) => ({ ...p, odjeljci: [] })), greska: null };
+    return { poglavlja: poredakKolegija(poglavlja).map((p) => ({ ...p, odjeljci: [] })), greska: null };
   }
 
-  const spojena = poglavlja.map((p) => ({
+  const spojena = poredakKolegija(poglavlja).map((p) => ({
     ...p,
     odjeljci: (odjeljci ?? []).filter((o) => o.poglavlje_id === p.id),
   }));
   return { poglavlja: spojena, greska: null };
+}
+
+/**
+ * Redoslijed cjelina na naslovnici i u navigaciji prethodna/sljedeća: po broju,
+ * ali Dodaci (predgovor, pojmovnik, literatura) uvijek na kraju — i kad se
+ * kolegiju doda cjelina s većim brojem (npr. 12 · TOMAS, data/cjeline/).
+ */
+function poredakKolegija<T extends { broj: number }>(poglavlja: T[]): T[] {
+  return [...poglavlja].sort(
+    (a, b) => Number(a.broj === DODACI_BROJ) - Number(b.broj === DODACI_BROJ) || a.broj - b.broj,
+  );
 }
 
 /**

@@ -12,6 +12,7 @@
     "struktura": "tsx --env-file=.env.local scripts/izvuci-strukturu.ts",
     "ingest": "tsx --env-file=.env.local scripts/ingest.ts",
     "ingest:dopunski": "tsx --env-file=.env.local scripts/ingest-dopunski.ts",
+    "ingest:cjelina": "tsx --env-file=.env.local scripts/ingest-cjelina.ts",
     "nacrti": "tsx --env-file=.env.local scripts/generiraj-nacrte.ts",
     "kviz:uvezi": "tsx --env-file=.env.local scripts/uvezi-kviz.ts",
     "rag:debug": "tsx --env-file=.env.local scripts/rag-debug.ts",

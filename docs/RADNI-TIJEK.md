@@ -114,6 +114,27 @@ Dopunski izvori **nisu** u zadanom opsegu dohvata: student ih uključuje
 prekidačem *„Uključi dopunske izvore"* u chatu, a citati ih uvijek posebno
 označavaju. Priručnik ostaje izvor istine.
 
+### 4a. Samostalna cjelina izvan priručnika (npr. 12 · TOMAS)
+
+Cjelina koja nije u Word priručniku zapisuje se u Markdownu u `data/cjeline/`
+(primjer i opis zapisa: `data/cjeline/poglavlje-12-tomas.md`). Za razliku od
+dopunskih izvora, takva cjelina **jest** dio kurikuluma: ima svoju stranicu,
+sažetak, odjeljke, chat, usmenu vježbu i kviz, i u zadanom je opsegu dohvata.
+Izvor se bilježi kao zaseban red u `izvori`, a oznake `<!-- str. N -->` u
+tekstu određuju broj stranice u citatu (za TOMAS: broj slajda prezentacije).
+
+```bash
+npm run ingest:cjelina -- --datoteka=data/cjeline/poglavlje-12-tomas.md --suho
+npm run ingest:cjelina -- --datoteka=data/cjeline/poglavlje-12-tomas.md \
+  --slajdovi=materijali/tomas-slajdovi      # slajd-01.png … slajd-30.png → Storage
+npm run mediji -- --poglavlje=12            # nakon uploada medija u „12 cjelina"
+```
+
+Slike slajdova vežu se uz tumačenja u `data/slajdovi/poglavlje-12.json`.
+Preglednik slajdova pojavljuje se kad cjelina ima medij tipa `prezentacija`
+(npr. PDF prezentacije u mapi `12 cjelina`). Na naslovnici su Dodaci uvijek
+posljednji, pa nova cjelina stoji prije njih.
+
 ---
 
 ## 5. Ciljevi učenja, kartice i kviz

@@ -22,6 +22,7 @@ Stack: **Next.js 14 (App Router) + Supabase (Postgres + pgvector) + Claude
 | Cjelina | Stanje |
 | --- | --- |
 | Struktura kolegija: 11 cjelina, 60 odjeljaka, stvarni brojevi stranica | ✅ `data/sadrzaj.json` |
+| Cjelina 12 · TOMAS Hrvatska 2025./2026. (izvan priručnika, iz prezentacije Instituta za turizam) | ✅ `data/cjeline/poglavlje-12-tomas.md` → `npm run ingest:cjelina` |
 | Ingest priručnika (DOCX → cjeline, sažetci, odjeljci, isječci, ugradnje) | ✅ `npm run ingest` |
 | Ingest dopunskih izvora (PDF) | ✅ `npm run ingest:dopunski` |
 | Hibridni RAG (pgvector + full-text) + rerank manjim modelom | ✅ `lib/retrieval.ts` |
@@ -208,6 +209,7 @@ skloni zaglavlje i podnožje i zatraži puni zaslon preglednika.
 | `npm run struktura` | DOCX → `data/sadrzaj.json` (`--provjeri` = bez pisanja) |
 | `npm run ingest` | Puni ingest priručnika (`--suho`, `--poglavlje=N`) |
 | `npm run ingest:dopunski` | Ingest dopunskih PDF izvora iz registra |
+| `npm run ingest:cjelina -- --datoteka=…` | Ingest samostalne cjeline iz Markdowna (`data/cjeline/`; `--suho`, `--slajdovi=mapa`) |
 | `npm run nacrti -- --ciljevi --kartice --kviz` | Nacrti ciljeva, kartica i kviz pitanja (`odobreno = false`) |
 | `npm run kviz:uvezi -- --datoteka=…` | Uvoz nastavnikovih pitanja (odmah odobrena) |
 | `npm run rag:debug -- "pitanje"` | Što bi RAG vratio, bez poziva modelu |
