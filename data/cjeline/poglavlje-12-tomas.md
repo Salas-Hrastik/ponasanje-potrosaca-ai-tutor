@@ -324,3 +324,16 @@ U Kontinentalnoj Hrvatskoj prosječni dnevni izdaci porasli su sa 136 € u 2022
 ### Veza s gradivom kolegija
 
 Rezultati istraživanja TOMAS konkretni su, izmjereni primjer pojmova obrađenih u prethodnim cjelinama. Motivi putovanja (odjeljak 12.3) pokazuju kako se motivacija turista razlikuje po segmentima i mijenja kroz vrijeme. Izvori informacija pokazuju fazu traženja informacija u procesu donošenja odluke o putovanju i sve veću ulogu interneta, društvenih mreža i alata umjetne inteligencije u online ponašanju turističkog potrošača. Zadovoljstvo, namjera preporuke i vjernost gostiju (odjeljci 12.2 i 12.4) odgovaraju fazi poslijekupovnog ponašanja. Samo istraživanje primjer je klasične kvantitativne metode istraživanja ponašanja: anketiranja na stratificiranom uzorku, ponderiranog stvarnim turističkim prometom iz sustava eVisitor i ponavljanog kroz desetljeća radi praćenja trendova.
+
+### Sažetak i pitanja za ponavljanje
+
+SAŽETAK POGLAVLJA · Istraživanje TOMAS Hrvatska 2025./2026. nacionalno je longitudinalno istraživanje u kojem je na stratificiranom uzorku od 14.770 turista, utežanom podacima iz sustava eVisitor, izmjeren profil, motivacija, aktivnosti, zadovoljstvo i potrošnja turista u Jadranskoj i Kontinentalnoj Hrvatskoj. Na obali raste udio gostiju veće kupovne moći i novih gostiju, jačaju motivi zabave i odmora u gradu, a boravak se skraćuje. Kontinent privlači nešto starije goste koji dolaze poslovno ili na city break, ostaju kraće, ali su zadovoljniji i spremniji preporučiti destinaciju. Dnevna potrošnja u obje regije snažno raste, na 162 € odnosno 164 €, dok internet ostaje glavni izvor informacija.
+
+PITANJA ZA PONAVLJANJE · Pitanja otvorenog tipa za provjeru razumijevanja cjeline:
+
+- Što je istraživanje TOMAS, tko ga provodi i koje su njegove glavne koristi za upravljanje turizmom?
+- Objasnite kako stratificirani uzorak i utežavanje podacima iz sustava eVisitor osiguravaju reprezentativnost rezultata.
+- Usporedite profil gostiju Jadranske i Kontinentalne Hrvatske prema dobi, obrazovanju, primanjima i pratnji na putovanju.
+- Kako se mijenjaju motivi putovanja gostiju na obali od 2022. do 2025. i što te promjene govore o ponašanju turističkih potrošača?
+- Koju ulogu imaju internet i alati umjetne inteligencije u traženju informacija o putovanju i koja tržišta se na internet oslanjaju najviše?
+- Objasnite paradoks kraćeg boravka i veće dnevne potrošnje te njegove posljedice za turističku ponudu.
