@@ -15,6 +15,7 @@
     "ingest:cjelina": "tsx --env-file=.env.local scripts/ingest-cjelina.ts",
     "nacrti": "tsx --env-file=.env.local scripts/generiraj-nacrte.ts",
     "kviz:uvezi": "tsx --env-file=.env.local scripts/uvezi-kviz.ts",
+    "kartice:uvezi": "tsx --env-file=.env.local scripts/uvezi-kartice.ts",
     "rag:debug": "tsx --env-file=.env.local scripts/rag-debug.ts",
     "mediji": "tsx --env-file=.env.local scripts/uvezi-medije.ts",
     "slajdovi": "tsx --env-file=.env.local scripts/tumaci-slajdove.ts",

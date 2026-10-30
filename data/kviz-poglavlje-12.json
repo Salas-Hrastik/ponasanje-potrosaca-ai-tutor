@@ -1,0 +1,117 @@
+{
+  "napomena": "Kviz cjeline 12 (TOMAS Hrvatska 2025./2026.). Uvoz: npm run kviz:uvezi -- --datoteka=data/kviz-poglavlje-12.json. Brojevi stranica = slajdovi prezentacije.",
+  "pitanja": [
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.1",
+      "pitanje": "Kako su podaci istraživanja TOMAS Hrvatska 2025./2026. ponderirani da bi rezultati bili reprezentativni?",
+      "odgovori": [
+        "Prema broju smještajnih objekata u svakoj županiji",
+        "Podacima o ostvarenom turističkom prometu iz sustava eVisitor",
+        "Prema udjelu svake zemlje porijekla u ukupnom stanovništvu Europe",
+        "Ponderiranje nije provedeno jer je uzorak slučajan"
+      ],
+      "tocan_index": 1,
+      "objasnjenje": "Rezultati su utežani podacima o ostvarenom turističkom prometu iz sustava eVisitor, što osigurava reprezentativnost prema stratumima (str. 5).",
+      "stranica_ref": "str. 5"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.2",
+      "pitanje": "Kako se prema istraživanju TOMAS Ljeto mijenjao udio gostiju do 29 godina u Jadranskoj Hrvatskoj?",
+      "odgovori": [
+        "Pao je sa 17 % na 14 %",
+        "Ostao je nepromijenjen na 21 %",
+        "Porastao je s 14 % u 2022. na 17 % u 2025.",
+        "Porastao je s 24 % na 62 %"
+      ],
+      "tocan_index": 2,
+      "objasnjenje": "Udio najmlađe dobne skupine nakon dugog pada ponovno raste: s 14 % u 2022. na 17 % u 2025. godini (str. 8–9).",
+      "stranica_ref": "str. 8–9"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.2",
+      "pitanje": "Koji podatak najbolje pokazuje vjernost inozemnih gostiju Hrvatskoj?",
+      "odgovori": [
+        "60 % inozemnih gostiju već je bilo u Hrvatskoj tri ili više puta",
+        "22 % gostiju na obali dolazi prvi put",
+        "Gosti iz SAD-a troše 280 € dnevno",
+        "65 % gostiju informira se putem interneta"
+      ],
+      "tocan_index": 0,
+      "objasnjenje": "Tri ili više posjeta ima 60 % inozemnih gostiju, a u kampovima 75 %; najvjerniji su gosti s bliskih tržišta (str. 12).",
+      "stranica_ref": "str. 12"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.3",
+      "pitanje": "Koja su dva motiva najvažnija za dolazak turista u Kontinentalnu Hrvatsku?",
+      "odgovori": [
+        "More i priroda",
+        "Wellness i gastronomija",
+        "Zabava i manifestacije",
+        "City break i posao, svaki s 22 %"
+      ],
+      "tocan_index": 3,
+      "objasnjenje": "U Kontinentalnoj Hrvatskoj najvažniji su motivi city break i posao (po 22 %), dok na obali dominiraju more i priroda (str. 14).",
+      "stranica_ref": "str. 14"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.3",
+      "pitanje": "Koji je glavni izvor informacija turista u Jadranskoj Hrvatskoj i kako se njegova važnost mijenja?",
+      "odgovori": [
+        "Preporuke rodbine i prijatelja, čija važnost raste",
+        "Internet, čije je korištenje poraslo s 56 % na 65 % od 2019.",
+        "Turističke agencije, čija važnost stagnira",
+        "Tiskani katalozi i brošure, čija važnost raste"
+      ],
+      "tocan_index": 1,
+      "objasnjenje": "Internet koristi 65 % gostiju na obali, uz stalan rast sa 56 % u 2019.; slijede preporuke rodbine i prijatelja (str. 15).",
+      "stranica_ref": "str. 15"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.4",
+      "pitanje": "Kako se prema istraživanju mijenja duljina boravka turista u Hrvatskoj?",
+      "odgovori": [
+        "Boravak se produljuje u obje regije",
+        "Boravak se produljuje samo u Kontinentalnoj Hrvatskoj",
+        "Boravak se skraćuje u obje regije",
+        "Duljina boravka se nije promijenila od 2022."
+      ],
+      "tocan_index": 2,
+      "objasnjenje": "Prosječan boravak u mjestu skraćen je na obali ljeti s 8,4 na 6,9, a na kontinentu s 3,4 na 2,8 noćenja (str. 18).",
+      "stranica_ref": "str. 18"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.4",
+      "pitanje": "Koji je element ponude u obje regije dobio samo srednju ocjenu zadovoljstva?",
+      "odgovori": [
+        "Gastro ponuda u mjestu",
+        "Osobna sigurnost",
+        "Ljepota prirode i krajolika",
+        "Promet u mjestu"
+      ],
+      "tocan_index": 3,
+      "objasnjenje": "Od 31 ocijenjenog elementa jedino promet u mjestu ima srednje zadovoljstvo, i u Jadranskoj i u Kontinentalnoj Hrvatskoj (str. 20–21).",
+      "stranica_ref": "str. 20–21"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.5",
+      "pitanje": "Kako se od 2022. do 2025. promijenila struktura dnevnih izdataka turista u Jadranskoj Hrvatskoj?",
+      "odgovori": [
+        "Raste udio ostalih destinacijskih usluga, s 31 % na 34 %",
+        "Raste udio smještaja, hrane i pića, sa 66 % na 69 %",
+        "Struktura izdataka ostala je potpuno ista",
+        "Ukupni dnevni izdaci pali su sa 162 € na 141 €"
+      ],
+      "tocan_index": 0,
+      "objasnjenje": "Uz rast ukupnih izdataka sa 141 € na 162 €, udio ostalih destinacijskih usluga porastao je s 31 % na 34 % (str. 26).",
+      "stranica_ref": "str. 26"
+    }
+  ]
+}

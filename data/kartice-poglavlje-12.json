@@ -1,0 +1,75 @@
+{
+  "napomena": "Kartice za učenje cjeline 12 (TOMAS Hrvatska 2025./2026.). Uvoz: npm run kartice:uvezi -- --datoteka=data/kartice-poglavlje-12.json. Brojevi stranica = slajdovi prezentacije.",
+  "kartice": [
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.1",
+      "pojam": "TOMAS istraživanje",
+      "definicija": "Nacionalno longitudinalno i kvantitativno primarno istraživanje turističke potražnje u Hrvatskoj koje Institut za turizam provodi od 1987. godine, prikupljajući podatke izravno od turista.",
+      "stranica_ref": "str. 3"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.1",
+      "pojam": "Stratificirani uzorak",
+      "definicija": "Dizajn uzorka istraživanja TOMAS: stratificirani slučajni odnosno kvotni uzorak, s dolascima i noćenjima prema stratumima iz eVisitora kao okvirom; obuhvatio je 14.770 turista u 153 mjesta.",
+      "stranica_ref": "str. 5"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.1",
+      "pojam": "Utežavanje (ponderiranje) rezultata",
+      "definicija": "Usklađivanje rezultata uzorka sa stvarnim turističkim prometom iz sustava eVisitor, čime se osigurava reprezentativnost rezultata prema stratumima.",
+      "stranica_ref": "str. 5"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.2",
+      "pojam": "Profil turista",
+      "definicija": "Sociodemografska obilježja gostiju: prosječna dob je 41 godina na obali i 43,5 na kontinentu, a fakultetsko obrazovanje ima 41 % odnosno 45 % gostiju.",
+      "stranica_ref": "str. 8–10"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.2",
+      "pojam": "Vjernost gostiju",
+      "definicija": "Ponovljeni dolasci u Hrvatsku: 60 % inozemnih gostiju bilo je ovdje tri ili više puta, a u kampovima 75 %, najviše s bliskih tržišta.",
+      "stranica_ref": "str. 12"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.3",
+      "pojam": "Odmorišna putovanja",
+      "definicija": "Putovanja kojima je glavna svrha odmor; čine 93 % putovanja u Jadranskoj i 56 % u Kontinentalnoj Hrvatskoj.",
+      "stranica_ref": "str. 14"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.3",
+      "pojam": "Internet kao izvor informacija",
+      "definicija": "Glavni izvor informacija za 65 % gostiju na obali; najčešće se koriste društvene mreže, online agencije, meta travel stranice i alati umjetne inteligencije.",
+      "stranica_ref": "str. 15"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.4",
+      "pojam": "Stupanj zadovoljstva",
+      "definicija": "Udio gostiju koji su element ponude ocijenili s 6 ili 7 na skali od 1 do 7; vrlo visok je 80 % i više, visok 70–79,9 %, a srednji 60–69,9 %.",
+      "stranica_ref": "str. 20–21"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.4",
+      "pojam": "Namjera preporuke",
+      "definicija": "Udio gostiju koji bi destinaciju gotovo sigurno preporučili drugima: 69 % gostiju na kontinentu i 58 % gostiju na obali.",
+      "stranica_ref": "str. 22"
+    },
+    {
+      "poglavlje_broj": 12,
+      "odjeljak_oznaka": "12.5",
+      "pojam": "Prosječni dnevni izdaci",
+      "definicija": "Potrošnja turista po osobi i danu: 162 € na obali (+15 % od 2022.) i 164 € na kontinentu (+21 %), najviše za smještaj.",
+      "stranica_ref": "str. 24–27"
+    }
+  ]
+}
